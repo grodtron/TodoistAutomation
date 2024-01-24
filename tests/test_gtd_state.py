@@ -14,7 +14,7 @@ class TestGTDState(unittest.TestCase):
         gtd_state = GTDState()
         gtd_state.add_context(context1)
         gtd_state.add_context(context2)
-        gtd_state.add_context(ExlusionList(name="NotNow"))
+        gtd_state.add_context(ExclusionList(name="NotNow"))
 
         # Call the method you want to test
         result = gtd_state.render_todoist_objects()
