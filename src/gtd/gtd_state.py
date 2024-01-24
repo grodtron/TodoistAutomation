@@ -60,7 +60,7 @@ class GTDState:
         project = TodoistProject(
             name=f"{exclusion_list.name} Projects",
             color=exclusion_list.color,
-            is_favorite=True
+            is_favorite=False
         )
         return TodoistObjects(labels=[], filters=[], projects=[project])
 
