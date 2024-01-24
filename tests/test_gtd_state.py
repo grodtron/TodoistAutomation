@@ -71,8 +71,8 @@ class TestGTDState(unittest.TestCase):
         ]
 
         expected_projects = [
-            TodoistProject(name="NotNow", color="red"),
-            TodoistProject(name="Vacation", color="blue"),
+            TodoistProject(name="NotNow", color="red", is_favorite=False),
+            TodoistProject(name="Vacation", color="blue", is_favorite=False),
         ]
 
         self.assertEqual(result.labels, expected_labels)
