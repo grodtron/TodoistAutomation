@@ -1,5 +1,5 @@
 import unittest
-from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, GTDContext, CompositeContext
+from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, GTDContext, CompositeContext, ExlusionList
 
 class TestGTDState(unittest.TestCase):
     def test_render_todoist_objects(self):
@@ -14,6 +14,7 @@ class TestGTDState(unittest.TestCase):
         gtd_state = GTDState()
         gtd_state.add_context(context1)
         gtd_state.add_context(context2)
+        gtd_state.add_context(ExlusionList(name="NotNow"))
 
         # Call the method you want to test
         result = gtd_state.render_todoist_objects()

@@ -21,9 +21,17 @@ class TodoistFilter:
 
 @dataclass_json
 @dataclass
+class TodoistProject:
+    name: str
+    color: str = DEFAULT_COLOR
+    is_favorite: bool = field(default=None)
+
+@dataclass_json
+@dataclass
 class TodoistCollection:
     labels: List[TodoistLabel]
     filters: List[TodoistFilter]
+    projects: List[TodoistProject]
 
 @dataclass_json
 @dataclass
@@ -39,3 +47,9 @@ class CompositeContext:
     emojis: str = ""
     color: str = DEFAULT_COLOR
     labels: List[str] = field(default_factory=list)
+
+@dataclass_json
+@dataclass
+class ExclusionList:
+    name: str
+    color: str = DEFAULT_COLOR
