@@ -1,5 +1,5 @@
 import unittest
-from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, GTDContext, CompositeContext, ExclusionList
+from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, GTDContext, CompositeContext, ExclusionList
 
 class TestGTDState(unittest.TestCase):
     def test_render_todoist_objects(self):
@@ -49,8 +49,8 @@ class TestGTDState(unittest.TestCase):
         gtd_state = GTDState()
         gtd_state.add_context(context1)
         gtd_state.add_context(context2)
-        gtd_state.add_context(ExclusionList(name="NotNow"))
-        gtd_state.add_context(ExclusionList(name="Vacation"))
+        gtd_state.add_context(ExclusionList(name="NotNow", color="red"))
+        gtd_state.add_context(ExclusionList(name="Vacation", color="blue"))
 
         # Call the method you want to test
         result = gtd_state.render_todoist_objects()
@@ -70,8 +70,14 @@ class TestGTDState(unittest.TestCase):
             TodoistFilter(name="🌟 Personal", query=f"#Personal{' ' * 60}| (@Personal & !#NotNow & !#Vacation),#Health{' ' * 60}| (@Health & !#NotNow & !#Vacation),#Finance{' ' * 60}| (@Finance & !#NotNow & !#Vacation)", color="green", is_favorite=True),
         ]
 
+        expected_projects = [
+            TodoistProject(name="NotNow", color="red", is_favorite=False),
+            TodoistProject(name="Vacation", color="blue", is_favorite=False),
+        ]
+
         self.assertEqual(result.labels, expected_labels)
         self.assertEqual(result.filters, expected_filters)
+        self.assertEqual(result.projects, expected_projects)
 
 if __name__ == '__main__':
     unittest.main()

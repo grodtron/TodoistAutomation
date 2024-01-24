@@ -58,9 +58,9 @@ class GTDState:
 
     def _generate_todoist_objects_exclusion_list(self, exclusion_list: ExclusionList) -> TodoistObjects:
         project = TodoistProject(
-            name=f"{exclusion_list.name} Projects",
+            name=f"{exclusion_list.name}",
             color=exclusion_list.color,
-            is_favorite=True
+            is_favorite=False
         )
         return TodoistObjects(labels=[], filters=[], projects=[project])
 
