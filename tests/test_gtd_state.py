@@ -1,5 +1,5 @@
 import unittest
-from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, GTDContext, CompositeContext, ExlusionList
+from src.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, GTDContext, CompositeContext, ExclusionList
 
 class TestGTDState(unittest.TestCase):
     def test_render_todoist_objects(self):
