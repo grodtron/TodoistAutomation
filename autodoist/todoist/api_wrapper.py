@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict
 import uuid
 import requests
-from your_data_classes import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
 
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
@@ -44,7 +44,12 @@ class TodoistApiWrapper:
         command = {
             "type": f"{item_type}_{action_type}",
             "uuid": str(uuid.uuid4()),
-            "args": {"id": item_id} if item_id else {"temp_id": str(uuid.uuid4())},
-            **updated_item.as_dict(),
+            "args": updated_item.to_dict()
         }
+
+        if item_id:
+            command['args']['id'] = item_id
+        else:
+            command["temp_id"] = str(uuid.uuid4())
+                
         return command
