@@ -1,3 +1,4 @@
 dataclasses
 dataclasses-json
 requests
+mypy
