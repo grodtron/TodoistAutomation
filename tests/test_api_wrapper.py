@@ -36,7 +36,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
             filters=[], #[ConcreteTodoistFilter(id=1, name="Filter 1", query="query", color="#ffffff", is_favorite=True)],
             projects=[] #[ConcreteTodoistProject(id=1, name="Project 1", color="#ffffff", is_favorite=True)]
         )
-        expected_sync_commands = [
+        expected_commands = [
             {
                 "type": "label_update",
                 "args": {"id": 1, "color": "#ffffff", "is_favorite": True},
