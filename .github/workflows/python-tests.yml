@@ -28,7 +28,7 @@ jobs:
 
     - name: Install Mypy types
       run: |
-        python -m mypy --install-types .
+        python -m mypy --install-types --non-interactive .
 
     - name: Run mypy
       run: |
