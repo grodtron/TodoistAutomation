@@ -1,6 +1,6 @@
 from typing import List, Union
 from dataclasses import dataclass
-from models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, GTDContext, CompositeContext, ExclusionList
+from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, GTDContext, CompositeContext, ExclusionList
 
 @dataclass
 class TodoistObjects:
