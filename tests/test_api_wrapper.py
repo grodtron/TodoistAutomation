@@ -28,6 +28,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         self.assertEqual(len(result.labels), 1)
         self.assertEqual(len(result.filters), 1)
         self.assertEqual(len(result.projects), 1)
+        # TODO assert on content
 
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
@@ -54,7 +55,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
                 "args": {"color": "#ffffff", "is_favorite": True, "name": "NewLabel"},
             },
 
-            # ... similar commands for filters and projects
+            # TODO ... similar commands for filters and projects
         ]
         self.mock_api_requester.make_request.return_value = {}
 
