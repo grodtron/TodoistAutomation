@@ -32,8 +32,8 @@ class TestTodoistApiWrapper(unittest.TestCase):
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
         todoist_objects = ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(id=1, name="UpdatedLabel", color="#ffffff", is_favorite=True)],
-            labels=[ConcreteTodoistLabel(name="NewLabel", color="#ffffff", is_favorite=True)],
+            labels=[ConcreteTodoistLabel(id=1, name="UpdatedLabel", color="#ffffff", is_favorite=True),
+                    ConcreteTodoistLabel(name="NewLabel", color="#ffffff", is_favorite=True)],
             filters=[], #[ConcreteTodoistFilter(id=1, name="Filter 1", query="query", color="#ffffff", is_favorite=True)],
             projects=[] #[ConcreteTodoistProject(id=1, name="Project 1", color="#ffffff", is_favorite=True)]
         )
