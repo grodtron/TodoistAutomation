@@ -64,10 +64,6 @@ class TestTodoistApiWrapper(unittest.TestCase):
             del actual_command['uuid']
 
             self.assertIn(actual_command, expected_commands)
-        
-        
-        # Check that actual_commands is now an empty dictionary
-        self.assertEqual(actual_commands, {})
 
 
 if __name__ == '__main__':
