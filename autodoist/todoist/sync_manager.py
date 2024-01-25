@@ -1,5 +1,5 @@
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
-from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject, TodoistCollection
 
 
 class TodoistSyncManager:

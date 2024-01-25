@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Type, Callable, Any
 from dataclasses import dataclass
 from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, GTDContext, CompositeContext, ExclusionList
 
@@ -9,14 +9,14 @@ class TodoistObjects:
     projects: List[TodoistProject]
 
 class GTDState:
-    def __init__(self):
+    def __init__(self) -> None:
         self.contexts: List[Union[GTDContext, CompositeContext, ExclusionList]] = []
 
-    def add_context(self, context: Union[GTDContext, CompositeContext, ExclusionList]):
+    def add_context(self, context: Union[GTDContext, CompositeContext, ExclusionList]) -> None:
         self.contexts.append(context)
 
     def _generate_todoist_objects(self, context: Union[GTDContext, CompositeContext, ExclusionList]) -> TodoistObjects:
-        generators = {
+        generators: Dict[Type, Callable[Any, TodoistObjects]] = {
             GTDContext: self._generate_todoist_objects_gtd_context,
             CompositeContext: self._generate_todoist_objects_composite_context,
             ExclusionList: self._generate_todoist_objects_exclusion_list
