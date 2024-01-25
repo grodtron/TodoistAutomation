@@ -39,6 +39,10 @@ class ConcreteTodoistObjects:
     filters: List[ConcreteTodoistFilter]
     projects: List[ConcreteTodoistProject]
 
+    def get_all_items(self) -> List[Any]:
+        return self.labels + self.filters + self.projects
+
+
 @dataclass_json
 @dataclass
 
