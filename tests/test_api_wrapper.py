@@ -51,7 +51,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
                 "type": "label_add",
                 "uuid": dummy_uuid,
                 "temp_id": dummy_uuid,
-                "args": {"color": "#ffffff", "is_favorite": True, "name": "UpdatedLabel"},
+                "args": {"color": "#ffffff", "is_favorite": True, "name": "NewLabel"},
             },
 
             # ... similar commands for filters and projects
