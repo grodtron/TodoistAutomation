@@ -12,6 +12,9 @@ class ConcreteTodoistLabel:
     is_favorite: bool = field(default=None)
     id: int = field(default=None)
 
+    def get_type(self) -> str:
+        return "label"
+
 
 @dataclass_json
 @dataclass
@@ -22,6 +25,9 @@ class ConcreteTodoistFilter:
     is_favorite: bool = field(default=None)
     id: int = field(default=None)
 
+    def get_type(self) -> str:
+        return "filter"
+
 
 @dataclass_json
 @dataclass
@@ -30,6 +36,9 @@ class ConcreteTodoistProject:
     color: str = DEFAULT_COLOR
     is_favorite: bool = field(default=None)
     id: int = field(default=None)
+
+    def get_type(self) -> str:
+        return "project"
 
 
 @dataclass_json
