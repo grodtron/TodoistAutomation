@@ -52,7 +52,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         # Check that make_request was called with a subset of the expected commands
         self.mock_api_requester.make_request.assert_called_once()
         actual_args, _ = self.mock_api_requester.make_request.call_args
-        actual_commands = actual_args[0]['commands']
+        actual_commands = actual_args['commands']
         for expected_command in expected_sync_commands:
             self.assertIn(expected_command, actual_commands)
 
