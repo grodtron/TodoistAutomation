@@ -60,7 +60,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
 
         # Call the method to test
         # Patch the uuid module
-        with patch("uuid.uuid4", side_effect=[dummy_uuid]):
+        with patch("uuid.uuid4", dummy_uuid):
             self.todoist_api_wrapper.update_todoist_objects(todoist_objects)
         
         # Assertions
