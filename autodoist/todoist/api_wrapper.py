@@ -30,7 +30,7 @@ class TodoistApiWrapper:
         
         return ConcreteTodoistObjects(labels=labels, filters=filters, projects=projects)
 
-    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> None:
+    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict:
         sync_commands = []
 
         for item in todoist_objects.get_all_items():
