@@ -41,6 +41,8 @@ class ConcreteTodoistObjects:
 
 @dataclass_json
 @dataclass
+
+
 class TodoistLabel:
     name: str
     color: str = DEFAULT_COLOR
