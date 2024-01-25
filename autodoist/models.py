@@ -1,6 +1,6 @@
 from typing import List, Union, Any, Optional
-from dataclasses import dataclass, field, config
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 
 DEFAULT_COLOR = "default_color_value"
 
