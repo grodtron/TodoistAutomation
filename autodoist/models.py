@@ -6,6 +6,41 @@ DEFAULT_COLOR = "default_color_value"
 
 @dataclass_json
 @dataclass
+class ConcreteTodoistLabel:
+    name: str
+    color: str = DEFAULT_COLOR
+    is_favorite: bool = field(default=None)
+    id: int = field(default=None)
+
+
+@dataclass_json
+@dataclass
+class ConcreteTodoistFilter:
+    name: str
+    query: str
+    color: str = DEFAULT_COLOR
+    is_favorite: bool = field(default=None)
+    id: int = field(default=None)
+
+
+@dataclass_json
+@dataclass
+class ConcreteTodoistProject:
+    name: str
+    color: str = DEFAULT_COLOR
+    is_favorite: bool = field(default=None)
+    id: int = field(default=None)
+
+
+@dataclass_json
+@dataclass
+class ConcreteTodoistObjects:
+    labels: List[ConcreteTodoistLabel]
+    filters: List[ConcreteTodoistFilter]
+    projects: List[ConcreteTodoistProject]
+
+@dataclass_json
+@dataclass
 class TodoistLabel:
     name: str
     color: str = DEFAULT_COLOR

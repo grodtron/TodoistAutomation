@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict
 import uuid
 import requests
-from your_data_classes import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
 
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
