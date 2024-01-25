@@ -16,7 +16,7 @@ class GTDState:
         self.contexts.append(context)
 
     def _generate_todoist_objects(self, context: Union[GTDContext, CompositeContext, ExclusionList]) -> TodoistObjects:
-        generators: Dict[Type, Callable[Any, TodoistObjects]] = {
+        generators: Dict[Type, Callable[[Any], TodoistObjects]] = {
             GTDContext: self._generate_todoist_objects_gtd_context,
             CompositeContext: self._generate_todoist_objects_composite_context,
             ExclusionList: self._generate_todoist_objects_exclusion_list
