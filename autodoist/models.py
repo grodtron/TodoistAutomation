@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Any
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 
