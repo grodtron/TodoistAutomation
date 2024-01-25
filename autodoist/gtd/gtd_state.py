@@ -1,4 +1,4 @@
-from typing import List, Union, Type, Callable, Any
+from typing import List, Union, Type, Callable, Any, Dict
 from dataclasses import dataclass
 from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, GTDContext, CompositeContext, ExclusionList
 
