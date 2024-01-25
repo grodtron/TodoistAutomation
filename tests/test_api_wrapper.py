@@ -39,8 +39,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         expected_commands = [
             {
                 "type": "label_update",
-                "args": {"id": 1, "color": "#ffffff", "is_favorite": True},
-                "name": "Label 1"
+                "args": {"id": 1, "color": "#ffffff", "is_favorite": True, "name": "Label 1"},
             },
             # ... similar commands for filters and projects
         ]
