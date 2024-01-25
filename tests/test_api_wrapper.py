@@ -13,9 +13,9 @@ class TestTodoistApiWrapper(unittest.TestCase):
     def test_get_all_todoist_objects(self):
         # Set up the expected response
         expected_response = {
-            "labels": [{"id": 1, "name": "Label 1"}],
-            "filters": [{"id": 1, "name": "Filter 1"}],
-            "projects": [{"id": 1, "name": "Project 1"}],
+            "labels": [{"id": 1, "name": "Label 1", "color": "#ffffff", "is_favorite": True}],
+            "filters": [{"id": 1, "name": "Filter 1", "query": "query", "color": "#ffffff", "is_favorite": True}],
+            "projects": [{"id": 1, "name": "Project 1", "color": "#ffffff", "is_favorite": True}],
         }
         self.mock_api_requester.make_request.return_value = expected_response
 
@@ -31,15 +31,15 @@ class TestTodoistApiWrapper(unittest.TestCase):
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
         todoist_objects = ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(id=1, name="Label 1")],
-            filters=[ConcreteTodoistFilter(id=1, name="Filter 1")],
-            projects=[ConcreteTodoistProject(id=1, name="Project 1")]
+            labels=[ConcreteTodoistLabel(id=1, name="Label 1", color="#ffffff", is_favorite=True)],
+            filters=[ConcreteTodoistFilter(id=1, name="Filter 1", query="query", color="#ffffff", is_favorite=True)],
+            projects=[ConcreteTodoistProject(id=1, name="Project 1", color="#ffffff", is_favorite=True)]
         )
         expected_sync_commands = [
             {
                 "type": "label_update",
                 "uuid": "some_uuid",
-                "args": {"id": 1},
+                "args": {"id": 1, "color": "#ffffff", "is_favorite": True},
                 "id": 1,
                 "name": "Label 1"
             },
