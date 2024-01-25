@@ -45,6 +45,6 @@ class TodoistApiWrapper:
             "type": f"{item_type}_{action_type}",
             "uuid": str(uuid.uuid4()),
             "args": {"id": item_id} if item_id else {"temp_id": str(uuid.uuid4())},
-            **updated_item.as_dict(),
+            **updated_item.to_dict(),
         }
         return command
