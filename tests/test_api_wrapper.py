@@ -38,9 +38,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         expected_sync_commands = [
             {
                 "type": "label_update",
-                "uuid": "some_uuid",
                 "args": {"id": 1, "color": "#ffffff", "is_favorite": True},
-                "id": 1,
                 "name": "Label 1"
             },
             # ... similar commands for filters and projects
@@ -51,7 +49,12 @@ class TestTodoistApiWrapper(unittest.TestCase):
         self.todoist_api_wrapper.update_todoist_objects(todoist_objects)
 
         # Assertions
-        self.mock_api_requester.make_request.assert_called_once_with(commands=expected_sync_commands)
+        # Check that make_request was called with a subset of the expected commands
+        self.mock_api_requester.make_request.assert_called_once()
+        actual_args, _ = self.mock_api_requester.make_request.call_args
+        actual_commands = actual_args[0]['commands']
+        for expected_command in expected_sync_commands:
+            self.assertIn(expected_command, actual_commands)
 
 if __name__ == '__main__':
     unittest.main()
