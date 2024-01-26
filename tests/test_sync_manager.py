@@ -49,7 +49,7 @@ class TestTodoistSyncManager(unittest.TestCase):
     ])
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
         # Arrange
-        class MockApiWrapper(TodoistApiWrapper):
+        class MockApiWrapper:
             def get_all_todoist_objects(self):
                 return existing_state
 
