@@ -1,5 +1,6 @@
 dataclasses
 dataclasses-json
 requests
+requests-types
 mypy
 parameterized
