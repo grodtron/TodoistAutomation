@@ -1,6 +1,6 @@
 import unittest
 from parameterized import parameterized
-from autodoist.models import TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject, ConcreteTodoistCollection
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
 from autodoist.sync_manager import TodoistSyncManager
 
