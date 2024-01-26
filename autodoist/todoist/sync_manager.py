@@ -43,7 +43,7 @@ class TodoistSyncManager:
                 objects_to_sync.append(concrete_class(**desired_obj.to_dict()))
             else:
                 # Object exists, update it
-                updated_obj = concrete_class(**existing_obj.to_dict(), **desired_obj.to_dict())
+                updated_obj = concrete_class(id=existing_obj.id, **desired_obj.to_dict())
                 objects_to_sync.append(updated_obj)
 
         return objects_to_sync
