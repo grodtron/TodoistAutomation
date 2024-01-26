@@ -13,25 +13,33 @@ class TestTodoistSyncManager(unittest.TestCase):
             filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(name="Label1")],
-            filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
-            projects=[ConcreteTodoistProject(name="Project1")]
+            labels=[ConcreteTodoistLabel(id=1, name="Label1")],
+            filters=[ConcreteTodoistFilter(id=2, name="Filter1", query="query1")],
+            projects=[ConcreteTodoistProject(id=3, name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[], filters=[], projects=[]
+            labels=[ConcreteTodoistLabel(id=1, name="Label1")],
+            filters=[ConcreteTodoistFilter(id=2, name="Filter1", query="query1")],
+            projects=[ConcreteTodoistProject(id=3, name="Project1")]
         )),
 
         # Test case 2: Adding a new label
         ("AddNewLabel", TodoistCollection(
-            labels=[TodoistLabel(name="Label1"), TodoistLabel(name="NewLabel")],
+            labels=[
+                TodoistLabel(name="Label1"),
+                TodoistLabel(name="NewLabel")],
             filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(name="Label1")],
-            filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
-            projects=[ConcreteTodoistProject(name="Project1")]
+            labels=[ConcreteTodoistLabel(id=4, name="Label1")],
+            filters=[ConcreteTodoistFilter(id=5, name="Filter1", query="query1")],
+            projects=[ConcreteTodoistProject(id=6, name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(name="NewLabel")],
-            filters=[], projects=[]
+            labels=[
+                ConcreteTodoistLabel(id=4, name="Label1"),
+                ConcreteTodoistLabel(name="NewLabel"),
+            ],
+            filters=[ConcreteTodoistFilter(id=5, name="Filter1", query="query1")],
+            projects=[ConcreteTodoistProject(id=6, name="Project1")]
         )),
 
         # Test case 3: Updating an existing filter
@@ -40,11 +48,13 @@ class TestTodoistSyncManager(unittest.TestCase):
             filters=[TodoistFilter(name="Filter1", query="updated_query")],
             projects=[TodoistProject(name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(name="Label1")],
-            filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
-            projects=[ConcreteTodoistProject(name="Project1")]
+            labels=[ConcreteTodoistLabel(id=7, name="Label1")],
+            filters=[ConcreteTodoistFilter(id=8, name="Filter1", query="query1")],
+            projects=[ConcreteTodoistProject(id=9, name="Project1")]
         ), ConcreteTodoistObjects(
-            labels=[], filters=[], projects=[ConcreteTodoistProject(name="Project1")]
+            labels=[ConcreteTodoistLabel(id=7, name="Label1")],
+            filters=[ConcreteTodoistFilter(id=8, name="Filter1", query="updated_query")],
+            projects=[ConcreteTodoistProject(id=9, name="Project1")]
         )),
     ])
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
