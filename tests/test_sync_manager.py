@@ -1,6 +1,6 @@
 import unittest
 from parameterized import parameterized
-from autodoist.models import TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject, ConcreteTodoistCollection
+from autodoist.models import TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
 from autodoist.sync_manager import TodoistSyncManager
 
@@ -12,11 +12,11 @@ class TestTodoistSyncManager(unittest.TestCase):
             labels=[TodoistLabel(name="Label1")],
             filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(name="Label1")],
             filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
             projects=[ConcreteTodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[], filters=[], projects=[]
         )),
 
@@ -25,11 +25,11 @@ class TestTodoistSyncManager(unittest.TestCase):
             labels=[TodoistLabel(name="Label1"), TodoistLabel(name="NewLabel")],
             filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(name="Label1")],
             filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
             projects=[ConcreteTodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(name="NewLabel")],
             filters=[], projects=[]
         )),
@@ -39,11 +39,11 @@ class TestTodoistSyncManager(unittest.TestCase):
             labels=[TodoistLabel(name="Label1")],
             filters=[TodoistFilter(name="Filter1", query="updated_query")],
             projects=[TodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(name="Label1")],
             filters=[ConcreteTodoistFilter(name="Filter1", query="query1")],
             projects=[ConcreteTodoistProject(name="Project1")]
-        ), ConcreteTodoistCollection(
+        ), ConcreteTodoistObjects(
             labels=[], filters=[], projects=[ConcreteTodoistProject(name="Project1")]
         )),
     ])
