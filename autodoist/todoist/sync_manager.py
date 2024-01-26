@@ -40,7 +40,7 @@ class TodoistSyncManager:
 
             if existing_obj is None:
                 # Object doesn't exist, create it
-                objects_to_sync.append(concrete_class(**desired_obj.to_dict())
+                objects_to_sync.append(concrete_class(**desired_obj.to_dict()))
             else:
                 # Object exists, update it
                 updated_obj = concrete_class(**existing_obj.to_dict(), **desired_obj.to_dict())
