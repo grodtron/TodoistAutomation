@@ -2,3 +2,4 @@ dataclasses
 dataclasses-json
 requests
 mypy
+parameterized
