@@ -1,9 +1,7 @@
-from typing import List, Optional
+from typing import List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
-
-DEFAULT_COLOR = Color.DEFAULT_COLOR
 
 class Color(Enum):
     DEFAULT_COLOR = "default_color_value"
@@ -11,6 +9,8 @@ class Color(Enum):
     GREEN = "green"
     BLUE = "blue"
     # Add more colors as needed
+
+DEFAULT_COLOR = Color.DEFAULT_COLOR
 
 def ExcludeIfNone(value):
     """Do not include field for None values"""
