@@ -56,6 +56,25 @@ class TestTodoistSyncManager(unittest.TestCase):
             filters=[ConcreteTodoistFilter(id=8, name="Filter1", query="updated_query")],
             projects=[ConcreteTodoistProject(id=9, name="Project1")]
         )),
+
+        # Test case 5: Add a New Filter
+        ("AddNewFilter", TodoistCollection(
+            labels=[],
+            filters=[
+                TodoistFilter(name="NewFilter", query="query2")
+            ],
+            projects=[]
+        ), ConcreteTodoistObjects(
+            labels=[],
+            filters=[],
+            projects=[]
+        ), ConcreteTodoistObjects(
+            labels=[],
+            filters=[
+                ConcreteTodoistFilter(name="NewFilter", query="query2")
+            ],
+            projects=[]
+        )),
     ])
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
         # Arrange
