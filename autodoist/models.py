@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
 
 class Color(Enum):
-    DEFAULT_COLOR = "default_color_value"
     BERRY_RED = "berry_red"
     RED = "red"
     ORANGE = "orange"
@@ -26,7 +25,7 @@ class Color(Enum):
     GREY = "grey"
     TAUPE = "taupe"
 
-DEFAULT_COLOR = Color.DEFAULT_COLOR
+DEFAULT_COLOR = Color.GREY
 
 def ExcludeIfNone(value):
     """Do not include field for None values"""
