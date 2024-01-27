@@ -1,16 +1,9 @@
-import unittest
-from parameterized import parameterized
-from autodoist.models import TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
-from autodoist.todoist.api_wrapper import TodoistApiWrapper
-from autodoist.todoist.sync_manager import TodoistSyncManager
-
 class TestTodoistSyncManager(unittest.TestCase):
 
     @parameterized.expand([
         # Test case 1: No changes in desired state
         ("NoChanges", TodoistCollection(
             labels=[TodoistLabel(name="Label1")],
-            filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
         ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(id=1, name="Label1")],
@@ -27,7 +20,6 @@ class TestTodoistSyncManager(unittest.TestCase):
             labels=[
                 TodoistLabel(name="Label1"),
                 TodoistLabel(name="NewLabel")],
-            filters=[TodoistFilter(name="Filter1", query="query1")],
             projects=[TodoistProject(name="Project1")]
         ), ConcreteTodoistObjects(
             labels=[ConcreteTodoistLabel(id=4, name="Label1")],
@@ -63,7 +55,9 @@ class TestTodoistSyncManager(unittest.TestCase):
                 TodoistFilter(name="NewFilter", query="query2")
             ],
         ), ConcreteTodoistObjects(
-            
+            labels=[],
+            filters=[],
+            projects=[]
         ), ConcreteTodoistObjects(
             filters=[
                 ConcreteTodoistFilter(name="NewFilter", query="query2")
