@@ -1,32 +1,19 @@
-from typing import List, Union, Type, Callable, Any, Dict
+from typing import List, Union, Type, Callable, Any, Dict, Tuple
 from dataclasses import dataclass
-from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, Context, CompositeContext, ExclusionList
+from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, Context, CompositeContext, ExclusionList, GTDState
+from functools import reduce
+from itertools import chain
 
-@dataclass
-class TodoistObjects:
-    labels: List[TodoistLabel]
-    filters: List[TodoistFilter]
-    projects: List[TodoistProject]
+def process_gtd_state(gtd_state: GTDState) -> TodoistCollection:
+    def _merge_collections(collection1: TodoistCollection, collection2: TodoistCollection) -> TodoistCollection:
+        return TodoistCollection(
+            labels=collection1.labels + collection2.labels,
+            filters=collection1.filters + collection2.filters,
+            projects=collection1.projects + collection2.projects
+        )
 
-class GTDState:
-    def __init__(self) -> None:
-        self.contexts: List[Union[Context, CompositeContext, ExclusionList]] = []
-
-    def add_context(self, context: Union[Context, CompositeContext, ExclusionList]) -> None:
-        self.contexts.append(context)
-
-    def _generate_todoist_objects(self, context: Union[Context, CompositeContext, ExclusionList]) -> TodoistObjects:
-        generators: Dict[Type, Callable[[Any], TodoistObjects]] = {
-            Context: self._generate_todoist_objects_gtd_context,
-            CompositeContext: self._generate_todoist_objects_composite_context,
-            ExclusionList: self._generate_todoist_objects_exclusion_list
-        }
-
-        generator = generators[type(context)]
-        return generator(context)
-
-    def _generate_todoist_objects_gtd_context(self, context: Context) -> TodoistObjects:
-        exclusion_queries = ' & '.join([f'!#{exclusion.name}' for exclusion in self._get_exclusion_lists()])
+    def _process_context(context: Context) -> TodoistCollection:
+        exclusion_queries = ' & '.join([f'!#{exclusion.name}' for exclusion in gtd_state.exclusion_lists])
         label = TodoistLabel(
             name=f"{context.name}",
             color=context.color,
@@ -38,15 +25,15 @@ class GTDState:
             color=context.color,
             is_favorite=True
         )
-        return TodoistObjects(labels=[label], filters=[filter_], projects=[])
+        return TodoistCollection(labels=[label], filters=[filter_], projects=[])
 
-    def _generate_todoist_objects_composite_context(self, context: CompositeContext) -> TodoistObjects:
+    def _process_composite_context(context: CompositeContext) -> TodoistCollection:
         labels = [TodoistLabel(
             name=f"{label}",
             color=context.color,
             is_favorite=True
         ) for label in context.labels]
-        exclusion_queries = ' & '.join([f'!#{exclusion.name}' for exclusion in self._get_exclusion_lists()])
+        exclusion_queries = ' & '.join([f'!#{exclusion.name}' for exclusion in gtd_state.exclusion_lists])
         filter_query = ','.join([f"#{label}{' ' * 60}| (@{label} & {exclusion_queries})" for label in [context.name] + context.labels])
         filter_ = TodoistFilter(
             name=f"{context.emojis} {context.name.title()}",
@@ -54,28 +41,23 @@ class GTDState:
             color=context.color,
             is_favorite=True
         )
-        return TodoistObjects(labels=labels, filters=[filter_], projects=[])
+        return TodoistCollection(labels=labels, filters=[filter_], projects=[])
 
-    def _generate_todoist_objects_exclusion_list(self, exclusion_list: ExclusionList) -> TodoistObjects:
+    def _process_exclusion_list(exclusion_list: ExclusionList) -> TodoistCollection:
         project = TodoistProject(
             name=f"{exclusion_list.name}",
             color=exclusion_list.color,
             is_favorite=False
         )
-        return TodoistObjects(labels=[], filters=[], projects=[project])
+        return TodoistCollection(labels=[], filters=[], projects=[project])
 
-    def _get_exclusion_lists(self) -> List[ExclusionList]:
-        return [context for context in self.contexts if isinstance(context, ExclusionList)]
-
-    def render_todoist_objects(self) -> TodoistCollection:
-        labels = []
-        filters = []
-        projects = []
-
-        for context in self.contexts:
-            generated_objects = self._generate_todoist_objects(context)
-            labels.extend(generated_objects.labels)
-            filters.extend(generated_objects.filters)
-            projects.extend(generated_objects.projects)
-
-        return TodoistCollection(labels=labels, filters=filters, projects=projects)
+    
+    # Use map to generate collections for each context, composite context, and exclusion list
+    return reduce(
+        _merge_collections,
+        chain(
+            map(_process_context, gtd_state.contexts),
+            map(_process_composite_context, gtd_state.composite_contexts),
+            map(_process_exclusion_list, gtd_state.exclusion_lists)
+        )
+    )
