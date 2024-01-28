@@ -106,7 +106,7 @@ class TodoistCollection:
 
 @dataclass_json
 @dataclass
-class GTDContext:
+class Context:
     name: str
     emojis: str = ""
     color: Color = DEFAULT_COLOR
