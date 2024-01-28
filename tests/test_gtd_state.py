@@ -1,5 +1,5 @@
 import unittest
-from autodoist.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, Context, CompositeContext, ExclusionList
+from autodoist.gtd.gtd_state import process_gtd_state, GTDState, TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, Context, CompositeContext, ExclusionList
 
 class TestGTDState(unittest.TestCase):
     def test_render_todoist_objects(self):
@@ -11,13 +11,10 @@ class TestGTDState(unittest.TestCase):
         context2 = CompositeContext(name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"])
 
         # Create an instance of GTDState and add the test data
-        gtd_state = GTDState()
-        gtd_state.add_context(context1)
-        gtd_state.add_context(context2)
-        gtd_state.add_context(ExclusionList(name="NotNow"))
-
+        gtd_state = GTDState(contexts=[context1], composite_contexts=[context2], exclusion_lists=[ExclusionList(name="NotNow")])
+        
         # Call the method you want to test
-        result = gtd_state.render_todoist_objects()
+        result = process_gtd_state(gtd_state)
 
         # Assert that the result is of the expected type
         self.assertIsInstance(result, TodoistCollection)
@@ -46,14 +43,10 @@ class TestGTDState(unittest.TestCase):
         context2 = CompositeContext(name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"])
 
         # Create an instance of GTDState and add the test data with multiple exclusion lists
-        gtd_state = GTDState()
-        gtd_state.add_context(context1)
-        gtd_state.add_context(context2)
-        gtd_state.add_context(ExclusionList(name="NotNow", color="red"))
-        gtd_state.add_context(ExclusionList(name="Vacation", color="blue"))
+        gtd_state = GTDState(contexts=[context1], composite_contexts=[context2], exclusion_lists=[ExclusionList(name="NotNow", color="red"), ExclusionList(name="Vacation", color="blue")])
 
         # Call the method you want to test
-        result = gtd_state.render_todoist_objects()
+        result = process_gtd_state(gtd_state)
 
         # Assert that the result is of the expected type
         self.assertIsInstance(result, TodoistCollection)
