@@ -124,3 +124,17 @@ class CompositeContext:
 class ExclusionList:
     name: str
     color: Color = DEFAULT_COLOR
+
+
+@dataclass_json
+@dataclass
+class GTDState:
+    contexts: List[Context]
+    composite_contexts: List[CompositeContext]
+    exclusion_lists: List[ExclusionList]
+
+
+def load_gtd_state_from_yaml(file_path):
+    with open(file_path, 'r') as file:
+        data = yaml.safe_load(file)
+    return GTDState.from_dict(data)
