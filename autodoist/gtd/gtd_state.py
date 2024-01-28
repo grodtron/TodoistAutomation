@@ -13,8 +13,8 @@ def process_gtd_state(gtd_state: GTDState) -> TodoistCollection:
         filters.extend(filters_)
         projects.extend(projects_)
 
-    for context in gtd_state.composite_contexts:
-        labels_, filters_, projects_ = _generate_todoist_objects_composite_context(context, gtd_state.exclusion_lists)
+    for composite_context in gtd_state.composite_contexts:
+        labels_, filters_, projects_ = _generate_todoist_objects_composite_context(composite_context, gtd_state.exclusion_lists)
         labels.extend(labels_)
         filters.extend(filters_)
         projects.extend(projects_)
