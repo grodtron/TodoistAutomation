@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from autodoist.models import GTDState, load_gtd_state_from_yaml
+from autodoist.models import GTDState, Context, CompositeContext, ExclusionList, load_gtd_state_from_yaml
 
 class TestLoadGTDStateFromYAML(unittest.TestCase):
 
