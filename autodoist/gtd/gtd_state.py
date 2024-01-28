@@ -1,6 +1,6 @@
-from typing import List, Union, Type, Callable, Any, Dict
+from typing import List, Union, Type, Callable, Any, Dict, Tuple
 from dataclasses import dataclass
-from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, Context, CompositeContext, ExclusionList
+from autodoist.models import TodoistLabel, TodoistFilter, TodoistProject, TodoistCollection, Context, CompositeContext, ExclusionList, GTDState
 
 def process_gtd_state(gtd_state: GTDState) -> TodoistCollection:
     labels = []
