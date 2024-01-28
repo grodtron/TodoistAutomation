@@ -134,7 +134,6 @@ class GTDState:
     exclusion_lists: List[ExclusionList]
 
 
-def load_gtd_state_from_yaml(file_path):
-    with open(file_path, 'r') as file:
-        data = yaml.safe_load(file)
+def load_gtd_state_from_yaml(yaml_data):
+    data = yaml.safe_load(yaml_data)
     return GTDState.from_dict(data)
