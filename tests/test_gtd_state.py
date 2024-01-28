@@ -1,5 +1,5 @@
 import unittest
-from autodoist.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, GTDContext, CompositeContext, ExclusionList
+from autodoist.gtd.gtd_state import GTDState, TodoistCollection, TodoistLabel, TodoistFilter, TodoistProject, Context, CompositeContext, ExclusionList
 
 class TestGTDState(unittest.TestCase):
     def test_render_todoist_objects(self):
@@ -7,7 +7,7 @@ class TestGTDState(unittest.TestCase):
         self.maxDiff = None
 
         # Create some test data
-        context1 = GTDContext(name="Work", emojis="🚀", color="blue")
+        context1 = Context(name="Work", emojis="🚀", color="blue")
         context2 = CompositeContext(name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"])
 
         # Create an instance of GTDState and add the test data
@@ -42,7 +42,7 @@ class TestGTDState(unittest.TestCase):
         self.maxDiff = None
 
         # Create some test data
-        context1 = GTDContext(name="Work", emojis="🚀", color="blue")
+        context1 = Context(name="Work", emojis="🚀", color="blue")
         context2 = CompositeContext(name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"])
 
         # Create an instance of GTDState and add the test data with multiple exclusion lists
