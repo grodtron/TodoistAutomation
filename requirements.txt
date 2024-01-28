@@ -4,3 +4,5 @@ requests
 types-requests
 mypy
 parameterized
+PyYAML
+types-PyYAML

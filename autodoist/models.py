@@ -1,3 +1,4 @@
+import yaml
 from typing import List, Optional, Any
 from enum import Enum
 from dataclasses import dataclass, field
@@ -124,3 +125,16 @@ class CompositeContext:
 class ExclusionList:
     name: str
     color: Color = DEFAULT_COLOR
+
+
+@dataclass_json
+@dataclass
+class GTDState:
+    contexts: List[Context]
+    composite_contexts: List[CompositeContext]
+    exclusion_lists: List[ExclusionList]
+
+
+def load_gtd_state_from_yaml(yaml_data):
+    data = yaml.safe_load(yaml_data)
+    return GTDState.from_dict(data)
