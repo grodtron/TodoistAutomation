@@ -15,6 +15,11 @@ def main():
         "--yaml-file", help="Path to the YAML file containing GTD state.", required=True
     )
     parser.add_argument("--api-key", help="API key for Todoist.", required=True)
+    parser.add_argument(
+        "--dry-run",
+        help="Perform a dry run without making any changes to Todoist.",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     # Load GTD state from YAML file
@@ -24,7 +29,12 @@ def main():
 
     # Initialize Todoist components
     api_requester = TodoistAPIRequester(args.api_key)
-    api_wrapper = TodoistApiWrapper(api_requester)
+    
+    if args.dry_run:
+        api_wrapper = DryRunTodoistApiWrapper(api_requester)
+    else:
+        api_wrapper = TodoistApiWrapper(api_requester)
+    
     sync_manager = TodoistSyncManager(api_wrapper)
 
     # Process GTD state and sync with Todoist
