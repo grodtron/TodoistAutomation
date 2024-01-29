@@ -68,3 +68,16 @@ class TodoistApiWrapper:
             command["temp_id"] = str(uuid.uuid4())
 
         return command
+
+
+class DryRunTodoistApiWrapper(TodoistApiWrapper):
+    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> None:
+        sync_commands = []
+
+        for item in todoist_objects.get_all_items():
+            item_type = item.get_type()
+            command = self._create_update_command(item_type, item.id, item)
+            sync_commands.append(command)
+            print(f"Command to be executed: {command}")
+
+        print("Dry run completed. No changes were made.")
