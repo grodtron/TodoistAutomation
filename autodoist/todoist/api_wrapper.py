@@ -71,7 +71,7 @@ class TodoistApiWrapper:
 
 
 class DryRunTodoistApiWrapper(TodoistApiWrapper):
-    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> None:
+    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict:
         sync_commands = []
 
         for item in todoist_objects.get_all_items():
@@ -81,3 +81,5 @@ class DryRunTodoistApiWrapper(TodoistApiWrapper):
             print(f"Command to be executed: {command}")
 
         print("Dry run completed. No changes were made.")
+
+        return dict()
