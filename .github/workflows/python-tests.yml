@@ -27,7 +27,7 @@ jobs:
 
     - name: Run mypy
       run: |
-        python -m mypy .
+        python -m mypy --exclude build/lib .
 
     - name: Run tests
       run: |
