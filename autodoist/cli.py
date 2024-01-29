@@ -2,7 +2,7 @@ import argparse
 import yaml
 from autodoist.gtd.gtd_state import process_gtd_state
 from autodoist.models import load_gtd_state_from_yaml
-from autodoist.todoist.api_wrapper import TodoistAPIRequester, TodoistApiWrapper
+from autodoist.todoist.api_wrapper import TodoistAPIRequester, TodoistApiWrapper, DryRunTodoistApiWrapper
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
 
