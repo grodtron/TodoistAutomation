@@ -1,4 +1,5 @@
 import argparse
+import logging
 import yaml
 from autodoist.gtd.gtd_state import process_gtd_state
 from autodoist.models import load_gtd_state_from_yaml
@@ -9,6 +10,9 @@ from autodoist.todoist.api_wrapper import (
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
+# Setup logging
+logging.basicConfig(level=logging.INFO)  # Default to INFO level
+logger = logging.getLogger(__name__)
 
 def main():
     # Parse command line arguments
@@ -29,7 +33,16 @@ def main():
         help="Dump the generated todoist_collection without syncing.",
         action="store_true",
     )
+    parser.add_argument(
+        "--debug",
+        help="Enable debug level logging project wide.",
+        action="store_true",
+    )
     args = parser.parse_args()
+
+    # Set logging level to DEBUG if debug flag is provided
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
 
     # Load GTD state from YAML file
     with open(args.yaml_file, "r") as f:
