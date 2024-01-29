@@ -24,6 +24,11 @@ def main():
         help="Perform a dry run without making any changes to Todoist.",
         action="store_true",
     )
+    parser.add_argument(
+        "--dump-only",
+        help="Dump the generated todoist_collection without syncing.",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     # Load GTD state from YAML file
@@ -41,9 +46,13 @@ def main():
 
     sync_manager = TodoistSyncManager(api_wrapper)
 
-    # Process GTD state and sync with Todoist
+    # Process GTD state and sync with Todoist or dump the collection
     todoist_collection = process_gtd_state(gtd_state)
-    sync_manager.sync(todoist_collection)
+
+    if args.dump_only:
+        print(todoist_collection)
+    else:
+        sync_manager.sync(todoist_collection)
 
 
 if __name__ == "__main__":
