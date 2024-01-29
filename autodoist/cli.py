@@ -2,7 +2,11 @@ import argparse
 import yaml
 from autodoist.gtd.gtd_state import process_gtd_state
 from autodoist.models import load_gtd_state_from_yaml
-from autodoist.todoist.api_wrapper import TodoistAPIRequester, TodoistApiWrapper, DryRunTodoistApiWrapper
+from autodoist.todoist.api_wrapper import (
+    TodoistAPIRequester,
+    TodoistApiWrapper,
+    DryRunTodoistApiWrapper,
+)
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
 
@@ -29,12 +33,12 @@ def main():
 
     # Initialize Todoist components
     api_requester = TodoistAPIRequester(args.api_key)
-    
+
     if args.dry_run:
         api_wrapper = DryRunTodoistApiWrapper(api_requester)
     else:
         api_wrapper = TodoistApiWrapper(api_requester)
-    
+
     sync_manager = TodoistSyncManager(api_wrapper)
 
     # Process GTD state and sync with Todoist
