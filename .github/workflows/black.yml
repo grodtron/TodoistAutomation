@@ -1,9 +1,9 @@
 name: Black formatter
 
 on:
-  pull_request:
-    paths:
-      - '**/*.py'
+  push:
+    branches:
+      - main  # Change this to your main branch
 
 jobs:
   black:
