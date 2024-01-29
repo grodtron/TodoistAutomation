@@ -1,7 +1,13 @@
 from typing import Optional, List, Dict
 import uuid
 import requests
-from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import (
+    ConcreteTodoistObjects,
+    ConcreteTodoistLabel,
+    ConcreteTodoistFilter,
+    ConcreteTodoistProject,
+)
+
 
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
@@ -22,12 +28,19 @@ class TodoistApiWrapper:
         self.api_requester = api_requester
 
     def get_all_todoist_objects(self) -> ConcreteTodoistObjects:
-        response = self.api_requester.make_request(sync_token="*", resource_types=["labels", "filters", "projects"])
-        
+        response = self.api_requester.make_request(
+            sync_token="*", resource_types=["labels", "filters", "projects"]
+        )
+
         labels = [ConcreteTodoistLabel(**label) for label in response.get("labels", [])]
-        filters = [ConcreteTodoistFilter(**filter_) for filter_ in response.get("filters", [])]
-        projects = [ConcreteTodoistProject(**project) for project in response.get("projects", [])]
-        
+        filters = [
+            ConcreteTodoistFilter(**filter_) for filter_ in response.get("filters", [])
+        ]
+        projects = [
+            ConcreteTodoistProject(**project)
+            for project in response.get("projects", [])
+        ]
+
         return ConcreteTodoistObjects(labels=labels, filters=filters, projects=projects)
 
     def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict:
@@ -39,17 +52,19 @@ class TodoistApiWrapper:
 
         return self.api_requester.make_request(commands=sync_commands)
 
-    def _create_update_command(self, item_type: str, item_id: Optional[int], updated_item) -> Dict:
+    def _create_update_command(
+        self, item_type: str, item_id: Optional[int], updated_item
+    ) -> Dict:
         action_type = "update" if item_id else "add"
         command = {
             "type": f"{item_type}_{action_type}",
             "uuid": str(uuid.uuid4()),
-            "args": updated_item.to_dict()
+            "args": updated_item.to_dict(),
         }
 
         if item_id:
-            command['args']['id'] = item_id
+            command["args"]["id"] = item_id
         else:
             command["temp_id"] = str(uuid.uuid4())
-                
+
         return command

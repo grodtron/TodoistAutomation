@@ -4,6 +4,7 @@ from enum import Enum
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
 
+
 class Color(Enum):
     BERRY_RED = "berry_red"
     RED = "red"
@@ -26,11 +27,14 @@ class Color(Enum):
     GREY = "grey"
     TAUPE = "taupe"
 
+
 DEFAULT_COLOR = Color.GREY
+
 
 def ExcludeIfNone(value):
     """Do not include field for None values"""
     return value is None
+
 
 @dataclass_json
 @dataclass
@@ -42,6 +46,7 @@ class ConcreteTodoistLabel:
 
     def get_type(self) -> str:
         return "label"
+
 
 @dataclass_json
 @dataclass
@@ -55,6 +60,7 @@ class ConcreteTodoistFilter:
     def get_type(self) -> str:
         return "filter"
 
+
 @dataclass_json
 @dataclass
 class ConcreteTodoistProject:
@@ -66,6 +72,7 @@ class ConcreteTodoistProject:
     def get_type(self) -> str:
         return "project"
 
+
 @dataclass_json
 @dataclass
 class ConcreteTodoistObjects:
@@ -76,12 +83,14 @@ class ConcreteTodoistObjects:
     def get_all_items(self) -> List[Any]:
         return self.labels + self.filters + self.projects
 
+
 @dataclass_json
 @dataclass
 class TodoistLabel:
     name: str
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
+
 
 @dataclass_json
 @dataclass
@@ -91,12 +100,14 @@ class TodoistFilter:
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
 
+
 @dataclass_json
 @dataclass
 class TodoistProject:
     name: str
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
+
 
 @dataclass_json
 @dataclass
@@ -105,12 +116,14 @@ class TodoistCollection:
     filters: List[TodoistFilter]
     projects: List[TodoistProject]
 
+
 @dataclass_json
 @dataclass
 class Context:
     name: str
     emojis: str = ""
     color: Color = DEFAULT_COLOR
+
 
 @dataclass_json
 @dataclass
@@ -119,6 +132,7 @@ class CompositeContext:
     emojis: str = ""
     color: Color = DEFAULT_COLOR
     labels: List[str] = field(default_factory=list)
+
 
 @dataclass_json
 @dataclass

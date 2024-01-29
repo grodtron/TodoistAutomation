@@ -1,6 +1,13 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from autodoist.models import GTDState, Context, CompositeContext, ExclusionList, load_gtd_state_from_yaml
+from autodoist.models import (
+    GTDState,
+    Context,
+    CompositeContext,
+    ExclusionList,
+    load_gtd_state_from_yaml,
+)
+
 
 class TestLoadGTDStateFromYAML(unittest.TestCase):
 
@@ -22,19 +29,18 @@ class TestLoadGTDStateFromYAML(unittest.TestCase):
         expected_gtd_state = GTDState(
             contexts=[
                 Context(name="Work", emojis="💼"),
-                Context(name="Personal", emojis="🏠")
+                Context(name="Personal", emojis="🏠"),
             ],
             composite_contexts=[
                 CompositeContext(name="Home", labels=["Family", "Chores"]),
-                CompositeContext(name="Office", labels=["Meetings", "Tasks"])
+                CompositeContext(name="Office", labels=["Meetings", "Tasks"]),
             ],
-            exclusion_lists=[
-                ExclusionList(name="Ignore")
-            ]
+            exclusion_lists=[ExclusionList(name="Ignore")],
         )
 
         actual_gtd_state = load_gtd_state_from_yaml(yaml_data)
         self.assertEqual(actual_gtd_state, expected_gtd_state)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,11 @@
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
-from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject, TodoistCollection
+from autodoist.models import (
+    ConcreteTodoistObjects,
+    ConcreteTodoistLabel,
+    ConcreteTodoistFilter,
+    ConcreteTodoistProject,
+    TodoistCollection,
+)
 
 
 class TodoistSyncManager:
@@ -16,20 +22,28 @@ class TodoistSyncManager:
         existing_state = self.api_wrapper.get_all_todoist_objects()
 
         # Process Labels
-        labels_to_sync = self._sync_objects(existing_state.labels, desired_state.labels, ConcreteTodoistLabel)
+        labels_to_sync = self._sync_objects(
+            existing_state.labels, desired_state.labels, ConcreteTodoistLabel
+        )
 
         # Process Filters
-        filters_to_sync = self._sync_objects(existing_state.filters, desired_state.filters, ConcreteTodoistFilter)
+        filters_to_sync = self._sync_objects(
+            existing_state.filters, desired_state.filters, ConcreteTodoistFilter
+        )
 
         # Process Projects
-        projects_to_sync = self._sync_objects(existing_state.projects, desired_state.projects, ConcreteTodoistProject)
+        projects_to_sync = self._sync_objects(
+            existing_state.projects, desired_state.projects, ConcreteTodoistProject
+        )
 
         # Execute sync commands
-        self.api_wrapper.update_todoist_objects(ConcreteTodoistObjects(
-            labels=labels_to_sync,
-            filters=filters_to_sync,
-            projects=projects_to_sync
-        ))
+        self.api_wrapper.update_todoist_objects(
+            ConcreteTodoistObjects(
+                labels=labels_to_sync,
+                filters=filters_to_sync,
+                projects=projects_to_sync,
+            )
+        )
 
     def _sync_objects(self, existing_objects, desired_objects, concrete_class):
         existing_objects_dict = {obj.name: obj for obj in existing_objects}
@@ -43,7 +57,9 @@ class TodoistSyncManager:
                 objects_to_sync.append(concrete_class(**desired_obj.to_dict()))
             else:
                 # Object exists, update it
-                updated_obj = concrete_class(id=existing_obj.id, **desired_obj.to_dict())
+                updated_obj = concrete_class(
+                    id=existing_obj.id, **desired_obj.to_dict()
+                )
                 objects_to_sync.append(updated_obj)
 
         return objects_to_sync
