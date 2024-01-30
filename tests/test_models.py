@@ -28,7 +28,7 @@ class TestConcreteTodoistProject(unittest.TestCase):
         '''
 
         # When
-        project = ConcreteTodoistProject.from_dict(**json.loads(json_data))
+        project = ConcreteTodoistProject(**json.loads(json_data))
 
         # Then
         self.assertEqual(project.child_order, 0)
