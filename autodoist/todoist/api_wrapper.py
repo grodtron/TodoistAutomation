@@ -1,4 +1,3 @@
-
 from typing import Optional, List, Dict
 import logging
 import uuid
@@ -9,6 +8,7 @@ from autodoist.models import (
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
 )
+
 
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
@@ -25,6 +25,7 @@ class TodoistAPIRequester:
         response = requests.post(self.API_URL, headers=self.HEADERS, data=payload)
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
         return response.json()
+
 
 class TodoistApiWrapper:
     def __init__(self, api_requester: TodoistAPIRequester):
@@ -53,7 +54,7 @@ class TodoistApiWrapper:
         for item in todoist_objects.get_all_items():
             item_type = item.get_type()
             sync_commands.append(self._create_update_command(item_type, item.id, item))
-        
+
         self.logger.debug(f"Sending update commands: {sync_commands}")
         return self.api_requester.make_request(commands=sync_commands)
 
@@ -73,6 +74,7 @@ class TodoistApiWrapper:
             command["temp_id"] = str(uuid.uuid4())
 
         return command
+
 
 class DryRunTodoistApiWrapper(TodoistApiWrapper):
     def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict:

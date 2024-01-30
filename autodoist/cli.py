@@ -14,6 +14,7 @@ from autodoist.todoist.sync_manager import TodoistSyncManager
 logging.basicConfig(level=logging.INFO)  # Default to INFO level
 logger = logging.getLogger(__name__)
 
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(
