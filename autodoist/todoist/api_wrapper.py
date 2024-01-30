@@ -10,11 +10,12 @@ from autodoist.models import (
 )
 
 
+import logging
+import requests
+from typing import Dict
+
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
-    HEADERS = {
-        "Content-Type": "application/x-www-form-urlencoded",
-    }
 
     def __init__(self, api_key: str):
         self.api_key = api_key
@@ -22,9 +23,11 @@ class TodoistAPIRequester:
 
     def make_request(self, **payload) -> Dict:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
-        response = requests.post(self.API_URL, headers=self.HEADERS, data=payload)
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        response = requests.post(self.API_URL, headers=headers, data=payload)
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
         return response.json()
+
 
 
 class TodoistApiWrapper:
