@@ -3,7 +3,7 @@ name: Black formatter
 on:
   pull_request:
     branches:
-      - '*'  # Trigger on any branch for pull requests
+      - 'main'  # Trigger on any branch for pull requests
 
 jobs:
   black:
