@@ -10,7 +10,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
         markdown += "|-------|-------|\n"
         for field_name, field_value in item.to_dict().items():
             if field_value is not None:
-                markdown += f"| {field_name.capitalize().replace('_', ' ')} | {field_value} |\n"
+                markdown += f"| {field_name} | {field_value} |\n"
         markdown += "\n"
 
     return markdown
