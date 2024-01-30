@@ -24,8 +24,18 @@ class TodoistAPIRequester:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
         response = requests.post(self.API_URL, headers=self.HEADERS, data=payload)
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
-        return response.json()
 
+        if response.status_code != 200:
+            self.logger.error(f"Request failed with status code: {response.status_code}")
+            try:
+                error_data = response.json()
+                error_message = error_data.get("error", "Unknown error")
+                error_code = error_data.get("error_code")
+                raise Exception(f"Request failed: {error_message} ({error_code})")
+            except ValueError:
+                raise Exception("Request failed with unknown error")
+
+        return response.json()
 
 class TodoistApiWrapper:
     def __init__(self, api_requester: TodoistAPIRequester):
