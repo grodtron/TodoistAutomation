@@ -107,8 +107,9 @@ class ConcreteTodoistProject:
         metadata=config(exclude=ExcludeIfNone), default=None
     )
     v2_id: Optional[str] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    inbox_project: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-
+    inbox_project: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
 
     def get_type(self) -> str:
         return "project"
