@@ -2,7 +2,7 @@ import argparse
 import logging
 import yaml
 from autodoist.gtd.gtd_state import process_gtd_state
-from autodoist.models import load_gtd_state_from_yaml, ConcreteTodoistCollection
+from autodoist.models import load_gtd_state_from_yaml
 from autodoist.todoist.api_wrapper import (
     TodoistAPIRequester,
     TodoistApiWrapper,
