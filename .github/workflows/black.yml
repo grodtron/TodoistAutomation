@@ -1,9 +1,9 @@
 name: Black formatter
 
 on:
-  push:
+  pull_request:
     branches:
-      - main  # Change this to your main branch
+      - main  # Trigger on any branch for pull requests
 
 jobs:
   black:
@@ -32,7 +32,6 @@ jobs:
           git add .
           git commit -m "Apply Black formatting" || exit 0
       
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+     - name: Push changes
+       run: git push origin HEAD:${{ github.head_ref }}
+
