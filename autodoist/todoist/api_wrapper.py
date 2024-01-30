@@ -25,6 +25,9 @@ class TodoistAPIRequester:
         response = requests.post(self.API_URL, headers=self.HEADERS, data=payload)
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
 
+        print(response.status_code)
+        print(repr(response))
+        
         if response.status_code != 200:
             self.logger.error(f"Request failed with status code: {response.status_code}")
             try:
