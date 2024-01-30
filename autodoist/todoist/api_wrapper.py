@@ -14,6 +14,7 @@ import logging
 import requests
 from typing import Dict
 
+
 class TodoistAPIRequester:
     API_URL = "https://api.todoist.com/sync/v9/sync"
 
@@ -27,7 +28,6 @@ class TodoistAPIRequester:
         response = requests.post(self.API_URL, headers=headers, data=payload)
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
         return response.json()
-
 
 
 class TodoistApiWrapper:
