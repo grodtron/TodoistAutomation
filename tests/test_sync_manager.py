@@ -34,11 +34,9 @@ class TestTodoistSyncManager(unittest.TestCase):
                     projects=[ConcreteTodoistProject(id=3, name="Project1")],
                 ),
                 ConcreteTodoistObjects(
-                    labels=[ConcreteTodoistLabel(id=1, name="Label1")],
-                    filters=[
-                        ConcreteTodoistFilter(id=2, name="Filter1", query="query1")
-                    ],
-                    projects=[ConcreteTodoistProject(id=3, name="Project1")],
+                    labels=[ConcreteTodoistLabel(id=1)],
+                    filters=[ConcreteTodoistFilter(id=2)],
+                    projects=[ConcreteTodoistProject(id=3)],
                 ),
             ),
             # Test case 2: Adding a new label
@@ -58,13 +56,13 @@ class TestTodoistSyncManager(unittest.TestCase):
                 ),
                 ConcreteTodoistObjects(
                     labels=[
-                        ConcreteTodoistLabel(id=4, name="Label1"),
+                        ConcreteTodoistLabel(id=4),
                         ConcreteTodoistLabel(name="NewLabel"),
                     ],
                     filters=[
                         ConcreteTodoistFilter(id=5, name="Filter1", query="query1")
                     ],
-                    projects=[ConcreteTodoistProject(id=6, name="Project1")],
+                    projects=[ConcreteTodoistProject(id=6)],
                 ),
             ),
             # Test case 3: Updating an existing filter
@@ -89,7 +87,7 @@ class TestTodoistSyncManager(unittest.TestCase):
                             id=8, name="Filter1", query="updated_query"
                         )
                     ],
-                    projects=[ConcreteTodoistProject(id=9, name="Project1")],
+                    projects=[ConcreteTodoistProject(id=9)],
                 ),
             ),
             # Test case 5: Add a New Filter
