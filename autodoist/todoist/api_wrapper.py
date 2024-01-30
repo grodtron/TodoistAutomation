@@ -37,7 +37,7 @@ class TodoistApiWrapper:
 
     def get_all_todoist_objects(self) -> ConcreteTodoistObjects:
         response = self.api_requester.make_request(
-            sync_token="*", resource_types=["labels", "filters", "projects"]
+            sync_token="*", resource_types='["labels", "filters", "projects"]'
         )
         self.logger.debug(f"Received Todoist objects: {response}")
         labels = [ConcreteTodoistLabel(**label) for label in response.get("labels", [])]
