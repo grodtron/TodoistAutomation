@@ -66,8 +66,10 @@ class TestTodoistApiWrapper(unittest.TestCase):
     
         # Patching requests.post to return the error response
         with patch('requests.post') as mock_post:
-            mock_post.return_value.status_code = 403
-            mock_post.return_value.json.return_value = error_response
+            mock_response = MagicMock()
+            mock_response.status_code = 403
+            mock_response.json.return_value = error_response
+            mock_post.return_value = mock_response
     
             # Call the method to test
             with self.assertRaises(Exception) as context:
@@ -76,6 +78,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         # Assertions
         self.assertIn("Invalid CSRF token", str(context.exception))
         self.assertIn("410", str(context.exception))
+
 
     
     def test_update_todoist_objects(self):
