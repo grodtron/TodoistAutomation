@@ -3,10 +3,11 @@ import json
 from datetime import datetime
 from autodoist.models import ConcreteTodoistProject
 
+
 class TestConcreteTodoistProject(unittest.TestCase):
     def test_from_json(self):
         # Given
-        json_data = '''
+        json_data = """
         {
           "child_order": 0,
           "collapsed": false,
@@ -25,7 +26,7 @@ class TestConcreteTodoistProject(unittest.TestCase):
           "v2_id": "6QXmCv9WvMrJfh33",
           "view_style": "list"
         }
-        '''
+        """
 
         # When
         project = ConcreteTodoistProject(**json.loads(json_data))
@@ -47,5 +48,6 @@ class TestConcreteTodoistProject(unittest.TestCase):
         self.assertEqual(project.v2_id, "6QXmCv9WvMrJfh33")
         self.assertEqual(project.view_style, "list")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
