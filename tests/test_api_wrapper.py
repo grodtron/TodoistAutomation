@@ -41,7 +41,7 @@ class TestErrorHandling(unittest.TestCase):
     
             # Call the method to test
             with self.assertRaises(Exception) as context:
-                self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects())
+                self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects(labels=[], projects=[], filters=[]))
     
         # Assertions
         self.assertIn("Invalid CSRF token", str(context.exception))
