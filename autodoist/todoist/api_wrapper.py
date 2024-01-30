@@ -30,9 +30,11 @@ class TodoistAPIRequester:
 
         print(response.status_code)
         print(repr(response))
-        
+
         if response.status_code != 200:
-            self.logger.error(f"Request failed with status code: {response.status_code}")
+            self.logger.error(
+                f"Request failed with status code: {response.status_code}"
+            )
             try:
                 error_data = response.json()
                 error_message = error_data.get("error", "Unknown error")
@@ -42,6 +44,7 @@ class TodoistAPIRequester:
                 raise Exception("Request failed with unknown error")
 
         return response.json()
+
 
 class TodoistApiWrapper:
     def __init__(self, api_requester: TodoistAPIRequester):
