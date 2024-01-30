@@ -94,9 +94,9 @@ class ConcreteTodoistProject:
 @dataclass_json
 @dataclass
 class ConcreteTodoistObjects:
-    labels: List[ConcreteTodoistLabel] = OptField([])
-    filters: List[ConcreteTodoistFilter] = OptField([])
-    projects: List[ConcreteTodoistProject] = OptField([])
+    labels: List[ConcreteTodoistLabel] = field(default_factory=list)
+    filters: List[ConcreteTodoistFilter] = field(default_factory=list)
+    projects: List[ConcreteTodoistProject] = field(default_factory=list)
 
     def get_all_items(self) -> List[Any]:
         return self.labels + self.filters + self.projects
