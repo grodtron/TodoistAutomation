@@ -34,11 +34,7 @@ class TestTodoistSyncManager(unittest.TestCase):
                     projects=[ConcreteTodoistProject(id=3, name="Project1")],
                 ),
                 ConcreteTodoistObjects(
-                    labels=[ConcreteTodoistLabel(id=1, name="Label1")],
-                    filters=[
-                        ConcreteTodoistFilter(id=2, name="Filter1", query="query1")
-                    ],
-                    projects=[ConcreteTodoistProject(id=3, name="Project1")],
+        
                 ),
             ),
             # Test case 2: Adding a new label
@@ -58,13 +54,8 @@ class TestTodoistSyncManager(unittest.TestCase):
                 ),
                 ConcreteTodoistObjects(
                     labels=[
-                        ConcreteTodoistLabel(id=4, name="Label1"),
                         ConcreteTodoistLabel(name="NewLabel"),
                     ],
-                    filters=[
-                        ConcreteTodoistFilter(id=5, name="Filter1", query="query1")
-                    ],
-                    projects=[ConcreteTodoistProject(id=6, name="Project1")],
                 ),
             ),
             # Test case 3: Updating an existing filter
@@ -83,13 +74,11 @@ class TestTodoistSyncManager(unittest.TestCase):
                     projects=[ConcreteTodoistProject(id=9, name="Project1")],
                 ),
                 ConcreteTodoistObjects(
-                    labels=[ConcreteTodoistLabel(id=7, name="Label1")],
                     filters=[
                         ConcreteTodoistFilter(
-                            id=8, name="Filter1", query="updated_query"
+                            id=8, query="updated_query"
                         )
                     ],
-                    projects=[ConcreteTodoistProject(id=9, name="Project1")],
                 ),
             ),
             # Test case 5: Add a New Filter
@@ -100,11 +89,9 @@ class TestTodoistSyncManager(unittest.TestCase):
                     filters=[TodoistFilter(name="NewFilter", query="query2")],
                     projects=[],
                 ),
-                ConcreteTodoistObjects(labels=[], filters=[], projects=[]),
+                ConcreteTodoistObjects(),
                 ConcreteTodoistObjects(
-                    labels=[],
                     filters=[ConcreteTodoistFilter(name="NewFilter", query="query2")],
-                    projects=[],
                 ),
             ),
         ]
