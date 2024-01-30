@@ -66,6 +66,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
     
         # Patching requests.post to return the error response
         with patch('requests.post') as mock_post:
+            mock_post.return_value.status_code = 403
             mock_post.return_value.json.return_value = error_response
     
             # Call the method to test
