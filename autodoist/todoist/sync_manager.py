@@ -33,7 +33,7 @@ class TodoistSyncManager:
         )
 
         return (
-            ConcreteTodoistCollection(
+            ConcreteTodoistObjects(
                 labels=labels_to_sync,
                 filters=filters_to_sync,
                 projects=projects_to_sync,
