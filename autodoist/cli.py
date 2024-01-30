@@ -11,8 +11,6 @@ from autodoist.todoist.api_wrapper import (
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
 
-
-
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(
