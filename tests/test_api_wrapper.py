@@ -50,6 +50,29 @@ class TestTodoistApiWrapper(unittest.TestCase):
         self.assertEqual(len(result.projects), 1)
         # TODO assert on content
 
+    def test_update_todoist_objects_error_handling(self):
+        # Set up a mock error response
+        error_response = {
+            "error": "Invalid CSRF token",
+            "error_code": 410,
+            "error_extra": {
+                "access_type": "web_session",
+                "event_id": "4eefe83d25d44fe39ddcaeb85841caf8",
+                "retry_after": 4,
+            },
+            "error_tag": "AUTH_INVALID_CSRF_TOKEN",
+            "http_code": 403,
+        }
+        self.mock_api_requester.make_request.return_value = error_response
+
+        # Call the method to test
+        with self.assertRaises(Exception) as context:
+            self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects())
+
+        # Assertions
+        self.assertIn("Invalid CSRF token", str(context.exception))
+        self.assertIn("410", str(context.exception))
+    
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
         todoist_objects = ConcreteTodoistObjects(
