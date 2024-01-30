@@ -10,9 +10,7 @@ from autodoist.todoist.api_wrapper import (
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
-# Setup logging
-logging.basicConfig(level=logging.INFO)  # Default to INFO level
-logger = logging.getLogger(__name__)
+
 
 
 def main():
@@ -44,7 +42,8 @@ def main():
     # Set logging level to DEBUG if debug flag is provided
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
-
+    else:
+        logging.basicConfig(level=logging.INFO)
     # Load GTD state from YAML file
     with open(args.yaml_file, "r") as f:
         yaml_data = f.read()
