@@ -1,7 +1,7 @@
 import unittest
 import json
 from datetime import datetime
-from your_module_containing_models import ConcreteTodoistProject
+from autodoist.models import ConcreteTodoistProject
 
 class TestConcreteTodoistProject(unittest.TestCase):
     def test_from_json(self):
