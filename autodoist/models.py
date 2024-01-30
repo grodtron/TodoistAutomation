@@ -106,8 +106,8 @@ class ConcreteTodoistObjects:
 @dataclass
 class TodoistLabel:
     name: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
+    color: Color = OptField()
+    is_favorite: bool = OptField()
 
 
 @dataclass_json
@@ -115,24 +115,24 @@ class TodoistLabel:
 class TodoistFilter:
     name: str
     query: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
+    color: Color = OptField()
+    is_favorite: bool = OptField()
 
 
 @dataclass_json
 @dataclass
 class TodoistProject:
     name: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
+    color: Color = OptField()
+    is_favorite: bool = OptField()
 
 
 @dataclass_json
 @dataclass
 class TodoistCollection:
-    labels: List[TodoistLabel]
-    filters: List[TodoistFilter]
-    projects: List[TodoistProject]
+    labels: List[TodoistLabel] = field(default_factory=list)
+    filters: List[TodoistFilter] = field(default_factory=list)
+    projects: List[TodoistProject] = field(default_factory=list)
 
 
 @dataclass_json
