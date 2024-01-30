@@ -100,9 +100,13 @@ class ConcreteTodoistProject:
     view_style: Optional[str] = field(
         metadata=config(exclude=ExcludeIfNone), default=None
     )
-    created_at: Optional[str]= field(metadata=config(exclude=ExcludeIfNone), default=None)
-    updated_at: Optional[str]= field(metadata=config(exclude=ExcludeIfNone), default=None)
-    v2_id: Optional[str]= field(metadata=config(exclude=ExcludeIfNone), default=None)
+    created_at: Optional[str] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    updated_at: Optional[str] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    v2_id: Optional[str] = field(metadata=config(exclude=ExcludeIfNone), default=None)
 
     def get_type(self) -> str:
         return "project"
