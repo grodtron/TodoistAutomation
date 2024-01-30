@@ -3,6 +3,59 @@ import json
 from datetime import datetime
 from autodoist.models import ConcreteTodoistProject
 
+class TestConcreteTodoistLabel(unittest.TestCase):
+    def test_from_json(self):
+        # Given
+        json_data = '''
+        {
+          "color": "charcoal",
+          "id": "2171177815",
+          "is_deleted": false,
+          "is_favorite": false,
+          "item_order": 20,
+          "name": "Top3"
+        }
+        '''
+
+        # When
+        label = ConcreteTodoistLabel(**json.loads(json_data))
+
+        # Then
+        self.assertEqual(label.color, "charcoal")
+        self.assertEqual(label.id, "2171177815")
+        self.assertEqual(label.is_deleted, False)
+        self.assertEqual(label.is_favorite, False)
+        self.assertEqual(label.item_order, 20)
+        self.assertEqual(label.name, "Top3")
+
+
+class TestConcreteTodoistFilter(unittest.TestCase):
+    def test_from_json(self):
+        # Given
+        json_data = '''
+        {
+          "color": "charcoal",
+          "id": "2345486677",
+          "is_deleted": false,
+          "is_favorite": false,
+          "item_order": 21,
+          "name": "Today's tasks before 10am",
+          "query": "today & due before: 10am & due after: 5am"
+        }
+        '''
+
+        # When
+        filter_obj = ConcreteTodoistFilter(**json.loads(json_data))
+
+        # Then
+        self.assertEqual(filter_obj.color, "charcoal")
+        self.assertEqual(filter_obj.id, "2345486677")
+        self.assertEqual(filter_obj.is_deleted, False)
+        self.assertEqual(filter_obj.is_favorite, False)
+        self.assertEqual(filter_obj.item_order, 21)
+        self.assertEqual(filter_obj.name, "Today's tasks before 10am")
+        self.assertEqual(filter_obj.query, "today & due before: 10am & due after: 5am")
+
 
 class TestConcreteTodoistProject(unittest.TestCase):
     def test_from_json(self):
