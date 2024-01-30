@@ -10,6 +10,44 @@ from autodoist.models import (
 from autodoist.todoist.api_wrapper import TodoistApiWrapper, TodoistAPIRequester
 
 
+class TestErrorHandling(unittest.TestCase):
+
+    def setUp(self):
+        # Create a MagicMock TodoistAPIRequester for testing
+        self.todoist_api_wrapper = TodoistApiWrapper(
+            api_requester=TodoistAPIRequester(api_key="FOOBAR")
+        )
+    
+    def test_update_todoist_objects_error_handling(self):
+        # Set up a mock error response
+        error_response = {
+            "error": "Invalid CSRF token",
+            "error_code": 410,
+            "error_extra": {
+                "access_type": "web_session",
+                "event_id": "4eefe83d25d44fe39ddcaeb85841caf8",
+                "retry_after": 4,
+            },
+            "error_tag": "AUTH_INVALID_CSRF_TOKEN",
+            "http_code": 403,
+        }
+    
+        # Patching requests.post to return the error response
+        with patch('requests.post') as mock_post:
+            mock_response = MagicMock()
+            mock_response.status_code = 403
+            mock_response.json.return_value = error_response
+            mock_post.return_value = mock_response
+    
+            # Call the method to test
+            with self.assertRaises(Exception) as context:
+                self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects(labels=[], projects=[], filters=[]))
+    
+        # Assertions
+        self.assertIn("Invalid CSRF token", str(context.exception))
+        self.assertIn("410", str(context.exception))
+
+
 class TestTodoistApiWrapper(unittest.TestCase):
 
     def setUp(self):
@@ -49,7 +87,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         self.assertEqual(len(result.filters), 1)
         self.assertEqual(len(result.projects), 1)
         # TODO assert on content
-
+    
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
         todoist_objects = ConcreteTodoistObjects(

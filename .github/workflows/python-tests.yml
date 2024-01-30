@@ -31,6 +31,6 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m unittest discover -s tests  # Change this to your test directory
+        python -m unittest discover -b -s tests  # Change this to your test directory
 
 
