@@ -1,3 +1,5 @@
+
+from typing import Optional, List, Dict
 import logging
 import uuid
 import requests
