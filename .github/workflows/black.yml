@@ -2,8 +2,8 @@ name: Black formatter
 
 on:
   pull_request:
-    branches:
-      - main  # Trigger on any branch for pull requests
+    types: [opened, edited, reopened]
+
 
 jobs:
   black:
