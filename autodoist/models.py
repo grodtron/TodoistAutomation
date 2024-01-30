@@ -35,20 +35,18 @@ def ExcludeIfNone(value):
     """Do not include field for None values"""
     return value is None
 
+def OptField(default_val=None):
+    return field(metadata=config(exclude=ExcludeIfNone), default=default_val)
 
 @dataclass_json
 @dataclass
 class ConcreteTodoistLabel:
-    name: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
-    id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    item_order: Optional[int] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    is_deleted: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
+    name: str = OptField()
+    color: Color = OptField()
+    is_favorite: bool = OptField()
+    id: Optional[int] = OptField()
+    item_order: Optional[int] = OptField()
+    is_deleted: Optional[bool] = OptField()
 
     def get_type(self) -> str:
         return "label"
@@ -57,17 +55,13 @@ class ConcreteTodoistLabel:
 @dataclass_json
 @dataclass
 class ConcreteTodoistFilter:
-    name: str
-    query: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
-    id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    item_order: Optional[int] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    is_deleted: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
+    name: str = OptField()
+    query: str = OptField()
+    color: Color = OptField()
+    is_favorite: bool = OptField()
+    id: Optional[int] = OptField()
+    item_order: Optional[int] = OptField()
+    is_deleted: Optional[bool] = OptField()
 
     def get_type(self) -> str:
         return "filter"
@@ -76,40 +70,22 @@ class ConcreteTodoistFilter:
 @dataclass_json
 @dataclass
 class ConcreteTodoistProject:
-    name: str
-    color: Color = DEFAULT_COLOR
-    is_favorite: bool = field(default=False)
-    id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    parent_id: Optional[int] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    child_order: Optional[int] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    collapsed: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    shared: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    sync_id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    is_deleted: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    is_archived: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    view_style: Optional[str] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    created_at: Optional[str] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    updated_at: Optional[str] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
-    v2_id: Optional[str] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    inbox_project: Optional[bool] = field(
-        metadata=config(exclude=ExcludeIfNone), default=None
-    )
+    name: str = OptField()
+    color: Color = OptField()
+    is_favorite: bool = OptField()
+    id: Optional[int] = OptField()
+    parent_id: Optional[int] = OptField()
+    child_order: Optional[int] = OptField()
+    collapsed: Optional[bool] = OptField()
+    shared: Optional[bool] = OptField()
+    sync_id: Optional[int] = OptField()
+    is_deleted: Optional[bool] = OptField()
+    is_archived: Optional[bool] = OptField()
+    view_style: Optional[str] = OptField()
+    created_at: Optional[str] = OptField()
+    updated_at: Optional[str] = OptField()
+    v2_id: Optional[str] = OptField()
+    inbox_project: Optional[bool] = OptField()
 
     def get_type(self) -> str:
         return "project"
@@ -118,9 +94,9 @@ class ConcreteTodoistProject:
 @dataclass_json
 @dataclass
 class ConcreteTodoistObjects:
-    labels: List[ConcreteTodoistLabel]
-    filters: List[ConcreteTodoistFilter]
-    projects: List[ConcreteTodoistProject]
+    labels: List[ConcreteTodoistLabel] = OptField([])
+    filters: List[ConcreteTodoistFilter] = OptField([])
+    projects: List[ConcreteTodoistProject] = OptField([])
 
     def get_all_items(self) -> List[Any]:
         return self.labels + self.filters + self.projects
