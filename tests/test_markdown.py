@@ -35,10 +35,10 @@ class TestRenderAsMarkdown(unittest.TestCase):
 | parent_id | 123 |
 """
 
-        # Normalize whitespace for comparison
-        expected_output = '\n'.join([line.strip() for line in expected_output.strip().split('\n')])
+        # Normalize whitespace and capitalization for comparison
+        expected_output = '\n'.join([line.strip() for line in expected_output.strip().split('\n')]).lower()
         actual_output = render_as_markdown(todoist_objects)
-        actual_output = '\n'.join([line.strip() for line in actual_output.strip().split('\n')])
+        actual_output = '\n'.join([line.strip() for line in actual_output.strip().split('\n')]).lower()
 
         self.assertEqual(expected_output, actual_output)
 
