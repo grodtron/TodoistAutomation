@@ -1,12 +1,17 @@
 import unittest
 import json
 from datetime import datetime
-from autodoist.models import ConcreteTodoistProject, ConcreteTodoistFilter, ConcreteTodoistLabel
+from autodoist.models import (
+    ConcreteTodoistProject,
+    ConcreteTodoistFilter,
+    ConcreteTodoistLabel,
+)
+
 
 class TestConcreteTodoistLabel(unittest.TestCase):
     def test_from_json(self):
         # Given
-        json_data = '''
+        json_data = """
         {
           "color": "charcoal",
           "id": "2171177815",
@@ -15,7 +20,7 @@ class TestConcreteTodoistLabel(unittest.TestCase):
           "item_order": 20,
           "name": "Top3"
         }
-        '''
+        """
 
         # When
         label = ConcreteTodoistLabel(**json.loads(json_data))
@@ -32,7 +37,7 @@ class TestConcreteTodoistLabel(unittest.TestCase):
 class TestConcreteTodoistFilter(unittest.TestCase):
     def test_from_json(self):
         # Given
-        json_data = '''
+        json_data = """
         {
           "color": "charcoal",
           "id": "2345486677",
@@ -42,7 +47,7 @@ class TestConcreteTodoistFilter(unittest.TestCase):
           "name": "Today's tasks before 10am",
           "query": "today & due before: 10am & due after: 5am"
         }
-        '''
+        """
 
         # When
         filter_obj = ConcreteTodoistFilter(**json.loads(json_data))
