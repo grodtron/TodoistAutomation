@@ -48,18 +48,24 @@ class TodoistSyncManager:
     def _sync_objects(self, existing_objects, desired_objects, concrete_class):
         existing_objects_dict = {obj.name: obj for obj in existing_objects}
         objects_to_sync = []
-
+    
         for desired_obj in desired_objects:
             existing_obj = existing_objects_dict.get(desired_obj.name)
-
+    
             if existing_obj is None:
                 # Object doesn't exist, create it
                 objects_to_sync.append(concrete_class(**desired_obj.to_dict()))
             else:
-                # Object exists, update it
-                updated_obj = concrete_class(
-                    id=existing_obj.id, **desired_obj.to_dict()
-                )
-                objects_to_sync.append(updated_obj)
-
+                # Object exists, update it with only the differing attributes
+                updated_attrs = {
+                    attr: value
+                    for attr, value in desired_obj.to_dict().items()
+                    if getattr(existing_obj, attr) != value
+                }
+                if updated_attrs:
+                    updated_obj = concrete_class(
+                        id=existing_obj.id, **updated_attrs
+                    )
+                    objects_to_sync.append(updated_obj)
+    
         return objects_to_sync
