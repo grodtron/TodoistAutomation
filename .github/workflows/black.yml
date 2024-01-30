@@ -1,8 +1,10 @@
 name: Black formatter
 
+
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    branches:
+      - main  # Change this to your main branch
 
 
 jobs:
