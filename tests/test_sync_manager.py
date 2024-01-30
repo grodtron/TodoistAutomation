@@ -60,7 +60,7 @@ class TestTodoistSyncManager(unittest.TestCase):
                         ConcreteTodoistLabel(name="NewLabel"),
                     ],
                     filters=[
-                        ConcreteTodoistFilter(id=5, name="Filter1", query="query1")
+                        ConcreteTodoistFilter(id=5)
                     ],
                     projects=[ConcreteTodoistProject(id=6)],
                 ),
@@ -81,10 +81,10 @@ class TestTodoistSyncManager(unittest.TestCase):
                     projects=[ConcreteTodoistProject(id=9, name="Project1")],
                 ),
                 ConcreteTodoistObjects(
-                    labels=[ConcreteTodoistLabel(id=7, name="Label1")],
+                    labels=[ConcreteTodoistLabel(id=7)],
                     filters=[
                         ConcreteTodoistFilter(
-                            id=8, name="Filter1", query="updated_query"
+                            id=8, query="updated_query"
                         )
                     ],
                     projects=[ConcreteTodoistProject(id=9)],
@@ -98,11 +98,9 @@ class TestTodoistSyncManager(unittest.TestCase):
                     filters=[TodoistFilter(name="NewFilter", query="query2")],
                     projects=[],
                 ),
-                ConcreteTodoistObjects(labels=[], filters=[], projects=[]),
+                ConcreteTodoistObjects(),
                 ConcreteTodoistObjects(
-                    labels=[],
                     filters=[ConcreteTodoistFilter(name="NewFilter", query="query2")],
-                    projects=[],
                 ),
             ),
         ]
