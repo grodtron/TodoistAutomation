@@ -12,14 +12,14 @@ class TestRenderAsMarkdown(unittest.TestCase):
         todoist_objects = ConcreteTodoistObjects(labels=[label], filters=[filter], projects=[project])
 
         expected_output = """### Label (Created)
-| Name | Value |
+| Field | Value |
 |-------|-------|
 | name | Label 1 |
 | color | red |
 | is_favorite | True |
 
 ### Filter (Created)
-| Name | Value |
+| Field | Value |
 |-------|-------|
 | name | Filter 1 |
 | query | some query |
@@ -27,7 +27,7 @@ class TestRenderAsMarkdown(unittest.TestCase):
 | is_favorite | False |
 
 ### Project (Created)
-| Name | Value |
+| Field | Value |
 |-------|-------|
 | name | Project 1 |
 | color | blue |
