@@ -1,7 +1,7 @@
 import unittest
 import json
 from datetime import datetime
-from autodoist.models import ConcreteTodoistProject
+from autodoist.models import ConcreteTodoistProject, TestConcreteTodoistFilter, TestConcreteTodoistLabel
 
 class TestConcreteTodoistLabel(unittest.TestCase):
     def test_from_json(self):
