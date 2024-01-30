@@ -1,9 +1,9 @@
 name: Black formatter
 
 on:
-  push:
+  pull_request:
     branches:
-      - main  # Change this to your main branch
+      - '*'  # Trigger on any branch for pull requests
 
 jobs:
   black:
