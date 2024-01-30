@@ -63,15 +63,19 @@ class TestTodoistApiWrapper(unittest.TestCase):
             "error_tag": "AUTH_INVALID_CSRF_TOKEN",
             "http_code": 403,
         }
-        self.mock_api_requester.make_request.return_value = error_response
-
-        # Call the method to test
-        with self.assertRaises(Exception) as context:
-            self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects())
-
+    
+        # Patching requests.post to return the error response
+        with patch('requests.post') as mock_post:
+            mock_post.return_value.json.return_value = error_response
+    
+            # Call the method to test
+            with self.assertRaises(Exception) as context:
+                self.todoist_api_wrapper.update_todoist_objects(ConcreteTodoistObjects())
+    
         # Assertions
         self.assertIn("Invalid CSRF token", str(context.exception))
         self.assertIn("410", str(context.exception))
+
     
     def test_update_todoist_objects(self):
         # Set up the expected sync_commands and response
