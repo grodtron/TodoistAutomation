@@ -43,8 +43,12 @@ class ConcreteTodoistLabel:
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
     id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    item_order: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    is_deleted: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
+    item_order: Optional[int] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    is_deleted: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
 
     def get_type(self) -> str:
         return "label"
@@ -58,8 +62,12 @@ class ConcreteTodoistFilter:
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
     id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    item_order: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    is_deleted: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
+    item_order: Optional[int] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    is_deleted: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
 
     def get_type(self) -> str:
         return "filter"
@@ -72,14 +80,26 @@ class ConcreteTodoistProject:
     color: Color = DEFAULT_COLOR
     is_favorite: bool = field(default=False)
     id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    parent_id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    child_order: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    collapsed: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
+    parent_id: Optional[int] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    child_order: Optional[int] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    collapsed: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
     shared: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
     sync_id: Optional[int] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    is_deleted: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    is_archived: Optional[bool] = field(metadata=config(exclude=ExcludeIfNone), default=None)
-    view_style: Optional[str] = field(metadata=config(exclude=ExcludeIfNone), default=None)
+    is_deleted: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    is_archived: Optional[bool] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
+    view_style: Optional[str] = field(
+        metadata=config(exclude=ExcludeIfNone), default=None
+    )
 
     def get_type(self) -> str:
         return "project"
