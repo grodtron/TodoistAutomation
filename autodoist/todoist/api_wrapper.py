@@ -23,7 +23,7 @@ class TodoistAPIRequester:
     def make_request(self, **payload) -> Dict:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
         response = requests.post(self.API_URL, headers=self.HEADERS, data=payload)
-        self.logger.debug(f"Received response: {response.content}")
+        self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
         return response.json()
 
 class TodoistApiWrapper:
