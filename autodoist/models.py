@@ -38,11 +38,14 @@ def ExcludeIfNone(value):
 def OptField(default_val=None):
     return field(metadata=config(exclude=ExcludeIfNone), default=default_val)
 
+def OptColorField():
+    return field(metadata=config(exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color))
+
 @dataclass_json
 @dataclass
 class ConcreteTodoistLabel:
     name: str = OptField()
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
     id: Optional[int] = OptField()
     item_order: Optional[int] = OptField()
@@ -57,7 +60,7 @@ class ConcreteTodoistLabel:
 class ConcreteTodoistFilter:
     name: str = OptField()
     query: str = OptField()
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
     id: Optional[int] = OptField()
     item_order: Optional[int] = OptField()
@@ -71,7 +74,7 @@ class ConcreteTodoistFilter:
 @dataclass
 class ConcreteTodoistProject:
     name: str = OptField()
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
     id: Optional[int] = OptField()
     parent_id: Optional[int] = OptField()
@@ -106,7 +109,7 @@ class ConcreteTodoistObjects:
 @dataclass
 class TodoistLabel:
     name: str
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
 
 
@@ -115,7 +118,7 @@ class TodoistLabel:
 class TodoistFilter:
     name: str
     query: str
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
 
 
@@ -123,7 +126,7 @@ class TodoistFilter:
 @dataclass
 class TodoistProject:
     name: str
-    color: Color = OptField()
+    color: Color = OptColorField()
     is_favorite: bool = OptField()
 
 
