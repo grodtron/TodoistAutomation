@@ -13,15 +13,68 @@ from autodoist.github.markdown import render_as_markdown
 from github import Github
 
 
-def post_comment_on_pr(github_token, repo, pr_number, comment):
-    github = Github(github_token)
-    repo = github.get_repo(f"{repo}")
-    pr = repo.get_pull(pr_number)
-    pr.create_issue_comment(comment)
+class CommandLineInterface:
+    def __init__(self, args, yaml_loader, todoist_api_factory, github_poster):
+        self.args = args
+        self.yaml_loader = yaml_loader
+        self.todoist_api_factory = todoist_api_factory
+        self.github_poster = github_poster
+
+    def run(self):
+        self._setup_logging()
+        gtd_state = self._load_gtd_state()
+        api_wrapper = self.todoist_api_factory.create_api_wrapper(self.args.api_key)
+        existing_state = api_wrapper.get_all_todoist_objects()
+        desired_state = process_gtd_state(gtd_state)
+        sync_manager = TodoistSyncManager()
+        objects_to_update = sync_manager.sync(existing_state, desired_state)
+
+        if self.args.command == "sync":
+            api_wrapper.update_todoist_objects(objects_to_update)
+        elif self.args.command == "preview":
+            self._preview_on_github(objects_to_update)
+
+    def _setup_logging(self):
+        level = logging.DEBUG if self.args.debug else logging.INFO
+        logging.basicConfig(level=level)
+
+    def _load_gtd_state(self):
+        with open(self.args.yaml_file, "r") as f:
+            yaml_data = f.read()
+        return self.yaml_loader.load_gtd_state(yaml_data)
+
+    def _preview_on_github(self, objects_to_update):
+        markdown_summary = render_as_markdown(objects_to_update)
+        self.github_poster.post_comment_on_pr(
+            self.args.github_token, self.args.repo, self.args.pr_number, markdown_summary
+        )
+
+
+class TodoistAPIFactory:
+    def create_api_wrapper(self, api_key):
+        api_requester = TodoistAPIRequester(api_key)
+        if args.dry_run:
+            return DryRunTodoistApiWrapper(api_requester)
+        else:
+            return TodoistApiWrapper(api_requester)
+
+
+class YamlLoader:
+    @staticmethod
+    def load_gtd_state(yaml_data):
+        return load_gtd_state_from_yaml(yaml_data)
+
+
+class GitHubPoster:
+    @staticmethod
+    def post_comment_on_pr(github_token, repo, pr_number, comment):
+        github = Github(github_token)
+        repo = github.get_repo(f"{repo}")
+        pr = repo.get_pull(pr_number)
+        pr.create_issue_comment(comment)
 
 
 def main():
-    # Parse command line arguments
     parser = argparse.ArgumentParser(
         description="Command line tool for syncing GTD state with Todoist."
     )
@@ -43,10 +96,7 @@ def main():
 
     subparsers = parser.add_subparsers(dest="command", help="sub-command help")
 
-    # Sub-parser for syncing directly to Todoist
     sync_parser = subparsers.add_parser("sync", help="Sync GTD state with Todoist")
-
-    # Sub-parser for previewing changes on GitHub
     preview_parser = subparsers.add_parser("preview", help="Preview changes on GitHub")
 
     preview_parser.add_argument(
@@ -64,43 +114,13 @@ def main():
 
     args = parser.parse_args()
 
-    # Set logging level to DEBUG if debug flag is provided
-    if args.debug:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
-
-    # Load GTD state from YAML file
-    with open(args.yaml_file, "r") as f:
-        yaml_data = f.read()
-    gtd_state = load_gtd_state_from_yaml(yaml_data)
-
-    # Initialize Todoist components
-    api_requester = TodoistAPIRequester(args.api_key)
-
-    if not args.dry_run:
-        api_wrapper = TodoistApiWrapper(api_requester)
-    else:
-        api_wrapper = DryRunTodoistApiWrapper(api_requester)
-
-    sync_manager = TodoistSyncManager()
-    desired_state = process_gtd_state(gtd_state)
-
-    existing_state = api_wrapper.get_all_todoist_objects()
-
-    # Sync GTD state with Todoist
-    objects_to_update = sync_manager.sync(existing_state, desired_state)
-
-    if args.command == "sync":
-        api_wrapper.update_todoist_objects(objects_to_update)
-
-    elif args.command == "preview":
-
-        # Preview changes on GitHub
-        markdown_summary = render_as_markdown(objects_to_update)
-        post_comment_on_pr(
-            args.github_token, args.repo, args.pr_number, markdown_summary
-        )
+    cli = CommandLineInterface(
+        args,
+        YamlLoader(),
+        TodoistAPIFactory(),
+        GitHubPoster(),
+    )
+    cli.run()
 
 
 if __name__ == "__main__":
