@@ -9,7 +9,7 @@ on:
 
 
 jobs:
-  black:
+  test:
     runs-on: ubuntu-latest
     
     steps:
