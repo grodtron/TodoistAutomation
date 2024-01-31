@@ -25,7 +25,7 @@ jobs:
       run: pip install black
 
     - name: Git Pull
-      run: git checkout --track origin/${{ github.head_ref }}
+      run: git branch -a # git checkout --track origin/${{ github.head_ref }}
 
     - name: Run Black formatter
       run: black .
