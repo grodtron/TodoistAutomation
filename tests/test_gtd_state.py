@@ -9,8 +9,8 @@ from autodoist.gtd.gtd_state import (
     Context,
     CompositeContext,
     ExclusionList,
-    Color,
 )
+from autodoist.models import Color
 
 
 class TestGTDState(unittest.TestCase):
