@@ -71,7 +71,7 @@ def main():
     existing_state = api_wrapper.get_all_todoist_objects()
     
     # Sync GTD state with Todoist
-    objects_to_update = sync_manager.sync(desired_state, existing_state)
+    objects_to_update = sync_manager.sync(existing_state, desired_state)
     
     if args.command == 'sync':
         api_wrapper.update_todoist_objects(objects_to_update)
