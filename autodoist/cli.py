@@ -10,6 +10,9 @@ from autodoist.todoist.api_wrapper import (
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
 
+def render_as_markdown(*args):
+    return "NOT YET IMPLEMENTED"
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(
@@ -57,16 +60,18 @@ def main():
     # Initialize Todoist components
     api_requester = TodoistAPIRequester(args.api_key)
 
-    if args.dry_run:
-        api_wrapper = DryRunTodoistApiWrapper(api_requester)
-    else:
+    if not args.dry_run:
         api_wrapper = TodoistApiWrapper(api_requester)
+    else:
+        api_wrapper = DryRunTodoistApiWrapper(api_requester)
 
     sync_manager = TodoistSyncManager()
-    todoist_collection = process_gtd_state(gtd_state)
-
+    desired_state = process_gtd_state(gtd_state)
+    
+    existing_state = api_wrapper.get_all_todoist_objects()
+    
     # Sync GTD state with Todoist
-    objects_to_update = sync_manager.sync(todoist_collection)
+    objects_to_update = sync_manager.sync(existing_state, desired_state)
     
     if args.command == 'sync':
         api_wrapper.update_todoist_objects(objects_to_update)
@@ -74,7 +79,7 @@ def main():
     elif args.command == 'preview':
 
         # Preview changes on GitHub
-        markdown_summary = render_as_markdown(todoist_collection)
+        markdown_summary = render_as_markdown(objects_to_update)
         # TODO post the markdown summary as a comment on a CR.
 
 if __name__ == "__main__":
