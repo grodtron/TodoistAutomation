@@ -169,4 +169,4 @@ class GTDState:
 
 def load_gtd_state_from_yaml(yaml_data):
     data = yaml.safe_load(yaml_data)
-    return GTDState.from_dict(data)
+    return GTDState.from_dict(data) # type: ignore
