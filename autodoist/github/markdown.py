@@ -40,7 +40,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
         for field_name in all_fields:
             if field_name in item.to_dict():
                 row += (
-                    item.to_dict()[field_name]
+                    str(item.to_dict()[field_name])
                     if item.to_dict()[field_name] is not None
                     else ""
                 )
