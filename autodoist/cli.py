@@ -9,9 +9,17 @@ from autodoist.todoist.api_wrapper import (
     DryRunTodoistApiWrapper,
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
+from github import Github
 
-def render_as_markdown(*args):
-    return "NOT YET IMPLEMENTED"
+def render_as_markdown(todoist_collection):
+    # Implementation of rendering todoist_collection as markdown
+    pass
+
+def post_comment_on_pr(github_token, repo, pr_number, comment):
+    github = Github(github_token)
+    repo = github.get_repo(f"{repo}")
+    pr = repo.get_pull(pr_number)
+    pr.create_issue_comment(comment)
 
 def main():
     # Parse command line arguments
@@ -43,6 +51,8 @@ def main():
     preview_parser = subparsers.add_parser('preview', help='Preview changes on GitHub')
 
     preview_parser.add_argument("--github-token", help="GitHub token for authentication.", required=True)
+    preview_parser.add_argument("--repo", help="Name of the GitHub repository.", required=True)
+    preview_parser.add_argument("--pr-number", help="PR number on the GitHub repository.", required=True)
 
     args = parser.parse_args()
 
@@ -80,7 +90,7 @@ def main():
 
         # Preview changes on GitHub
         markdown_summary = render_as_markdown(objects_to_update)
-        # TODO post the markdown summary as a comment on a CR.
+        post_comment_on_pr(args.github_token, args.repo, args.pr_number, markdown_summary)
 
 if __name__ == "__main__":
     main()
