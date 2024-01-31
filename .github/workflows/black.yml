@@ -35,5 +35,7 @@ jobs:
         git commit -m "Apply Black formatting" || exit 0
     
     - name: Push changes
-      run:  git push origin HEAD:${{ github.head_ref }}
-
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.head_ref }}
