@@ -8,7 +8,7 @@ import re
 def normalize_markdown_table_cell_content(cell):
     cell = cell.strip()
 
-    if cell == "-" * len(cell):
+    if cell and cell == "-" * len(cell):
         cell = "------"
 
     return cell
