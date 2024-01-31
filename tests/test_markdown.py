@@ -18,17 +18,13 @@ def normalize_markdown_table(markdown):
     # Convert to lowercase
     markdown = markdown.lower()
 
-    # Remove extra whitespace (except new lines)
-    markdown = re.sub(r"\s+", " ", markdown)
-
-    # Normalize column widths
-    markdown = re.sub(
-        r"(\|.*?\|)",
-        lambda x: "|"
-        + "|".join(map(normalize_markdown_table_cell_content, x.group(1).split("|")))
-        + "|",
-        markdown,
-    )
+    # Normalize columns
+    markdown = 
+     "\n".join(
+        "|".join(map(normalize_markdown_table_cell_content, line.split("|")))
+         for line in
+         markdown.splitlines()
+     )
 
     return markdown.strip()
 
