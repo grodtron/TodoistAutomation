@@ -12,7 +12,9 @@ class TodoistSyncManager:
     def __init__(self):
         pass
 
-    def sync(self, existing_state: ConcreteTodoistObjects, desired_state: TodoistCollection) -> ConcreteTodoistObjects:
+    def sync(
+        self, existing_state: ConcreteTodoistObjects, desired_state: TodoistCollection
+    ) -> ConcreteTodoistObjects:
         """
         Compares existing and desired states to determine objects to sync.
         Returns collections of objects to sync.
@@ -32,12 +34,10 @@ class TodoistSyncManager:
             existing_state.projects, desired_state.projects, ConcreteTodoistProject
         )
 
-        return (
-            ConcreteTodoistObjects(
-                labels=labels_to_sync,
-                filters=filters_to_sync,
-                projects=projects_to_sync,
-            )
+        return ConcreteTodoistObjects(
+            labels=labels_to_sync,
+            filters=filters_to_sync,
+            projects=projects_to_sync,
         )
 
     def _sync_objects(self, existing_objects, desired_objects, concrete_class):
@@ -58,9 +58,7 @@ class TodoistSyncManager:
                     if getattr(existing_obj, attr) != value
                 }
                 if updated_attrs:
-                    updated_obj = concrete_class(
-                        id=existing_obj.id, **updated_attrs
-                    )
+                    updated_obj = concrete_class(id=existing_obj.id, **updated_attrs)
                     objects_to_sync.append(updated_obj)
 
         return objects_to_sync

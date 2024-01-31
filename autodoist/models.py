@@ -32,11 +32,19 @@ def ExcludeIfNone(value):
     """Do not include field for None values"""
     return value is None
 
+
 def OptField(default_val=None):
     return field(metadata=config(exclude=ExcludeIfNone), default=default_val)
 
+
 def OptColorField(default_val=None):
-    return field(metadata=config(exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color), default=default_val)
+    return field(
+        metadata=config(
+            exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color
+        ),
+        default=default_val,
+    )
+
 
 @dataclass_json
 @dataclass
@@ -169,4 +177,4 @@ class GTDState:
 
 def load_gtd_state_from_yaml(yaml_data):
     data = yaml.safe_load(yaml_data)
-    return GTDState.from_dict(data) # type: ignore
+    return GTDState.from_dict(data)  # type: ignore

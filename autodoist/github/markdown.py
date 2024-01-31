@@ -1,5 +1,6 @@
 from autodoist.models import ConcreteTodoistObjects
 
+
 def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
     markdown = ""
 

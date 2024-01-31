@@ -21,7 +21,10 @@ class TestGTDState(unittest.TestCase):
         # Create some test data
         context1 = Context(name="Work", emojis="🚀", color=Color.BLUE)
         context2 = CompositeContext(
-            name="Personal", emojis="🌟", color=Color.GREEN, labels=["Health", "Finance"]
+            name="Personal",
+            emojis="🌟",
+            color=Color.GREEN,
+            labels=["Health", "Finance"],
         )
 
         # Create an instance of GTDState and add the test data
@@ -69,7 +72,10 @@ class TestGTDState(unittest.TestCase):
         # Create some test data
         context1 = Context(name="Work", emojis="🚀", color=Color.BLUE)
         context2 = CompositeContext(
-            name="Personal", emojis="🌟", color=Color.GREEN, labels=["Health", "Finance"]
+            name="Personal",
+            emojis="🌟",
+            color=Color.GREEN,
+            labels=["Health", "Finance"],
         )
 
         # Create an instance of GTDState and add the test data with multiple exclusion lists

@@ -11,7 +11,6 @@ from autodoist.models import (
 from autodoist.todoist.api_wrapper import TodoistApiWrapper, TodoistAPIRequester
 
 
-
 class TestErrorHandling(unittest.TestCase):
 
     def setUp(self):

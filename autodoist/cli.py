@@ -12,11 +12,13 @@ from autodoist.todoist.sync_manager import TodoistSyncManager
 from autodoist.github.markdown import render_as_markdown
 from github import Github
 
+
 def post_comment_on_pr(github_token, repo, pr_number, comment):
     github = Github(github_token)
     repo = github.get_repo(f"{repo}")
     pr = repo.get_pull(pr_number)
     pr.create_issue_comment(comment)
+
 
 def main():
     # Parse command line arguments
@@ -38,18 +40,24 @@ def main():
         help="Enable debug level logging project wide.",
         action="store_true",
     )
-    
-    subparsers = parser.add_subparsers(dest='command', help='sub-command help')
+
+    subparsers = parser.add_subparsers(dest="command", help="sub-command help")
 
     # Sub-parser for syncing directly to Todoist
-    sync_parser = subparsers.add_parser('sync', help='Sync GTD state with Todoist')
-    
-    # Sub-parser for previewing changes on GitHub
-    preview_parser = subparsers.add_parser('preview', help='Preview changes on GitHub')
+    sync_parser = subparsers.add_parser("sync", help="Sync GTD state with Todoist")
 
-    preview_parser.add_argument("--github-token", help="GitHub token for authentication.", required=True)
-    preview_parser.add_argument("--repo", help="Name of the GitHub repository.", required=True)
-    preview_parser.add_argument("--pr-number", help="PR number on the GitHub repository.", required=True)
+    # Sub-parser for previewing changes on GitHub
+    preview_parser = subparsers.add_parser("preview", help="Preview changes on GitHub")
+
+    preview_parser.add_argument(
+        "--github-token", help="GitHub token for authentication.", required=True
+    )
+    preview_parser.add_argument(
+        "--repo", help="Name of the GitHub repository.", required=True
+    )
+    preview_parser.add_argument(
+        "--pr-number", help="PR number on the GitHub repository.", required=True
+    )
 
     args = parser.parse_args()
 
@@ -74,20 +82,23 @@ def main():
 
     sync_manager = TodoistSyncManager()
     desired_state = process_gtd_state(gtd_state)
-    
+
     existing_state = api_wrapper.get_all_todoist_objects()
-    
+
     # Sync GTD state with Todoist
     objects_to_update = sync_manager.sync(existing_state, desired_state)
-    
-    if args.command == 'sync':
+
+    if args.command == "sync":
         api_wrapper.update_todoist_objects(objects_to_update)
 
-    elif args.command == 'preview':
+    elif args.command == "preview":
 
         # Preview changes on GitHub
         markdown_summary = render_as_markdown(objects_to_update)
-        post_comment_on_pr(args.github_token, args.repo, args.pr_number, markdown_summary)
+        post_comment_on_pr(
+            args.github_token, args.repo, args.pr_number, markdown_summary
+        )
+
 
 if __name__ == "__main__":
     main()
