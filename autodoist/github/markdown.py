@@ -36,15 +36,12 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
 
     # Constructing the rows
     for item in todoist_objects.get_all_items():
-        row = "| "
-        for field_name in all_fields:
-            if field_name in item.to_dict():
-                row += (
-                    str(item.to_dict()[field_name])
-                    if item.to_dict()[field_name] is not None
-                    else ""
-                )
-            row += " | "
-        markdown += row + "\n"
+        markdown += (
+            "| "
+            + " | ".join(
+                str(item.to_dict().get(field_name, "")) for field_name in all_fields
+            )
+            + " |\n"
+        )
 
     return markdown
