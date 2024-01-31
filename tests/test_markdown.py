@@ -11,7 +11,7 @@ class TestRenderAsMarkdown(unittest.TestCase):
         mock_item_1.to_dict.return_value = {"name": "Task 1", "priority": 1}
         mock_item_2 = MagicMock()
         mock_item_2.to_dict.return_value = {"name": "Task 2", "due_date": "2024-02-01"}
-        self.todoist_objects.get_all_items.return_value = [mock_item_1, mock_item_2] 
+        self.todoist_objects.get_all_items.return_value = [mock_item_1, mock_item_2]
 
     def test_render_as_markdown(self):
         expected_markdown = "| name | due_date | priority | query |\n"
