@@ -8,10 +8,11 @@ import re
 def normalize_markdown_table_cell_content(cell):
     cell = cell.strip()
 
-    if cell == '-'*len(cell):
-        cell = '------'
+    if cell == "-" * len(cell):
+        cell = "------"
 
     return cell
+
 
 def normalize_markdown_table(markdown):
     # Convert to lowercase
@@ -23,7 +24,11 @@ def normalize_markdown_table(markdown):
     # Normalize column widths
     markdown = re.sub(
         r"(\|.*?\|)",
-        lambda x: "|" + "|".join(map(normalize_markdown_table_cell_content(cell), x.group(1).split("|"))) + "|",
+        lambda x: "|"
+        + "|".join(
+            map(normalize_markdown_table_cell_content(cell), x.group(1).split("|"))
+        )
+        + "|",
         markdown,
     )
 
