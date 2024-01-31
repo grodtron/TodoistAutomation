@@ -23,7 +23,7 @@ class CommandLineInterface:
     def run(self):
         self._setup_logging()
         gtd_state = self._load_gtd_state()
-        api_wrapper = self.todoist_api_factory.create_api_wrapper(self.args.api_key)
+        api_wrapper = self.todoist_api_factory.create_api_wrapper(self.args.dry_run, self.args.api_key)
         existing_state = api_wrapper.get_all_todoist_objects()
         desired_state = process_gtd_state(gtd_state)
         sync_manager = TodoistSyncManager()
@@ -54,9 +54,9 @@ class CommandLineInterface:
 
 
 class TodoistAPIFactory:
-    def create_api_wrapper(self, api_key):
+    def create_api_wrapper(self, dry_run: bool, api_key: str):
         api_requester = TodoistAPIRequester(api_key)
-        if args.dry_run:
+        if dry_run:
             return DryRunTodoistApiWrapper(api_requester)
         else:
             return TodoistApiWrapper(api_requester)
