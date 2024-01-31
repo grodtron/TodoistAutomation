@@ -9,11 +9,8 @@ from autodoist.todoist.api_wrapper import (
     DryRunTodoistApiWrapper,
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
+from autodoist.github.markdown import render_as_markdown
 from github import Github
-
-def render_as_markdown(todoist_collection):
-    # Implementation of rendering todoist_collection as markdown
-    pass
 
 def post_comment_on_pr(github_token, repo, pr_number, comment):
     github = Github(github_token)
