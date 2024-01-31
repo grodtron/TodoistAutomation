@@ -28,9 +28,6 @@ class Color(Enum):
     TAUPE = "taupe"
 
 
-OptColorField() = Color.GREY
-
-
 def ExcludeIfNone(value):
     """Do not include field for None values"""
     return value is None
