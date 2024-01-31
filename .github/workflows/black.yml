@@ -4,7 +4,8 @@ name: Black formatter
 on:
   pull_request:
     branches:
-      - main  # Change this to your main branch
+      - 'main'
+
 
 
 jobs:
