@@ -12,7 +12,9 @@ class TodoistSyncManager:
     def __init__(self):
         pass
 
-    def sync(self, existing_state: ConcreteTodoistObjects, desired_state: TodoistCollection) -> ConcreteTodoistObjects:
+    def sync(
+        self, existing_state: ConcreteTodoistObjects, desired_state: TodoistCollection
+    ) -> ConcreteTodoistObjects:
         """
         Compares existing and desired states to determine objects to sync.
         Returns collections of objects to sync.
@@ -32,12 +34,10 @@ class TodoistSyncManager:
             existing_state.projects, desired_state.projects, ConcreteTodoistProject
         )
 
-        return (
-            ConcreteTodoistObjects(
-                labels=labels_to_sync,
-                filters=filters_to_sync,
-                projects=projects_to_sync,
-            )
+        return ConcreteTodoistObjects(
+            labels=labels_to_sync,
+            filters=filters_to_sync,
+            projects=projects_to_sync,
         )
 
     def _sync_objects(self, existing_objects, desired_objects, concrete_class):
@@ -49,7 +49,7 @@ class TodoistSyncManager:
 
             if existing_obj is None:
                 # Object doesn't exist, create it
-                objects_to_sync.append(concrete_class.from_dict(desired_obj.to_dict())) # type: ignore
+                objects_to_sync.append(concrete_class.from_dict(desired_obj.to_dict()))  # type: ignore
             else:
                 # Object exists, update it with only the differing attributes
                 updated_attrs = {
@@ -58,7 +58,7 @@ class TodoistSyncManager:
                     if getattr(existing_obj, attr) != value
                 }
                 if updated_attrs:
-                    updated_attrs['id'] = existing_obj.id
+                    updated_attrs["id"] = existing_obj.id
                     updated_obj = concrete_class.from_dict(updated_attrs)
                     objects_to_sync.append(updated_obj)
 

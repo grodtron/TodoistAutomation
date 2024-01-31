@@ -57,14 +57,15 @@ class TodoistApiWrapper:
         )
         self.logger.debug(f"Received Todoist objects: {response}")
         labels = [
-            ConcreteTodoistLabel.from_dict(label) # type: ignore
-            for label in response.get("labels", [])]
+            ConcreteTodoistLabel.from_dict(label)  # type: ignore
+            for label in response.get("labels", [])
+        ]
         filters = [
             ConcreteTodoistFilter.from_dict(filter_)  # type: ignore
             for filter_ in response.get("filters", [])
         ]
         projects = [
-            ConcreteTodoistProject.from_dict(project) # type: ignore
+            ConcreteTodoistProject.from_dict(project)  # type: ignore
             for project in response.get("projects", [])
         ]
 
