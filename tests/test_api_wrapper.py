@@ -71,12 +71,12 @@ class TestTodoistApiWrapper(unittest.TestCase):
                     "id": 1,
                     "name": "Filter 1",
                     "query": "query",
-                    "color": "#ffffff",
+                    "color": "berry_red",
                     "is_favorite": True,
                 }
             ],
             "projects": [
-                {"id": 1, "name": "Project 1", "color": "blue", "is_favorite": True}
+                {"id": 1, "name": "Project 1", "color": "green", "is_favorite": True}
             ],
         }
         self.mock_api_requester.make_request.return_value = expected_response
