@@ -46,7 +46,10 @@ class CommandLineInterface:
     def _preview_on_github(self, objects_to_update):
         markdown_summary = render_as_markdown(objects_to_update)
         self.github_poster.post_comment_on_pr(
-            self.args.github_token, self.args.repo, self.args.pr_number, markdown_summary
+            self.args.github_token,
+            self.args.repo,
+            self.args.pr_number,
+            markdown_summary,
         )
 
 
