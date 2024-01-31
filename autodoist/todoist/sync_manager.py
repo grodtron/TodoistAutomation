@@ -12,7 +12,7 @@ class TodoistSyncManager:
     def __init__(self):
         pass
 
-    def sync(self, existing_state: TodoistCollection, desired_state: TodoistCollection):
+    def sync(self, existing_state: ConcreteTodoistObjects, desired_state: TodoistCollection) -> ConcreteTodoistObjects:
         """
         Compares existing and desired states to determine objects to sync.
         Returns collections of objects to sync.
