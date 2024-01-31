@@ -2,14 +2,11 @@ name: Black formatter
 
 
 on:
-  pull_request:
-    branches:
-      - main
-
+  push:
 
 
 jobs:
-  test:
+  black:
     runs-on: ubuntu-latest
     
     steps:
@@ -35,5 +32,7 @@ jobs:
         git commit -m "Apply Black formatting" || exit 0
     
     - name: Push changes
-      run: git push origin HEAD:${{ github.head_ref }}
-
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.head_ref || github.ref_name }} # https://stackoverflow.com/a/71158878
