@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: pip install black
 
+    - name: Git Checkout
+      run: git checkout ${{ github.head_ref }}
+
     - name: Run Black formatter
       run: black .
 
@@ -35,5 +38,5 @@ jobs:
         git commit -m "Apply Black formatting" || exit 0
     
     - name: Push changes
-      run: git push origin HEAD:${{ github.head_ref }}
+      run: git push origin ${{ github.head_ref }}
 
