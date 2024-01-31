@@ -71,7 +71,7 @@ def main():
     existing_state = api_wrapper.get_all_todoist_objects()
     
     # Sync GTD state with Todoist
-    objects_to_update = sync_manager.sync(existing_state, desired_state)
+    objects_to_update = sync_manager.sync(desired_state, existing_state)
     
     if args.command == 'sync':
         api_wrapper.update_todoist_objects(objects_to_update)
@@ -79,7 +79,7 @@ def main():
     elif args.command == 'preview':
 
         # Preview changes on GitHub
-        markdown_summary = render_as_markdown(todoist_collection)
+        markdown_summary = render_as_markdown(objects_to_update)
         # TODO post the markdown summary as a comment on a CR.
 
 if __name__ == "__main__":
