@@ -6,6 +6,7 @@ from autodoist.models import (
     ConcreteTodoistLabel,
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
+    Color,
 )
 from autodoist.todoist.api_wrapper import TodoistApiWrapper, TodoistAPIRequester
 
@@ -63,7 +64,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         # Set up the expected response
         expected_response = {
             "labels": [
-                {"id": 1, "name": "Label 1", "color": "#ffffff", "is_favorite": True}
+                {"id": 1, "name": "Label 1", "color": "blue", "is_favorite": True}
             ],
             "filters": [
                 {
@@ -75,7 +76,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
                 }
             ],
             "projects": [
-                {"id": 1, "name": "Project 1", "color": "#ffffff", "is_favorite": True}
+                {"id": 1, "name": "Project 1", "color": "blue", "is_favorite": True}
             ],
         }
         self.mock_api_requester.make_request.return_value = expected_response
@@ -95,14 +96,14 @@ class TestTodoistApiWrapper(unittest.TestCase):
         todoist_objects = ConcreteTodoistObjects(
             labels=[
                 ConcreteTodoistLabel(
-                    id=1, name="UpdatedLabel", color="#ffffff", is_favorite=True
+                    id=1, name="UpdatedLabel", color=Color.BLUE, is_favorite=True
                 ),
                 ConcreteTodoistLabel(
-                    name="NewLabel", color="#ffffff", is_favorite=True
+                    name="NewLabel", color=Color.BLUE, is_favorite=True
                 ),
             ],
-            filters=[],  # [ConcreteTodoistFilter(id=1, name="Filter 1", query="query", color="#ffffff", is_favorite=True)],
-            projects=[],  # [ConcreteTodoistProject(id=1, name="Project 1", color="#ffffff", is_favorite=True)]
+            filters=[],
+            projects=[],
         )
 
         # Dummy UUID for mocking
@@ -114,7 +115,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
                 "uuid": dummy_uuid,
                 "args": {
                     "id": 1,
-                    "color": "#ffffff",
+                    "color": "blue",
                     "is_favorite": True,
                     "name": "UpdatedLabel",
                 },
@@ -123,7 +124,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
                 "type": "label_add",
                 "uuid": dummy_uuid,
                 "temp_id": dummy_uuid,
-                "args": {"color": "#ffffff", "is_favorite": True, "name": "NewLabel"},
+                "args": {"color": "blue", "is_favorite": True, "name": "NewLabel"},
             },
             # TODO ... similar commands for filters and projects
         ]
