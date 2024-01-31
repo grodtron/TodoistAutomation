@@ -56,12 +56,12 @@ class TodoistApiWrapper:
             sync_token="*", resource_types='["labels", "filters", "projects"]'
         )
         self.logger.debug(f"Received Todoist objects: {response}")
-        labels = [ConcreteTodoistLabel(**label) for label in response.get("labels", [])]
+        labels = [ConcreteTodoistLabel.from_dict(label) for label in response.get("labels", [])]
         filters = [
-            ConcreteTodoistFilter(**filter_) for filter_ in response.get("filters", [])
+            ConcreteTodoistFilter.from_dict(filter_) for filter_ in response.get("filters", [])
         ]
         projects = [
-            ConcreteTodoistProject(**project)
+            ConcreteTodoistProject.from_dict(project)
             for project in response.get("projects", [])
         ]
 
