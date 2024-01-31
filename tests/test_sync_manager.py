@@ -98,7 +98,7 @@ class TestTodoistSyncManager(unittest.TestCase):
     )
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
         # Act
-        sync_manager = TodoistSyncManager(mock_api_wrapper)
+        sync_manager = TodoistSyncManager()
         actual_sync_commands = sync_manager.sync(desired_state, existing_state)
 
         # Assert
