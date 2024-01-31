@@ -4,7 +4,7 @@ name: Black formatter
 on:
   pull_request:
     branches:
-      - 'main'
+      - main
 
 
 
@@ -13,27 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+       uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11' # Choose the version you want to use
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11' # Choose the version you want to use
         
-      - name: Install dependencies
-        run: pip install black
+    - name: Install dependencies
+      run: pip install black
 
-      - name: Run Black formatter
-        run: black .
+    - name: Run Black formatter
+      run: black .
 
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Apply Black formatting" || exit 0
-      
-     - name: Push changes
-       run: git push origin HEAD:${{ github.head_ref }}
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Apply Black formatting" || exit 0
+    
+    - name: Push changes
+      run: git push origin HEAD:${{ github.head_ref }}
 
