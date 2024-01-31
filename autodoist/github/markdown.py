@@ -8,7 +8,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
     def _gather_attributes(
         todoist_objects: ConcreteTodoistObjects,
     ) -> Dict[str, List[str]]:
-        attributes = {}
+        attributes: Dict[str, List[str]] = {}
         for item in todoist_objects.get_all_items():
             for field_name, field_value in item.to_dict().items():
                 if field_value is not None:
@@ -17,7 +17,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
                     attributes[field_name].append(str(field_value))
         return attributes
 
-    attributes: Dict[str, List[str]] = _gather_attributes(todoist_objects)
+    attributes = _gather_attributes(todoist_objects)
     all_fields = sorted(attributes.keys())
 
     # Ensure 'name' is the leftmost column
