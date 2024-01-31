@@ -2,10 +2,7 @@ name: Black formatter
 
 
 on:
-  pull_request:
-    branches:
-      - main
-
+  push:
 
 
 jobs:
@@ -23,9 +20,6 @@ jobs:
         
     - name: Install dependencies
       run: pip install black
-
-    - name: Git Pull
-      run: git branch -a # git checkout --track origin/${{ github.head_ref }}
 
     - name: Run Black formatter
       run: black .
