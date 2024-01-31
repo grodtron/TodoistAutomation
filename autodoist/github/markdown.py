@@ -17,7 +17,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
                     attributes[field_name].append(str(field_value))
         return attributes
 
-    attributes = _gather_attributes(todoist_objects)
+    attributes: Dict[str, List[str]] = _gather_attributes(todoist_objects)
     all_fields = sorted(attributes.keys())
 
     # Ensure 'name' is the leftmost column
