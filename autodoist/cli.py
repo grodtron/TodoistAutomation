@@ -49,7 +49,7 @@ def main():
 
     preview_parser.add_argument("--github-token", help="GitHub token for authentication.", required=True)
     preview_parser.add_argument("--repo", help="Name of the GitHub repository.", required=True)
-    preview_parser.add_argument("--pr-number", help="PR number on the GitHub repository.", required=True)
+    preview_parser.add_argument("--pr-number", help="PR number on the GitHub repository.", required=True, type=int)
 
     args = parser.parse_args()
 
