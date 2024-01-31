@@ -99,7 +99,7 @@ class TestTodoistSyncManager(unittest.TestCase):
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
         # Act
         sync_manager = TodoistSyncManager()
-        actual_sync_commands = sync_manager.sync(desired_state, existing_state)
+        actual_sync_commands = sync_manager.sync(existing_state, desired_state)
 
         # Assert
         self.assertEqual(actual_sync_commands, expected_sync_commands)
