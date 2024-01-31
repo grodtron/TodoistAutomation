@@ -28,7 +28,7 @@ class Color(Enum):
     TAUPE = "taupe"
 
 
-DEFAULT_COLOR = Color.GREY
+OptColorField() = Color.GREY
 
 
 def ExcludeIfNone(value):
@@ -143,7 +143,7 @@ class TodoistCollection:
 class Context:
     name: str
     emojis: str = ""
-    color: Color = DEFAULT_COLOR
+    color: Color = OptColorField()
 
 
 @dataclass_json
@@ -151,7 +151,7 @@ class Context:
 class CompositeContext:
     name: str
     emojis: str = ""
-    color: Color = DEFAULT_COLOR
+    color: Color = OptColorField()
     labels: List[str] = field(default_factory=list)
 
 
@@ -159,7 +159,7 @@ class CompositeContext:
 @dataclass
 class ExclusionList:
     name: str
-    color: Color = DEFAULT_COLOR
+    color: Color = OptColorField()
 
 
 @dataclass_json
