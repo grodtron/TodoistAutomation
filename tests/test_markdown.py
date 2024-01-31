@@ -31,6 +31,7 @@ def normalize_markdown_table(markdown):
 
     return markdown.strip()
 
+
 class TestNormalizeMarkdownTable(unittest.TestCase):
     def test_identical_tables(self):
         markdown_table1 = """
@@ -45,7 +46,10 @@ class TestNormalizeMarkdownTable(unittest.TestCase):
         |Alice |30   |Wonderland|
         |Bob   |25   |City      |
         """
-        self.assertEqual(normalize_markdown_table(markdown_table1), normalize_markdown_table(markdown_table2))
+        self.assertEqual(
+            normalize_markdown_table(markdown_table1),
+            normalize_markdown_table(markdown_table2),
+        )
 
 
 class TestRenderAsMarkdown(unittest.TestCase):
