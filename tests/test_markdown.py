@@ -2,6 +2,7 @@ import unittest
 from autodoist.github.markdown import render_as_markdown
 from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject, Color
 
+
 class TestRenderAsMarkdown(unittest.TestCase):
     def test_render_as_markdown(self):
         # Create some sample ConcreteTodoistObjects
