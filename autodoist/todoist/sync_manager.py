@@ -49,7 +49,7 @@ class TodoistSyncManager:
 
             if existing_obj is None:
                 # Object doesn't exist, create it
-                objects_to_sync.append(concrete_class(**desired_obj.to_dict()))
+                objects_to_sync.append(concrete_class.from_dict(desired_obj.to_dict())) # type: ignore
             else:
                 # Object exists, update it with only the differing attributes
                 updated_attrs = {
@@ -58,9 +58,8 @@ class TodoistSyncManager:
                     if getattr(existing_obj, attr) != value
                 }
                 if updated_attrs:
-                    updated_obj = concrete_class(
-                        id=existing_obj.id, **updated_attrs
-                    )
+                    updated_attrs['id'] = existing_obj.id
+                    updated_obj = concrete_class.from_dict(updated_attrs)
                     objects_to_sync.append(updated_obj)
 
         return objects_to_sync
