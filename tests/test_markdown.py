@@ -25,9 +25,7 @@ def normalize_markdown_table(markdown):
     markdown = re.sub(
         r"(\|.*?\|)",
         lambda x: "|"
-        + "|".join(
-            map(normalize_markdown_table_cell_content, x.group(1).split("|"))
-        )
+        + "|".join(map(normalize_markdown_table_cell_content, x.group(1).split("|")))
         + "|",
         markdown,
     )
