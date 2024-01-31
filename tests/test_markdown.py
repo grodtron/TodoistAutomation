@@ -5,6 +5,14 @@ from autodoist.github.markdown import render_as_markdown
 import re
 
 
+def normalize_markdown_table_cell_content(cell):
+    cell = cell.strip()
+
+    if cell == '-'*len(cell):
+        cell = '------'
+
+    return cell
+
 def normalize_markdown_table(markdown):
     # Convert to lowercase
     markdown = markdown.lower()
@@ -15,17 +23,7 @@ def normalize_markdown_table(markdown):
     # Normalize column widths
     markdown = re.sub(
         r"(\|.*?\|)",
-        lambda x: "|" + "|".join(cell.strip() for cell in x.group(1).split("|")) + "|",
-        markdown,
-    )
-
-    # Normalize number of dashes under header rows
-    markdown = re.sub(
-        r"(\|.*?\|)(\n\|[-:]+)+",
-        lambda x: x.group(1)
-        + "\n"
-        + "|".join(["-" * len(cell.strip()) for cell in x.group(1).split("|")])
-        + "|",
+        lambda x: "|" + "|".join(map(normalize_markdown_table_cell_content(cell), x.group(1).split("|"))) + "|",
         markdown,
     )
 
