@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: pip install black
 
+    - name: Git Pull
+      run: git checkout --track origin/${{ github.head_ref }}
+
     - name: Run Black formatter
       run: black .
 
