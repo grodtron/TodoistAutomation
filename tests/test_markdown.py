@@ -5,31 +5,46 @@ from autodoist.github.markdown import render_as_markdown
 import re
 
 
+def normalize_markdown_table_cell_content(cell):
+    cell = cell.strip()
+
+    if cell and cell == "-" * len(cell):
+        cell = "------"
+
+    return cell
+
+
 def normalize_markdown_table(markdown):
     # Convert to lowercase
     markdown = markdown.lower()
 
-    # Remove extra whitespace (except new lines)
-    markdown = re.sub(r"\s+", " ", markdown)
-
-    # Normalize column widths
-    markdown = re.sub(
-        r"(\|.*?\|)",
-        lambda x: "|" + "|".join(cell.strip() for cell in x.group(1).split("|")) + "|",
-        markdown,
-    )
-
-    # Normalize number of dashes under header rows
-    markdown = re.sub(
-        r"(\|.*?\|)(\n\|[-:]+)+",
-        lambda x: x.group(1)
-        + "\n"
-        + "|".join(["-" * len(cell.strip()) for cell in x.group(1).split("|")])
-        + "|",
-        markdown,
+    # Normalize columns
+    markdown = "\n".join(
+        "|".join(map(normalize_markdown_table_cell_content, line.split("|")))
+        for line in markdown.splitlines()
     )
 
     return markdown.strip()
+
+
+class TestNormalizeMarkdownTable(unittest.TestCase):
+    def test_identical_tables(self):
+        markdown_table1 = """
+        | Name   | Age | Location   |
+        |--------|-----|------------|
+        | Alice  | 30  | Wonderland |
+        | Bob    | 25  | City       |
+        """
+        markdown_table2 = """
+        | Name | Age | Location |
+        |------|-----|----------|
+        |Alice |30   |Wonderland|
+        |Bob   |25   |City      |
+        """
+        self.assertEqual(
+            normalize_markdown_table(markdown_table1),
+            normalize_markdown_table(markdown_table2),
+        )
 
 
 class TestRenderAsMarkdown(unittest.TestCase):
