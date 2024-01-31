@@ -9,7 +9,6 @@ on:
 
 jobs:
   black:
-    name: Apply Black formatter
     runs-on: ubuntu-latest
     
     steps:
