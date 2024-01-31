@@ -1,63 +1,25 @@
 import unittest
+from unittest.mock import MagicMock
 from autodoist.github.markdown import render_as_markdown
-from autodoist.models import (
-    ConcreteTodoistObjects,
-    ConcreteTodoistLabel,
-    ConcreteTodoistFilter,
-    ConcreteTodoistProject,
-    Color,
-)
 
 
 class TestRenderAsMarkdown(unittest.TestCase):
+    def setUp(self):
+        self.todoist_objects = MagicMock()
+        # Mocking some objects for testing
+        mock_item_1 = MagicMock()
+        mock_item_1.to_dict.return_value = {"name": "Task 1", "priority": 1}
+        mock_item_2 = MagicMock()
+        mock_item_2.to_dict.return_value = {"name": "Task 2", "due_date": "2024-02-01"}
+        self.todoist_objects.get_all_items.return_value = [mock_item_1, mock_item_2]
+
     def test_render_as_markdown(self):
-        # Create some sample ConcreteTodoistObjects
-        label = ConcreteTodoistLabel(name="Label 1", color=Color.RED, is_favorite=True)
-        filter = ConcreteTodoistFilter(
-            name="Filter 1", query="some query", color=Color.GREEN, is_favorite=False
-        )
-        project = ConcreteTodoistProject(
-            name="Project 1", color=Color.BLUE, is_favorite=True, parent_id=123
-        )
+        expected_markdown = "| name | due_date | priority | query |\n"
+        expected_markdown += "|------|----------|----------|-------|\n"
+        expected_markdown += "| Task 1 |  | 1 |  |\n"
+        expected_markdown += "| Task 2 | 2024-02-01 |  |  |\n"
 
-        todoist_objects = ConcreteTodoistObjects(
-            labels=[label], filters=[filter], projects=[project]
-        )
-
-        expected_output = """### Label (Created)
-| Field | Value |
-|-------|-------|
-| name | Label 1 |
-| color | red |
-| is_favorite | True |
-
-### Filter (Created)
-| Field | Value |
-|-------|-------|
-| name | Filter 1 |
-| query | some query |
-| color | green |
-| is_favorite | False |
-
-### Project (Created)
-| Field | Value |
-|-------|-------|
-| name | Project 1 |
-| color | blue |
-| is_favorite | True |
-| parent_id | 123 |
-"""
-
-        # Normalize whitespace and capitalization for comparison
-        expected_output = "\n".join(
-            [line.strip() for line in expected_output.strip().split("\n")]
-        ).lower()
-        actual_output = render_as_markdown(todoist_objects)
-        actual_output = "\n".join(
-            [line.strip() for line in actual_output.strip().split("\n")]
-        ).lower()
-
-        self.assertEqual(expected_output, actual_output)
+        self.assertEqual(render_as_markdown(self.todoist_objects), expected_markdown)
 
 
 if __name__ == "__main__":

@@ -72,7 +72,11 @@ class TestTodoistSyncManager(unittest.TestCase):
                     projects=[ConcreteTodoistProject(id=9, name="Project1")],
                 ),
                 ConcreteTodoistObjects(
-                    filters=[ConcreteTodoistFilter(id=8, query="updated_query")],
+                    filters=[
+                        ConcreteTodoistFilter(
+                            id=8, name="Filter1", query="updated_query"
+                        )
+                    ],
                 ),
             ),
             # Test case 5: Add a New Filter
