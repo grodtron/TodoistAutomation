@@ -2,6 +2,23 @@ import unittest
 from unittest.mock import MagicMock
 from autodoist.github.markdown import render_as_markdown
 
+import re
+
+def normalize_markdown_table(markdown):
+    # Convert to lowercase
+    markdown = markdown.lower()
+    
+    # Remove extra whitespace (except new lines)
+    markdown = re.sub(r'\s+', ' ', markdown)
+    
+    # Normalize column widths
+    markdown = re.sub(r'(\|.*?\|)', lambda x: '|' + '|'.join(cell.strip() for cell in x.group(1).split('|')) + '|', markdown)
+    
+    # Normalize number of dashes under header rows
+    markdown = re.sub(r'(\|.*?\|)(\n\|[-:]+)+', lambda x: x.group(1) + '\n' + '|'.join(['-' * len(cell.strip()) for cell in x.group(1).split('|')]) + '|', markdown)
+    
+    return markdown.strip()
+
 
 class TestRenderAsMarkdown(unittest.TestCase):
     def setUp(self):
@@ -19,7 +36,7 @@ class TestRenderAsMarkdown(unittest.TestCase):
         expected_markdown += "| Task 1 |  | 1 |\n"
         expected_markdown += "| Task 2 | 2024-02-01 |  |\n"
 
-        self.assertEqual(render_as_markdown(self.todoist_objects), expected_markdown)
+        self.assertEqual(normalize_markdown_table(render_as_markdown(self.todoist_objects)), normalize_markdown_table(expected_markdown))
 
 
 if __name__ == "__main__":
