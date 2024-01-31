@@ -38,8 +38,8 @@ def ExcludeIfNone(value):
 def OptField(default_val=None):
     return field(metadata=config(exclude=ExcludeIfNone), default=default_val)
 
-def OptColorField():
-    return field(metadata=config(exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color))
+def OptColorField(default_val=None):
+    return field(metadata=config(exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color), default=default_val)
 
 @dataclass_json
 @dataclass
