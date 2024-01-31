@@ -9,6 +9,7 @@ from autodoist.gtd.gtd_state import (
     Context,
     CompositeContext,
     ExclusionList,
+    Color,
 )
 
 
@@ -18,16 +19,16 @@ class TestGTDState(unittest.TestCase):
         self.maxDiff = None
 
         # Create some test data
-        context1 = Context(name="Work", emojis="🚀", color="blue")
+        context1 = Context(name="Work", emojis="🚀", color=Color.BLUE)
         context2 = CompositeContext(
-            name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"]
+            name="Personal", emojis="🌟", color=Color.GREEN, labels=["Health", "Finance"]
         )
 
         # Create an instance of GTDState and add the test data
         gtd_state = GTDState(
             contexts=[context1],
             composite_contexts=[context2],
-            exclusion_lists=[ExclusionList(name="NotNow")],
+            exclusion_lists=[ExclusionList(name="NotNow", color=Color.RED)],
         )
 
         # Call the method you want to test
@@ -38,22 +39,22 @@ class TestGTDState(unittest.TestCase):
 
         # Assert that the result contains the expected labels and filters
         expected_labels = [
-            TodoistLabel(name="Work", color="blue", is_favorite=True),
-            TodoistLabel(name="Health", color="green", is_favorite=True),
-            TodoistLabel(name="Finance", color="green", is_favorite=True),
+            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=True),
+            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=True),
+            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=True),
         ]
 
         expected_filters = [
             TodoistFilter(
                 name="🚀 Work",
                 query=f"#Work{' ' * 60}| (@Work & !#NotNow)",
-                color="blue",
+                color=Color.BLUE,
                 is_favorite=True,
             ),
             TodoistFilter(
                 name="🌟 Personal",
                 query=f"#Personal{' ' * 60}| (@Personal & !#NotNow),#Health{' ' * 60}| (@Health & !#NotNow),#Finance{' ' * 60}| (@Finance & !#NotNow)",
-                color="green",
+                color=Color.GREEN,
                 is_favorite=True,
             ),
         ]
@@ -66,9 +67,9 @@ class TestGTDState(unittest.TestCase):
         self.maxDiff = None
 
         # Create some test data
-        context1 = Context(name="Work", emojis="🚀", color="blue")
+        context1 = Context(name="Work", emojis="🚀", color=Color.BLUE)
         context2 = CompositeContext(
-            name="Personal", emojis="🌟", color="green", labels=["Health", "Finance"]
+            name="Personal", emojis="🌟", color=Color.GREEN, labels=["Health", "Finance"]
         )
 
         # Create an instance of GTDState and add the test data with multiple exclusion lists
@@ -76,8 +77,8 @@ class TestGTDState(unittest.TestCase):
             contexts=[context1],
             composite_contexts=[context2],
             exclusion_lists=[
-                ExclusionList(name="NotNow", color="red"),
-                ExclusionList(name="Vacation", color="blue"),
+                ExclusionList(name="NotNow", color=Color.RED),
+                ExclusionList(name="Vacation", color=Color.BLUE),
             ],
         )
 
@@ -89,29 +90,29 @@ class TestGTDState(unittest.TestCase):
 
         # Assert that the result contains the expected labels and filters with multiple exclusion lists
         expected_labels = [
-            TodoistLabel(name="Work", color="blue", is_favorite=True),
-            TodoistLabel(name="Health", color="green", is_favorite=True),
-            TodoistLabel(name="Finance", color="green", is_favorite=True),
+            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=True),
+            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=True),
+            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=True),
         ]
 
         expected_filters = [
             TodoistFilter(
                 name="🚀 Work",
                 query=f"#Work{' ' * 60}| (@Work & !#NotNow & !#Vacation)",
-                color="blue",
+                color=Color.BLUE,
                 is_favorite=True,
             ),
             TodoistFilter(
                 name="🌟 Personal",
                 query=f"#Personal{' ' * 60}| (@Personal & !#NotNow & !#Vacation),#Health{' ' * 60}| (@Health & !#NotNow & !#Vacation),#Finance{' ' * 60}| (@Finance & !#NotNow & !#Vacation)",
-                color="green",
+                color=Color.GREEN,
                 is_favorite=True,
             ),
         ]
 
         expected_projects = [
-            TodoistProject(name="NotNow", color="red", is_favorite=False),
-            TodoistProject(name="Vacation", color="blue", is_favorite=False),
+            TodoistProject(name="NotNow", color=Color.RED, is_favorite=False),
+            TodoistProject(name="Vacation", color=Color.BLUE, is_favorite=False),
         ]
 
         self.assertEqual(result.labels, expected_labels)
