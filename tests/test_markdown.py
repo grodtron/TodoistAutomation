@@ -19,8 +19,7 @@ def normalize_markdown_table(markdown):
     markdown = markdown.lower()
 
     # Normalize columns
-    markdown = 
-     "\n".join(
+    markdown = "\n".join(
         "|".join(map(normalize_markdown_table_cell_content, line.split("|")))
          for line in
          markdown.splitlines()
