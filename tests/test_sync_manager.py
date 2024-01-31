@@ -97,22 +97,12 @@ class TestTodoistSyncManager(unittest.TestCase):
         ]
     )
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
-        # Arrange
-        class MockApiWrapper:
-            def get_all_todoist_objects(self):
-                return existing_state
-
-            def update_todoist_objects(self, concrete_objects):
-                self.updated_objects = concrete_objects
-
-        mock_api_wrapper = MockApiWrapper()
-
         # Act
         sync_manager = TodoistSyncManager(mock_api_wrapper)
-        sync_manager.sync(desired_state)
+        actual_sync_commands = sync_manager.sync(desired_state, existing_state)
 
         # Assert
-        self.assertEqual(mock_api_wrapper.updated_objects, expected_sync_commands)
+        self.assertEqual(actual_sync_commands, expected_sync_commands)
 
 
 if __name__ == "__main__":
