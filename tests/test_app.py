@@ -68,7 +68,7 @@ class TestAutoDoistApp(TestCase):
         api_requester_mock = MagicMock()
         api_requester_mock.make_request.side_effect = [
             first_call_response,
-            None,  # TODO
+            {},  # TODO
         ]
 
         # Mock GitHubClient if it's part of your test, otherwise set it up accordingly
@@ -85,7 +85,7 @@ class TestAutoDoistApp(TestCase):
         app.run(args)
 
         # Verify make_request was called correctly
-        expected_calls = [call(None), call(**expected_commands)]  # TODO first call args
+        expected_calls = [call(sync_token="*", resource_types='["labels", "filters", "projects"]'), call(commands=expected_commands)]  # TODO first call args
         api_requester_mock.make_request.assert_has_calls(
             expected_calls, any_order=False
         )
