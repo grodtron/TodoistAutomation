@@ -95,7 +95,11 @@ def main():
 
     file_reader = lambda file_path: open(file_path, "r").read()
     api_requester = TodoistAPIRequester(args.api_key)
-    todoist_api_wrapper = TodoistApiWrapper(api_requester) if not args.dry_run else DryRunTodoistApiWrapper(api_requester)
+    todoist_api_wrapper = (
+        TodoistApiWrapper(api_requester)
+        if not args.dry_run
+        else DryRunTodoistApiWrapper(api_requester)
+    )
     github_client = GitHubClient(args.github_token)
 
     app = AutoDoistApp(file_reader, todoist_api_wrapper, github_client)
