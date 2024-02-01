@@ -8,26 +8,49 @@ from yourmodule import (
 
 class TestAutoDoistApp(unittest.TestCase):
 
-    @parameterized.expand(
-        [
-            (
-                "path/to/yaml_file_1",
-                {"type": "get", "data": {...}},
-                {"type": "update", "data": {...}},
-                {"response": "first_call_response_data"},
-                {"response": "second_call_response_data"},
-            ),
-            # Add more sets of parameters for additional test cases
-        ]
-    )
-    def test_auto_doist_app(
-        self,
-        yaml_input,
-        first_call_payload,
-        second_call_payload,
-        first_call_response,
-        second_call_response,
-    ):
+from unittest import TestCase
+from parameterized import parameterized
+from unittest.mock import MagicMock, call
+
+class TestAutoDoistApp(TestCase):
+
+    @parameterized.expand([
+        # Test Case 1
+        (
+            # YAML input (simplified for brevity)
+            '''
+            contexts:
+              - name: "call"
+                color: "red"
+            composite_contexts:
+              - name: "home"
+                color: "yellow"
+                labels:
+                  - "basement"
+            exclusion_lists:
+              - name: "NotNow"
+                color: "grey"
+            ''',
+            # First call response (Get Data Result, simplified)
+            {
+                "filters": [
+                    {"id": "2345719224", "name": "📞🗣️📲 Call", "color": "red"},
+                    # Adding only one filter for simplicity
+                ],
+                "projects": [
+                    {"id": "2326905183", "name": "NotNow", "color": "grey"},
+                    # Adding only one project for simplicity
+                ]
+            },
+            # Expected Commands Submitted (simplified list of commands)
+            [
+                {'type': 'filter_update', 'args': {'name': '📞🗣️📲 Call', 'color': 'red', 'id': '2345719224'}},
+                {'type': 'project_update', 'args': {'name': 'NotNow', 'color': 'grey', 'id': '2326905183'}},
+                # Simplified to only match part of the provided commands for brevity
+            ]
+        ),
+    ])
+    def test_auto_doist_app(self, yaml_input, first_call_response, expected_commands):
         # Mock the file reader
         file_reader_mock = MagicMock(return_value=yaml_input)
 
@@ -35,7 +58,7 @@ class TestAutoDoistApp(unittest.TestCase):
         api_requester_mock = MagicMock()
         api_requester_mock.make_request.side_effect = [
             first_call_response,
-            second_call_response,
+            None, # TODO
         ]
 
         # Mock GitHubClient if it's part of your test, otherwise set it up accordingly
@@ -52,7 +75,7 @@ class TestAutoDoistApp(unittest.TestCase):
         app.run(args)
 
         # Verify make_request was called correctly
-        expected_calls = [call(**first_call_payload), call(**second_call_payload)]
+        expected_calls = [call(None) , call(**expected_commands)] # TODO first call args
         api_requester_mock.make_request.assert_has_calls(
             expected_calls, any_order=False
         )
