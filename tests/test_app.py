@@ -1,12 +1,9 @@
 import unittest
 from parameterized import parameterized
 from unittest.mock import MagicMock, call
-from yourmodule import (
+from autodoist.cli import (
     AutoDoistApp,
 )  # Adjust the import path to your actual module structure
-
-
-class TestAutoDoistApp(unittest.TestCase):
 
 from unittest import TestCase
 from parameterized import parameterized
