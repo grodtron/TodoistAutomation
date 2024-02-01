@@ -8,7 +8,9 @@ from autodoist.cli import (
 from unittest import TestCase
 from parameterized import parameterized
 from unittest.mock import MagicMock, call
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 class TestAutoDoistApp(TestCase):
 
