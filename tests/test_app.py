@@ -85,7 +85,10 @@ class TestAutoDoistApp(TestCase):
         app.run(args)
 
         # Verify make_request was called correctly
-        expected_calls = [call(sync_token="*", resource_types='["labels", "filters", "projects"]'), call(commands=expected_commands)]  # TODO first call args
+        expected_calls = [
+            call(sync_token="*", resource_types='["labels", "filters", "projects"]'),
+            call(commands=expected_commands),
+        ]  # TODO first call args
         api_requester_mock.make_request.assert_has_calls(
             expected_calls, any_order=False
         )
