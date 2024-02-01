@@ -12,6 +12,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
+
 class TestAutoDoistApp(TestCase):
 
     @parameterized.expand(
