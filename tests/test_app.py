@@ -64,6 +64,7 @@ def make_label(
         "name": name,
     }
 
+
 def make_add_command(type, **kwargs):
     return {
         "type": f"{type}_add",
@@ -72,13 +73,13 @@ def make_add_command(type, **kwargs):
         "temp_id": "fixed-temp-id-for-add",
     }
 
+
 def make_update_command(type, **kwargs):
     return {
         "type": f"{type}_update",
         "args": kwargs,
         "uuid": "fixed-uuid-for-update",
     }
-
 
 
 def make_hashable_and_comparable(command_dict):
@@ -127,10 +128,18 @@ class TestAutoDoistApp(TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command("label", name="hardware-store", color="green", is_favorite=True, id=2171134071),
-                    make_add_command("project", name="Waiting", color="lavender", is_favorite=False),
+                    make_update_command(
+                        "label",
+                        name="hardware-store",
+                        color="green",
+                        is_favorite=True,
+                        id=2171134071,
+                    ),
+                    make_add_command(
+                        "project", name="Waiting", color="lavender", is_favorite=False
+                    ),
                     # Simplified to only match part of the provided commands for brevity
-                ]
+                ],
             ),
         ]
     )
