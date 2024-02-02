@@ -1,7 +1,12 @@
 import unittest
 from unittest.mock import MagicMock
 from autodoist.github.markdown import render_as_markdown
-from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
+from autodoist.models import (
+    ConcreteTodoistObjects,
+    ConcreteTodoistLabel,
+    ConcreteTodoistFilter,
+    ConcreteTodoistProject,
+)
 
 import re
 
@@ -51,9 +56,17 @@ class TestNormalizeMarkdownTable(unittest.TestCase):
 class TestRenderAsMarkdown(unittest.TestCase):
     def setUp(self):
         self.todoist_objects = ConcreteTodoistObjects(
-            labels=[ConcreteTodoistLabel(name="Urgent", color="red", is_favorite=True, id=1)],
-            filters=[ConcreteTodoistFilter(name="Work", query="@work", color="blue", is_favorite=False)],
-            projects=[ConcreteTodoistProject(name="Personal", color="green", is_favorite=True)]
+            labels=[
+                ConcreteTodoistLabel(name="Urgent", color="red", is_favorite=True, id=1)
+            ],
+            filters=[
+                ConcreteTodoistFilter(
+                    name="Work", query="@work", color="blue", is_favorite=False
+                )
+            ],
+            projects=[
+                ConcreteTodoistProject(name="Personal", color="green", is_favorite=True)
+            ],
         )
 
     def test_render_as_markdown(self):
@@ -68,7 +81,6 @@ class TestRenderAsMarkdown(unittest.TestCase):
         normalized_rendered = normalize_markdown_table(rendered_markdown)
         normalized_expected = normalize_markdown_table(expected_markdown)
         self.assertEqual(normalized_rendered, normalized_expected)
-
 
 
 if __name__ == "__main__":
