@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 from autodoist.github.markdown import render_as_markdown
-from autodoist.
+from autodoist.models import ConcreteTodoistObjects, ConcreteTodoistLabel, ConcreteTodoistFilter, ConcreteTodoistProject
 
 import re
 
