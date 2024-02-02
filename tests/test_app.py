@@ -48,7 +48,6 @@ class TestAutoDoistApp(TestCase):
                 # First call response (Get Data Result, simplified)
                 {
                     "filters": [
-                        "filters":[
                             {
                                 "color":"charcoal","id":"2345945708","is_deleted":false,"is_favorite":true,"item_order":1,"name":"Foobar","query":"somequery"
                             },{
