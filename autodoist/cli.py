@@ -13,15 +13,44 @@ from autodoist.github.markdown import render_as_markdown
 from github import Github
 
 
-def post_comment_on_pr(github_token, repo, pr_number, comment):
-    github = Github(github_token)
-    repo = github.get_repo(f"{repo}")
-    pr = repo.get_pull(pr_number)
-    pr.create_issue_comment(comment)
+class GitHubClient:
+    def __init__(self, github_token):
+        self.github = Github(github_token)
+
+    def post_comment(self, repo, pr_number, comment):
+        repo = self.github.get_repo(repo)
+        pr = repo.get_pull(pr_number)
+        pr.create_issue_comment(comment)
 
 
-def main():
-    # Parse command line arguments
+class AutoDoistApp:
+    def __init__(self, file_reader, api_requester, github_client):
+        self.file_reader = file_reader
+        self.api_requester = api_requester
+        self.github_client = github_client
+
+    def run(self, args):
+        yaml_data = self.file_reader(args.yaml_file)
+        gtd_state = load_gtd_state_from_yaml(yaml_data)
+
+        todoist_api_wrapper = (
+            TodoistApiWrapper(self.api_requester)
+            if not args.dry_run
+            else DryRunTodoistApiWrapper(self.api_requester)
+        )
+
+        desired_state = process_gtd_state(gtd_state)
+        existing_state = todoist_api_wrapper.get_all_todoist_objects()
+        objects_to_update = TodoistSyncManager().sync(existing_state, desired_state)
+
+        if args.command == "sync":
+            todoist_api_wrapper.update_todoist_objects(objects_to_update)
+        elif args.command == "preview":
+            markdown_summary = render_as_markdown(objects_to_update)
+            self.github_client.post_comment(args.repo, args.pr_number, markdown_summary)
+
+
+def parse_arguments():
     parser = argparse.ArgumentParser(
         description="Command line tool for syncing GTD state with Todoist."
     )
@@ -36,17 +65,11 @@ def main():
         action="store_true",
     )
     parser.add_argument(
-        "--debug",
-        help="Enable debug level logging project wide.",
-        action="store_true",
+        "--debug", help="Enable debug level logging project wide.", action="store_true"
     )
 
     subparsers = parser.add_subparsers(dest="command", help="sub-command help")
-
-    # Sub-parser for syncing directly to Todoist
     sync_parser = subparsers.add_parser("sync", help="Sync GTD state with Todoist")
-
-    # Sub-parser for previewing changes on GitHub
     preview_parser = subparsers.add_parser("preview", help="Preview changes on GitHub")
 
     preview_parser.add_argument(
@@ -62,45 +85,23 @@ def main():
         type=int,
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
 
-    # Set logging level to DEBUG if debug flag is provided
+
+def main():
+    args = parse_arguments()
+
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.INFO)
 
-    # Load GTD state from YAML file
-    with open(args.yaml_file, "r") as f:
-        yaml_data = f.read()
-    gtd_state = load_gtd_state_from_yaml(yaml_data)
-
-    # Initialize Todoist components
+    file_reader = lambda file_path: open(file_path, "r").read()
     api_requester = TodoistAPIRequester(args.api_key)
+    github_client = GitHubClient(args.github_token)
 
-    if not args.dry_run:
-        api_wrapper = TodoistApiWrapper(api_requester)
-    else:
-        api_wrapper = DryRunTodoistApiWrapper(api_requester)
-
-    sync_manager = TodoistSyncManager()
-    desired_state = process_gtd_state(gtd_state)
-
-    existing_state = api_wrapper.get_all_todoist_objects()
-
-    # Sync GTD state with Todoist
-    objects_to_update = sync_manager.sync(existing_state, desired_state)
-
-    if args.command == "sync":
-        api_wrapper.update_todoist_objects(objects_to_update)
-
-    elif args.command == "preview":
-
-        # Preview changes on GitHub
-        markdown_summary = render_as_markdown(objects_to_update)
-        post_comment_on_pr(
-            args.github_token, args.repo, args.pr_number, markdown_summary
-        )
+    app = AutoDoistApp(file_reader, api_requester, github_client)
+    app.run(args)
 
 
 if __name__ == "__main__":
