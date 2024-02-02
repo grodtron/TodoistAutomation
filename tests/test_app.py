@@ -102,7 +102,7 @@ class TestAutoDoistApp(TestCase):
         # Verify make_request was called correctly
         self.assertEqual(api_requester_mock.make_request.call_count, 2)
         self.assertEqual(
-            api_requester_mock.call_args_list[0],
+            api_requester_mock.make_request.call_args_list[0],
             call(sync_token="*", resource_types='["labels", "filters", "projects"]'),
         )
 
