@@ -64,7 +64,10 @@ class TestRenderAsMarkdown(unittest.TestCase):
             ],
             filters=[
                 ConcreteTodoistFilter(
-                    name="Work", query="@work", color=Color.BLUE, is_favorite=False
+                    name="Work",
+                    query="@work     | (@work & !#NotNow)",
+                    color=Color.BLUE,
+                    is_favorite=False,
                 )
             ],
             projects=[
@@ -76,10 +79,10 @@ class TestRenderAsMarkdown(unittest.TestCase):
 
     def test_render_as_markdown(self):
         expected_markdown = """
-| Type   | Operation | ID  | Name     | Other Attributes           |
+| Type   | Operation | ID  | Name     | New/Changed Attributes           |
 | ------ | --------- | --- | -------- | -------------------------- |
 | Label  | 🌳🔄    | 1   | Urgent   | Color=red, Is_favorite=True|
-| Filter | 🌱✨    |  | Work     | Query=@work, Color=blue, Is_favorite=False |
+| Filter | 🌱✨    |  | Work     | Query=`@work {5 spaces} \| (@work & !#NotNow)`, Color=blue, Is_favorite=False |
 | Project| 🌱✨    |  | Personal | Color=green, Is_favorite=True |
 """
         rendered_markdown = render_as_markdown(self.todoist_objects)
