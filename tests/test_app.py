@@ -1,18 +1,50 @@
 import unittest
 from parameterized import parameterized
 from unittest.mock import MagicMock, call
-from autodoist.cli import (
-    AutoDoistApp,
-)  # Adjust the import path to your actual module structure
-
-from unittest import TestCase
-from parameterized import parameterized
-from unittest.mock import MagicMock, call
+from autodoist.cli import AutoDoistApp
 import logging
-
-
 import json
 
+def make_filter(name="Foobar", query="somequery", color="charcoal", is_deleted=False, is_favorite=True, item_order=1):
+    return {
+        "color": color,
+        "id": "2345945708",
+        "is_deleted": is_deleted,
+        "is_favorite": is_favorite,
+        "item_order": item_order,
+        "name": name,
+        "query": query,
+    }
+
+def make_project(name="Inbox", color="charcoal", is_archived=False, is_deleted=False, is_favorite=False):
+    return {
+        "child_order": 0,
+        "collapsed": False,
+        "color": color,
+        "created_at": "2023-09-24T09:20:22Z",
+        "id": "2320352216",
+        "inbox_project": True,
+        "is_archived": is_archived,
+        "is_deleted": is_deleted,
+        "is_favorite": is_favorite,
+        "name": name,
+        "parent_id": None,
+        "shared": False,
+        "sync_id": None,
+        "updated_at": "2023-09-24T09:20:22Z",
+        "v2_id": "6QXmCv9WvMrJfh33",
+        "view_style": "list",
+    }
+
+def make_label(name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20):
+    return {
+        "color": color,
+        "id": "2171177815",
+        "is_deleted": is_deleted,
+        "is_favorite": is_favorite,
+        "item_order": item_order,
+        "name": name,
+    }
 
 def make_hashable_and_comparable(command_dict):
     for uuid_field in ["uuid", "temp_id"]:
@@ -21,9 +53,7 @@ def make_hashable_and_comparable(command_dict):
 
     return json.dumps(command_dict, sort_keys=True)
 
-
 logging.basicConfig(level=logging.DEBUG)
-
 
 class TestAutoDoistApp(TestCase):
 
@@ -47,81 +77,9 @@ class TestAutoDoistApp(TestCase):
             """,
                 # First call response (Get Data Result, simplified)
                 {
-                    "filters": [
-                        {
-                            "color": "charcoal",
-                            "id": "2345945708",
-                            "is_deleted": false,
-                            "is_favorite": true,
-                            "item_order": 1,
-                            "name": "Foobar",
-                            "query": "somequery",
-                        },
-                        {
-                            "color": "charcoal",
-                            "id": "2345943667",
-                            "is_deleted": false,
-                            "is_favorite": false,
-                            "item_order": 2,
-                            "name": "Test of wizard workflow",
-                            "query": "#TEST & subtask & today",
-                        },
-                    ],
-                    "projects": [
-                        {
-                            "child_order": 0,
-                            "collapsed": false,
-                            "color": "charcoal",
-                            "created_at": "2023-09-24T09:20:22Z",
-                            "id": "2320352216",
-                            "inbox_project": true,
-                            "is_archived": false,
-                            "is_deleted": false,
-                            "is_favorite": false,
-                            "name": "Inbox",
-                            "parent_id": null,
-                            "shared": false,
-                            "sync_id": null,
-                            "updated_at": "2023-09-24T09:20:22Z",
-                            "v2_id": "6QXmCv9WvMrJfh33",
-                            "view_style": "list",
-                        },
-                        {
-                            "child_order": 0,
-                            "collapsed": false,
-                            "color": "grey",
-                            "created_at": "2023-09-24T09:20:34Z",
-                            "id": "2320352279",
-                            "is_archived": false,
-                            "is_deleted": false,
-                            "is_favorite": false,
-                            "name": "\ud83d\udcbb Professional",
-                            "parent_id": null,
-                            "shared": false,
-                            "sync_id": null,
-                            "updated_at": "2023-12-08T13:01:10Z",
-                            "v2_id": "6QXmCwGR8cffFp7j",
-                            "view_style": "list",
-                        },
-                    ],
-                    "labels": [
-                        {
-                            "color": "charcoal",
-                            "id": "2171177815",
-                            "is_deleted": false,
-                            "is_favorite": false,
-                            "item_order": 20,
-                            "name": "Top3",
-                        },
-                        {
-                            "color": "charcoal",
-                            "id": "2170323972",
-                            "is_deleted": false,
-                            "is_favorite": false,
-                            "item_order": 19,
-                            "name": "basement",
-                        },
-                    ],
+                    "filters": [make_filter()],
+                    "projects": [make_project(), make_project(name="Professional", color="grey", updated_at="2023-12-08T13:01:10Z")],
+                    "labels": [make_label(), make_label(name="basement")],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
@@ -193,7 +151,6 @@ class TestAutoDoistApp(TestCase):
         }
 
         self.assertEqual(actual_commands_set, expected_commands_set)
-
 
 if __name__ == "__main__":
     unittest.main()
