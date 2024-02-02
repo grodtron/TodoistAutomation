@@ -5,7 +5,15 @@ from autodoist.cli import AutoDoistApp
 import logging
 import json
 
-def make_filter(name="Foobar", query="somequery", color="charcoal", is_deleted=False, is_favorite=True, item_order=1):
+
+def make_filter(
+    name="Foobar",
+    query="somequery",
+    color="charcoal",
+    is_deleted=False,
+    is_favorite=True,
+    item_order=1,
+):
     return {
         "color": color,
         "id": "2345945708",
@@ -16,7 +24,14 @@ def make_filter(name="Foobar", query="somequery", color="charcoal", is_deleted=F
         "query": query,
     }
 
-def make_project(name="Inbox", color="charcoal", is_archived=False, is_deleted=False, is_favorite=False):
+
+def make_project(
+    name="Inbox",
+    color="charcoal",
+    is_archived=False,
+    is_deleted=False,
+    is_favorite=False,
+):
     return {
         "child_order": 0,
         "collapsed": False,
@@ -36,7 +51,10 @@ def make_project(name="Inbox", color="charcoal", is_archived=False, is_deleted=F
         "view_style": "list",
     }
 
-def make_label(name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20):
+
+def make_label(
+    name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20
+):
     return {
         "color": color,
         "id": "2171177815",
@@ -46,6 +64,7 @@ def make_label(name="Top3", color="charcoal", is_deleted=False, is_favorite=Fals
         "name": name,
     }
 
+
 def make_hashable_and_comparable(command_dict):
     for uuid_field in ["uuid", "temp_id"]:
         if uuid_field in command_dict:
@@ -53,7 +72,9 @@ def make_hashable_and_comparable(command_dict):
 
     return json.dumps(command_dict, sort_keys=True)
 
+
 logging.basicConfig(level=logging.DEBUG)
+
 
 class TestAutoDoistApp(TestCase):
 
@@ -78,7 +99,14 @@ class TestAutoDoistApp(TestCase):
                 # First call response (Get Data Result, simplified)
                 {
                     "filters": [make_filter()],
-                    "projects": [make_project(), make_project(name="Professional", color="grey", updated_at="2023-12-08T13:01:10Z")],
+                    "projects": [
+                        make_project(),
+                        make_project(
+                            name="Professional",
+                            color="grey",
+                            updated_at="2023-12-08T13:01:10Z",
+                        ),
+                    ],
                     "labels": [make_label(), make_label(name="basement")],
                 },
                 # Expected Commands Submitted (simplified list of commands)
@@ -151,6 +179,7 @@ class TestAutoDoistApp(TestCase):
         }
 
         self.assertEqual(actual_commands_set, expected_commands_set)
+
 
 if __name__ == "__main__":
     unittest.main()
