@@ -79,7 +79,7 @@ class TodoistApiWrapper:
             sync_commands.append(self._create_update_command(item_type, item.id, item))
 
         self.logger.debug(f"Sending update commands: {sync_commands}")
-        return self.api_requester.make_request(commands=sync_commands)
+        return self.api_requester.make_request(commands=json.dumps(sync_commands))
 
     def _create_update_command(
         self, item_type: str, item_id: Optional[int], updated_item
