@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 from autodoist.github.markdown import render_as_markdown
+from autodoist.
 
 import re
 
@@ -49,24 +50,25 @@ class TestNormalizeMarkdownTable(unittest.TestCase):
 
 class TestRenderAsMarkdown(unittest.TestCase):
     def setUp(self):
-        self.todoist_objects = MagicMock()
-        # Mocking some objects for testing
-        mock_item_1 = MagicMock()
-        mock_item_1.to_dict.return_value = {"name": "Task 1", "priority": 1}
-        mock_item_2 = MagicMock()
-        mock_item_2.to_dict.return_value = {"name": "Task 2", "due_date": "2024-02-01"}
-        self.todoist_objects.get_all_items.return_value = [mock_item_1, mock_item_2]
+        self.todoist_objects = ConcreteTodoistObjects(
+            labels=[ConcreteTodoistLabel(name="Urgent", color="red", is_favorite=True, id=1)],
+            filters=[ConcreteTodoistFilter(name="Work", query="@work", color="blue", is_favorite=False)],
+            projects=[ConcreteTodoistProject(name="Personal", color="green", is_favorite=True)]
+        )
 
     def test_render_as_markdown(self):
-        expected_markdown = "| name | due_date | priority |\n"
-        expected_markdown += "|------|----------|----------|\n"
-        expected_markdown += "| Task 1 |  | 1 |\n"
-        expected_markdown += "| Task 2 | 2024-02-01 |  |\n"
+        expected_markdown = """
+| Type   | Operation | ID  | Name     | Other Attributes           |
+| ------ | --------- | --- | -------- | -------------------------- |
+| Label  | Update    | 1   | Urgent   | Color=red, Is_favorite=True|
+| Filter | Create    | N/A | Work     | Query=@work, Color=blue, Is_favorite=False |
+| Project| Create    | N/A | Personal | Color=green, Is_favorite=True |
+"""
+        rendered_markdown = render_as_markdown(self.todoist_objects)
+        normalized_rendered = normalize_markdown_table(rendered_markdown)
+        normalized_expected = normalize_markdown_table(expected_markdown)
+        self.assertEqual(normalized_rendered, normalized_expected)
 
-        self.assertEqual(
-            normalize_markdown_table(render_as_markdown(self.todoist_objects)),
-            normalize_markdown_table(expected_markdown),
-        )
 
 
 if __name__ == "__main__":
