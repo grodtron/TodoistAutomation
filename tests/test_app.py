@@ -15,7 +15,7 @@ import json
 
 
 def make_hashable_and_comparable(command_dict):
-    for uuid_field in ['uuid', 'temp_id']:
+    for uuid_field in ["uuid", "temp_id"]:
         if uuid_field in command_dict:
             command_dict[uuid_field] = "DUMMY_VALUE"
 
@@ -48,29 +48,103 @@ class TestAutoDoistApp(TestCase):
                 # First call response (Get Data Result, simplified)
                 {
                     "filters": [
-                            {
-                                "color":"charcoal","id":"2345945708","is_deleted":false,"is_favorite":true,"item_order":1,"name":"Foobar","query":"somequery"
-                            },{
-                                "color":"charcoal","id":"2345943667","is_deleted":false,"is_favorite":false,"item_order":2,"name":"Test of wizard workflow","query":"#TEST & subtask & today"
-                            }
-                    ],
-                    "projects":[
                         {
-                            "child_order":0,"collapsed":false,"color":"charcoal","created_at":"2023-09-24T09:20:22Z","id":"2320352216","inbox_project":true,"is_archived":false,"is_deleted":false,"is_favorite":false,"name":"Inbox","parent_id":null,"shared":false,"sync_id":null,"updated_at":"2023-09-24T09:20:22Z","v2_id":"6QXmCv9WvMrJfh33","view_style":"list"
-                        },{
-                            "child_order":0,"collapsed":false,"color":"grey","created_at":"2023-09-24T09:20:34Z","id":"2320352279","is_archived":false,"is_deleted":false,"is_favorite":false,"name":"\ud83d\udcbb Professional","parent_id":null,"shared":false,"sync_id":null,"updated_at":"2023-12-08T13:01:10Z","v2_id":"6QXmCwGR8cffFp7j","view_style":"list"
-                        }],
-                    "labels":[{
-                            "color":"charcoal","id":"2171177815","is_deleted":false,"is_favorite":false,"item_order":20,"name":"Top3"
-                        },{
-                            "color":"charcoal","id":"2170323972","is_deleted":false,"is_favorite":false,"item_order":19,"name":"basement"
+                            "color": "charcoal",
+                            "id": "2345945708",
+                            "is_deleted": false,
+                            "is_favorite": true,
+                            "item_order": 1,
+                            "name": "Foobar",
+                            "query": "somequery",
                         },
-                             ],
+                        {
+                            "color": "charcoal",
+                            "id": "2345943667",
+                            "is_deleted": false,
+                            "is_favorite": false,
+                            "item_order": 2,
+                            "name": "Test of wizard workflow",
+                            "query": "#TEST & subtask & today",
+                        },
+                    ],
+                    "projects": [
+                        {
+                            "child_order": 0,
+                            "collapsed": false,
+                            "color": "charcoal",
+                            "created_at": "2023-09-24T09:20:22Z",
+                            "id": "2320352216",
+                            "inbox_project": true,
+                            "is_archived": false,
+                            "is_deleted": false,
+                            "is_favorite": false,
+                            "name": "Inbox",
+                            "parent_id": null,
+                            "shared": false,
+                            "sync_id": null,
+                            "updated_at": "2023-09-24T09:20:22Z",
+                            "v2_id": "6QXmCv9WvMrJfh33",
+                            "view_style": "list",
+                        },
+                        {
+                            "child_order": 0,
+                            "collapsed": false,
+                            "color": "grey",
+                            "created_at": "2023-09-24T09:20:34Z",
+                            "id": "2320352279",
+                            "is_archived": false,
+                            "is_deleted": false,
+                            "is_favorite": false,
+                            "name": "\ud83d\udcbb Professional",
+                            "parent_id": null,
+                            "shared": false,
+                            "sync_id": null,
+                            "updated_at": "2023-12-08T13:01:10Z",
+                            "v2_id": "6QXmCwGR8cffFp7j",
+                            "view_style": "list",
+                        },
+                    ],
+                    "labels": [
+                        {
+                            "color": "charcoal",
+                            "id": "2171177815",
+                            "is_deleted": false,
+                            "is_favorite": false,
+                            "item_order": 20,
+                            "name": "Top3",
+                        },
+                        {
+                            "color": "charcoal",
+                            "id": "2170323972",
+                            "is_deleted": false,
+                            "is_favorite": false,
+                            "item_order": 19,
+                            "name": "basement",
+                        },
+                    ],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    {'type': 'label_update', 'uuid': '8e5a221f-1cdc-494b-884e-96dbf1710426', 'args': {'name': 'hardware-store', 'color': 'green', 'is_favorite': True, 'id': 2171134071}},
-                    {'type': 'project_add', 'uuid': 'b163d433-b0b5-4349-b06b-f2e41265fbce', 'args': {'name': 'Waiting', 'color': 'lavender', 'is_favorite': False}, 'temp_id': '55acbbdd-f19a-42c5-9bdb-06b59b402767'},
+                    {
+                        "type": "label_update",
+                        "uuid": "8e5a221f-1cdc-494b-884e-96dbf1710426",
+                        "args": {
+                            "name": "hardware-store",
+                            "color": "green",
+                            "is_favorite": True,
+                            "id": 2171134071,
+                        },
+                    },
+                    {
+                        "type": "project_add",
+                        "uuid": "b163d433-b0b5-4349-b06b-f2e41265fbce",
+                        "args": {
+                            "name": "Waiting",
+                            "color": "lavender",
+                            "is_favorite": False,
+                        },
+                        "temp_id": "55acbbdd-f19a-42c5-9bdb-06b59b402767",
+                    },
                     # Simplified to only match part of the provided commands for brevity
                 ],
             ),
