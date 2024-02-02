@@ -6,6 +6,7 @@ from autodoist.models import (
     ConcreteTodoistLabel,
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
+    Color,
 )
 
 import re
@@ -57,15 +58,15 @@ class TestRenderAsMarkdown(unittest.TestCase):
     def setUp(self):
         self.todoist_objects = ConcreteTodoistObjects(
             labels=[
-                ConcreteTodoistLabel(name="Urgent", color="red", is_favorite=True, id=1)
+                ConcreteTodoistLabel(name="Urgent", color=Color.RED, is_favorite=True, id=1)
             ],
             filters=[
                 ConcreteTodoistFilter(
-                    name="Work", query="@work", color="blue", is_favorite=False
+                    name="Work", query="@work", color=Color.BLUE, is_favorite=False
                 )
             ],
             projects=[
-                ConcreteTodoistProject(name="Personal", color="green", is_favorite=True)
+                ConcreteTodoistProject(name="Personal", color=Color.GREEN, is_favorite=True)
             ],
         )
 
