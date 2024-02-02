@@ -1,6 +1,7 @@
 from autodoist.models import ConcreteTodoistObjects
 from typing import List, Dict
 
+
 def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
     markdown = ""
 
@@ -10,12 +11,12 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
         attributes: Dict[str, List[str]] = {}
         for item in todoist_objects.get_all_items():
             # Determine the status emoji based on the 'id' field
-            status_emoji = "🆕" if item.to_dict().get('id') is None else "🔄"
+            status_emoji = "🆕" if item.to_dict().get("id") is None else "🔄"
             # Initialize the 'Status' column with the status emoji
-            if 'Status' not in attributes:
-                attributes['Status'] = []
-            attributes['Status'].append(status_emoji)
-            
+            if "Status" not in attributes:
+                attributes["Status"] = []
+            attributes["Status"].append(status_emoji)
+
             for field_name, field_value in item.to_dict().items():
                 if field_value is not None:
                     if field_name not in attributes:
