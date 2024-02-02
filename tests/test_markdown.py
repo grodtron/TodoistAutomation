@@ -58,7 +58,9 @@ class TestRenderAsMarkdown(unittest.TestCase):
     def setUp(self):
         self.todoist_objects = ConcreteTodoistObjects(
             labels=[
-                ConcreteTodoistLabel(name="Urgent", color=Color.RED, is_favorite=True, id=1)
+                ConcreteTodoistLabel(
+                    name="Urgent", color=Color.RED, is_favorite=True, id=1
+                )
             ],
             filters=[
                 ConcreteTodoistFilter(
@@ -66,7 +68,9 @@ class TestRenderAsMarkdown(unittest.TestCase):
                 )
             ],
             projects=[
-                ConcreteTodoistProject(name="Personal", color=Color.GREEN, is_favorite=True)
+                ConcreteTodoistProject(
+                    name="Personal", color=Color.GREEN, is_favorite=True
+                )
             ],
         )
 
