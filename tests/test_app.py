@@ -64,6 +64,22 @@ def make_label(
         "name": name,
     }
 
+def make_add_command(type, **kwargs):
+    return {
+        "type": f"{type}_add",
+        "args": kwargs,
+        "uuid": "fixed-uuid-for-add",
+        "temp_id": "fixed-temp-id-for-add",
+    }
+
+def make_update_command(type, **kwargs):
+    return {
+        "type": f"{type}_update",
+        "args": kwargs,
+        "uuid": "fixed-uuid-for-update",
+    }
+
+
 
 def make_hashable_and_comparable(command_dict):
     for uuid_field in ["uuid", "temp_id"]:
@@ -111,28 +127,10 @@ class TestAutoDoistApp(TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    {
-                        "type": "label_update",
-                        "uuid": "8e5a221f-1cdc-494b-884e-96dbf1710426",
-                        "args": {
-                            "name": "hardware-store",
-                            "color": "green",
-                            "is_favorite": True,
-                            "id": 2171134071,
-                        },
-                    },
-                    {
-                        "type": "project_add",
-                        "uuid": "b163d433-b0b5-4349-b06b-f2e41265fbce",
-                        "args": {
-                            "name": "Waiting",
-                            "color": "lavender",
-                            "is_favorite": False,
-                        },
-                        "temp_id": "55acbbdd-f19a-42c5-9bdb-06b59b402767",
-                    },
+                    make_update_command("label", name="hardware-store", color="green", is_favorite=True, id=2171134071),
+                    make_add_command("project", name="Waiting", color="lavender", is_favorite=False),
                     # Simplified to only match part of the provided commands for brevity
-                ],
+                ]
             ),
         ]
     )
