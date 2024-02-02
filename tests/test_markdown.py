@@ -82,7 +82,7 @@ class TestRenderAsMarkdown(unittest.TestCase):
 | Type   | Operation | ID  | Name     | New/Changed Attributes           |
 | ------ | --------- | --- | -------- | -------------------------- |
 | Label  | 🌳🔄    | 1   | Urgent   | Color=red, Is_favorite=True|
-| Filter | 🌱✨    |  | Work     | Query=`@work{5 spaces}| (@work & !#NotNow)`, Color=blue, Is_favorite=False |
+| Filter | 🌱✨    |  | Work     | Query=`@work {5 spaces} \| (@work & !#NotNow)`, Color=blue, Is_favorite=False |
 | Project| 🌱✨    |  | Personal | Color=green, Is_favorite=True |
 """
         rendered_markdown = render_as_markdown(self.todoist_objects)
