@@ -170,9 +170,9 @@ class ExclusionList:
 @dataclass_json
 @dataclass
 class GTDState:
-    contexts: Optional[List[Context]] = field(default_factory=list)
-    composite_contexts: Optional[List[CompositeContext]] = field(default_factory=list)
-    exclusion_lists: Optional[List[ExclusionList]] = field(default_factory=list)
+    contexts: List[Context] = field(default_factory=list)
+    composite_contexts: List[CompositeContext] = field(default_factory=list)
+    exclusion_lists: List[ExclusionList] = field(default_factory=list)
 
 
 def load_gtd_state_from_yaml(yaml_data):
