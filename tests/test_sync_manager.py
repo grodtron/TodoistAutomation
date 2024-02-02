@@ -101,9 +101,7 @@ class TestTodoistSyncManager(unittest.TestCase):
                 ConcreteTodoistObjects(
                     projects=[ConcreteTodoistProject(name="NotNow", color=Color.GREY)],
                 ),
-                ConcreteTodoistObjects(
-                    
-                ),
+                ConcreteTodoistObjects(),
             ),
         ]
     )
