@@ -187,9 +187,9 @@ class TestAutoDoistApp(unittest.TestCase):
         }
         actual_commands_set = {
             make_hashable_and_comparable(cmd)
-            for cmd in api_requester_mock.make_request.call_args_list[1].kwargs[
+            for cmd in json.loads(api_requester_mock.make_request.call_args_list[1].kwargs[
                 "commands"
-            ]
+            ])
         }
 
         self.assertEqual(actual_commands_set, expected_commands_set)
