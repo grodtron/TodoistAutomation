@@ -56,7 +56,7 @@ class TodoistSyncManager:
                 print(desired_obj.to_json())
                 print("existing")
                 print(existing_obj.to_json())
-                
+
                 updated_attrs = {
                     attr: value
                     for attr, value in desired_obj.to_dict().items()
