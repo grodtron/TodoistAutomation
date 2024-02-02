@@ -55,7 +55,7 @@ class TodoistSyncManager:
 
                 desired_dict = desired_obj.to_dict()
                 existing_dict = existing_obj.to_dict()
-                
+
                 updated_attrs = {
                     attr: value
                     for attr, value in desired_dict.items()
