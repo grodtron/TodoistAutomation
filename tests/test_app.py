@@ -121,14 +121,12 @@ class TestAutoDoistApp(unittest.TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command(
-                        "label",
+                    make_update_command("label", name="call", color="yellow", id=123),
+                    make_add_command(
+                        "filter",
                         name="call",
                         color="yellow",
-                        id=123
-                    ),
-                    make_add_command(
-                        "filter", name="call", color="yellow", query="#call | (@call & !#NotNow)"
+                        query="#call | (@call & !#NotNow)",
                     ),
                     # Simplified to only match part of the provided commands for brevity
                 ],
