@@ -9,6 +9,7 @@ from autodoist.models import (
     ConcreteTodoistLabel,
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
+    Color,
 )
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
 from autodoist.todoist.sync_manager import TodoistSyncManager
