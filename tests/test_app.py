@@ -98,9 +98,9 @@ def make_hashable_and_comparable(command_dict):
     def _normalize_whitespace(text):
         return re.sub(r"\s+", " ", text).strip()
 
-    if "filter" in command_dict["args"]:
-        command_dict["args"]["filter"] = _normalize_whitespace(
-            command_dict["args"]["filter"]
+    if "query" in command_dict["args"]:
+        command_dict["args"]["query"] = _normalize_whitespace(
+            command_dict["args"]["query"]
         )
 
     return json.dumps(command_dict, sort_keys=True)
