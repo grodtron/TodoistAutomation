@@ -13,10 +13,11 @@ def make_filter(
     is_deleted=False,
     is_favorite=True,
     item_order=1,
+    id="123123",
 ):
     return {
         "color": color,
-        "id": "2345945708",
+        "id": id,
         "is_deleted": is_deleted,
         "is_favorite": is_favorite,
         "item_order": item_order,
@@ -31,13 +32,14 @@ def make_project(
     is_archived=False,
     is_deleted=False,
     is_favorite=False,
+    id="123123"
 ):
     return {
         "child_order": 0,
         "collapsed": False,
         "color": color,
         "created_at": "2023-09-24T09:20:22Z",
-        "id": "2320352216",
+        "id": id,
         "inbox_project": True,
         "is_archived": is_archived,
         "is_deleted": is_deleted,
@@ -53,11 +55,11 @@ def make_project(
 
 
 def make_label(
-    name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20
+    name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20, id="123123"
 ):
     return {
         "color": color,
-        "id": "2171177815",
+        "id": id,
         "is_deleted": is_deleted,
         "is_favorite": is_favorite,
         "item_order": item_order,
