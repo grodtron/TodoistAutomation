@@ -64,7 +64,10 @@ class TestRenderAsMarkdown(unittest.TestCase):
             ],
             filters=[
                 ConcreteTodoistFilter(
-                    name="Work", query="@work     | (@work & !#NotNow)", color=Color.BLUE, is_favorite=False
+                    name="Work",
+                    query="@work     | (@work & !#NotNow)",
+                    color=Color.BLUE,
+                    is_favorite=False,
                 )
             ],
             projects=[
