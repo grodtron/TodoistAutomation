@@ -9,7 +9,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
 
     def process_query(query: str) -> str:
         # Replace multiple spaces with {n spaces} and escape pipe characters
-        query = re.sub(r' {2,}', lambda x: f" {{{len(x.group())} spaces}} ", query)
+        query = re.sub(r" {2,}", lambda x: f" {{{len(x.group())} spaces}} ", query)
         return query.replace("|", "\|")
 
     for item in todoist_objects.get_all_items():
