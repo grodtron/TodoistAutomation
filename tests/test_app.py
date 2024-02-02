@@ -10,6 +10,15 @@ from parameterized import parameterized
 from unittest.mock import MagicMock, call
 import logging
 
+
+import json
+
+def make_hashable_and_comparable(command_dict):
+    if 'uuid' in command_dict:
+        command_dict['uuid'] = "DUMMY_VALUE"
+    # TODO temp_id
+    return json.dumps(command_dict, sort_keys=True)
+
 logging.basicConfig(level=logging.DEBUG)
 
 
