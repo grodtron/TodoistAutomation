@@ -83,7 +83,8 @@ class TestAutoDoistApp(TestCase):
         # Mock command line arguments as needed
         args = MagicMock()
         args.command = "sync"  # Adjust based on the scenario being tested
-
+        args.dry_run = False
+        
         # Execute the application logic
         app.run(args)
 
