@@ -53,9 +53,9 @@ class TodoistSyncManager:
             else:
                 # Object exists, update it with only the differing attributes
                 print("desired")
-                print(desired_obj.to_json())
+                print(repr(desired_obj))
                 print("existing")
-                print(existing_obj.to_json())
+                print(repr(existing_obj))
 
                 updated_attrs = {
                     attr: value
