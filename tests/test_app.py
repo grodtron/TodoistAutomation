@@ -54,7 +54,7 @@ class TestAutoDoistApp(TestCase):
                                 "color":"charcoal","id":"2345943667","is_deleted":false,"is_favorite":false,"item_order":2,"name":"Test of wizard workflow","query":"#TEST & subtask & today"
                             }
                     ],
-                    "projects": "projects":[
+                    "projects":[
                         {
                             "child_order":0,"collapsed":false,"color":"charcoal","created_at":"2023-09-24T09:20:22Z","id":"2320352216","inbox_project":true,"is_archived":false,"is_deleted":false,"is_favorite":false,"name":"Inbox","parent_id":null,"shared":false,"sync_id":null,"updated_at":"2023-09-24T09:20:22Z","v2_id":"6QXmCv9WvMrJfh33","view_style":"list"
                         },{
@@ -65,6 +65,7 @@ class TestAutoDoistApp(TestCase):
                         },{
                             "color":"charcoal","id":"2170323972","is_deleted":false,"is_favorite":false,"item_order":19,"name":"basement"
                         },
+                             ],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
