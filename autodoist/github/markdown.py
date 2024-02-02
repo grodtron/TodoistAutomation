@@ -8,7 +8,7 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
 
     for item in todoist_objects.get_all_items():
         item_type = item.get_type()
-        operation = "Update" if item.id else "Create"
+        operation = "🌳🔄" if item.id else "🌱✨"
         id = item.id if item.id else "N/A"
         name = item.name if hasattr(item, "name") and item.name else "N/A"
         other_attributes = ", ".join(
