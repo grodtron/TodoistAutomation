@@ -1,6 +1,7 @@
 from autodoist.models import ConcreteTodoistObjects
 from typing import List, Dict
 
+
 def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
     headers = ["Type", "Operation", "ID", "Name", "Other Attributes"]
     rows = []
@@ -9,8 +10,14 @@ def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
         item_type = item.get_type()
         operation = "Update" if item.id else "Create"
         id = item.id if item.id else "N/A"
-        name = item.name if hasattr(item, 'name') and item.name else "N/A"
-        other_attributes = ", ".join([f"{k}={v}" for k, v in item.__dict__.items() if k not in ['id', 'name'] and v is not None])
+        name = item.name if hasattr(item, "name") and item.name else "N/A"
+        other_attributes = ", ".join(
+            [
+                f"{k}={v}"
+                for k, v in item.__dict__.items()
+                if k not in ["id", "name"] and v is not None
+            ]
+        )
 
         rows.append([item_type, operation, id, name, other_attributes])
 
