@@ -78,9 +78,9 @@ class TestRenderAsMarkdown(unittest.TestCase):
         expected_markdown = """
 | Type   | Operation | ID  | Name     | Other Attributes           |
 | ------ | --------- | --- | -------- | -------------------------- |
-| Label  | Update    | 1   | Urgent   | Color=red, Is_favorite=True|
-| Filter | Create    | N/A | Work     | Query=@work, Color=blue, Is_favorite=False |
-| Project| Create    | N/A | Personal | Color=green, Is_favorite=True |
+| Label  | 🌳🔄    | 1   | Urgent   | Color=red, Is_favorite=True|
+| Filter | 🌱✨    |  | Work     | Query=@work, Color=blue, Is_favorite=False |
+| Project| 🌱✨    |  | Personal | Color=green, Is_favorite=True |
 """
         rendered_markdown = render_as_markdown(self.todoist_objects)
         normalized_rendered = normalize_markdown_table(rendered_markdown)
