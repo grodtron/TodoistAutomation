@@ -98,7 +98,7 @@ def main():
 
     file_reader = lambda file_path: open(file_path, "r").read()
     api_requester = TodoistAPIRequester(args.api_key)
-    github_client = GitHubClient(args.github_token)
+    github_client = GitHubClient(getattr(args, 'github_token', 'DUMMY_GITHUB_TOKEN'))
 
     app = AutoDoistApp(file_reader, api_requester, github_client)
     app.run(args)
