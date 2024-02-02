@@ -92,6 +92,19 @@ class TestTodoistSyncManager(unittest.TestCase):
                     filters=[ConcreteTodoistFilter(name="NewFilter", query="query2")],
                 ),
             ),
+            # Test case 6: Existing project - no changes
+            (
+                "NoopProject",
+                TodoistCollection(
+                    projects=[TodoistProject(name="NotNow", color=Color.GREY)],
+                ),
+                ConcreteTodoistObjects(
+                    projects=[ConcreteTodoistProject(name="NotNow", color=Color.GREY)],
+                ),
+                ConcreteTodoistObjects(
+                    
+                ),
+            ),
         ]
     )
     def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
