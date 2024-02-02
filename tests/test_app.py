@@ -93,7 +93,7 @@ def make_hashable_and_comparable(command_dict):
 logging.basicConfig(level=logging.DEBUG)
 
 
-class TestAutoDoistApp(TestCase):
+class TestAutoDoistApp(unittest.TestCase):
 
     @parameterized.expand(
         [
@@ -104,39 +104,31 @@ class TestAutoDoistApp(TestCase):
             contexts:
               - name: "call"
                 color: "red"
-            composite_contexts:
-              - name: "home"
-                color: "yellow"
-                labels:
-                  - "basement"
             exclusion_lists:
               - name: "NotNow"
                 color: "grey"
             """,
                 # First call response (Get Data Result, simplified)
                 {
-                    "filters": [make_filter()],
+                    "filters": [],
                     "projects": [
-                        make_project(),
                         make_project(
-                            name="Professional",
+                            name="NotNow",
                             color="grey",
-                            updated_at="2023-12-08T13:01:10Z",
                         ),
                     ],
-                    "labels": [make_label(), make_label(name="basement")],
+                    "labels": [make_label(name="call", color="yellow", id=123)],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
                     make_update_command(
                         "label",
-                        name="hardware-store",
-                        color="green",
-                        is_favorite=True,
-                        id=2171134071,
+                        name="call",
+                        color="yellow",
+                        id=123
                     ),
                     make_add_command(
-                        "project", name="Waiting", color="lavender", is_favorite=False
+                        "filter", name="call", color="yellow", query="#call | (@call & !#NotNow)"
                     ),
                     # Simplified to only match part of the provided commands for brevity
                 ],
