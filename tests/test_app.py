@@ -32,7 +32,7 @@ def make_project(
     is_archived=False,
     is_deleted=False,
     is_favorite=False,
-    id="123123"
+    id="123123",
 ):
     return {
         "child_order": 0,
@@ -55,7 +55,12 @@ def make_project(
 
 
 def make_label(
-    name="Top3", color="charcoal", is_deleted=False, is_favorite=False, item_order=20, id="123123"
+    name="Top3",
+    color="charcoal",
+    is_deleted=False,
+    is_favorite=False,
+    item_order=20,
+    id="123123",
 ):
     return {
         "color": color,
