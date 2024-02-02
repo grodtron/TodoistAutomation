@@ -96,10 +96,12 @@ def make_hashable_and_comparable(command_dict):
             command_dict[uuid_field] = "DUMMY_VALUE"
 
     def _normalize_whitespace(text):
-        return re.sub(r'\s+', ' ', text).strip()
-    
+        return re.sub(r"\s+", " ", text).strip()
+
     if "filter" in command_dict["args"]:
-        command_dict["args"]["filter"] = _normalize_whitespace(command_dict["args"]["filter"])
+        command_dict["args"]["filter"] = _normalize_whitespace(
+            command_dict["args"]["filter"]
+        )
 
     return json.dumps(command_dict, sort_keys=True)
 
