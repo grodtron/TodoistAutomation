@@ -58,10 +58,10 @@ class TestRenderAsMarkdown(unittest.TestCase):
         self.todoist_objects.get_all_items.return_value = [mock_item_1, mock_item_2]
 
     def test_render_as_markdown(self):
-        expected_markdown = "| name | id | due_date | priority |\n"
-        expected_markdown += "|------|---|-------|----------|\n"
-        expected_markdown += "| 🔄 | Task 1 | 1 | | 1 |\n"
-        expected_markdown += "| 🆕 | Task 2 |  | 2024-02-01 |  |\n"
+        expected_markdown = "| status | name | due_date | id | priority |\n"
+        expected_markdown += "|-------|------|----------|---|------|\n"
+        expected_markdown += "| 🔄 | Task 1 |  | 1 | 1 |\n"
+        expected_markdown += "| 🆕 | Task 2 |  2024-02-01 |  |  |\n"
 
         self.assertEqual(
             normalize_markdown_table(render_as_markdown(self.todoist_objects)),
