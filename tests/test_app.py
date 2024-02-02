@@ -137,9 +137,7 @@ class TestAutoDoistApp(unittest.TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command(
-                        "label", name="call", color="red", id=123
-                    ),
+                    make_update_command("label", name="call", color="red", id=123),
                     make_add_command(
                         "filter",
                         name=" Call",
