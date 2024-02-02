@@ -52,11 +52,16 @@ class TodoistSyncManager:
                 objects_to_sync.append(concrete_class.from_dict(desired_obj.to_dict()))  # type: ignore
             else:
                 # Object exists, update it with only the differing attributes
+
+                desired_dict = desired_obj.to_dict()
+                existing_dict = existing_obj.to_dict()
+
                 updated_attrs = {
                     attr: value
-                    for attr, value in desired_obj.to_dict().items()
-                    if getattr(existing_obj, attr) != value
+                    for attr, value in desired_dict.items()
+                    if existing_dict.get(attr) != value
                 }
+
                 if updated_attrs:
                     updated_attrs["id"] = existing_obj.id
                     updated_attrs["name"] = desired_obj.name

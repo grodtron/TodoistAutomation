@@ -9,6 +9,7 @@ from autodoist.models import (
     ConcreteTodoistLabel,
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
+    Color,
 )
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
 from autodoist.todoist.sync_manager import TodoistSyncManager
@@ -91,6 +92,17 @@ class TestTodoistSyncManager(unittest.TestCase):
                 ConcreteTodoistObjects(
                     filters=[ConcreteTodoistFilter(name="NewFilter", query="query2")],
                 ),
+            ),
+            # Test case 6: Existing project - no changes
+            (
+                "NoopProject",
+                TodoistCollection(
+                    projects=[TodoistProject(name="NotNow", color=Color.GREY)],
+                ),
+                ConcreteTodoistObjects(
+                    projects=[ConcreteTodoistProject(name="NotNow", color=Color.GREY)],
+                ),
+                ConcreteTodoistObjects(),
             ),
         ]
     )
