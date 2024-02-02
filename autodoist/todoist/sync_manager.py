@@ -59,7 +59,7 @@ class TodoistSyncManager:
                 updated_attrs = {
                     attr: value
                     for attr, value in desired_dict.items()
-                    if existing_obj.get(attr) != value
+                    if existing_dict.get(attr) != value
                 }
 
                 if updated_attrs:
