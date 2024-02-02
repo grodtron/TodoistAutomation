@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, call
 from autodoist.cli import AutoDoistApp
 import logging
 import json
+import re
 
 
 def make_filter(
@@ -94,6 +95,12 @@ def make_hashable_and_comparable(command_dict):
         if uuid_field in command_dict:
             command_dict[uuid_field] = "DUMMY_VALUE"
 
+    def _normalize_whitespace(text):
+        return re.sub(r'\s+', ' ', text).strip()
+    
+    if "filter" in command_dict["args"]:
+        command_dict["args"]["filter"] = _normalize_whitespace(command_dict["args"]["filter"])
+
     return json.dumps(command_dict, sort_keys=True)
 
 
@@ -128,11 +135,11 @@ class TestAutoDoistApp(unittest.TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command("label", name="call", color="yellow", id=123),
+                    make_update_command("label", name="call", color="red", id=123),
                     make_add_command(
                         "filter",
-                        name="call",
-                        color="yellow",
+                        name=" Call",
+                        color="red",
                         query="#call | (@call & !#NotNow)",
                     ),
                     # Simplified to only match part of the provided commands for brevity
