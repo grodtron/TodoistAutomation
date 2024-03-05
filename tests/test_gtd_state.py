@@ -1,6 +1,6 @@
 import unittest
-from autodoist.gtd.gtd_state import (
-    process_gtd_state,
+from autodoist.gtd.gtd_state import process_gtd_state
+from autodoist.models import (Color
     GTDState,
     TodoistCollection,
     TodoistLabel,
@@ -10,7 +10,6 @@ from autodoist.gtd.gtd_state import (
     CompositeContext,
     ExclusionList,
 )
-from autodoist.models import Color
 
 
 class TestGTDState(unittest.TestCase):
