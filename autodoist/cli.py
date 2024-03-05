@@ -107,7 +107,6 @@ def main() -> None:
     api_requester: TodoistAPIRequester = TodoistAPIRequester(args.api_key)
     github_client: GitHubClient = GitHubClient(args.github_token)
 
-
     app: AutoDoistApp = AutoDoistApp(file_reader, api_requester, github_client)
     app.run(args)
 
