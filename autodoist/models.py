@@ -35,9 +35,7 @@ def ExcludeIfNone(value: Optional[Any]) -> bool:
 
 
 def OptField(default_val: Optional[Any] = None) -> Any:
-    return field(
-        default=default_val, metadata=config(exclude=ExcludeIfNone)
-    )
+    return field(default=default_val, metadata=config(exclude=ExcludeIfNone))
 
 
 def OptColorField(default_val: Optional[Color] = None) -> Any:
