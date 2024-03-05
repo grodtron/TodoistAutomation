@@ -9,7 +9,7 @@ from autodoist.models import (
 
 
 class TestConcreteTodoistLabel(unittest.TestCase):
-    def test_from_json(self):
+    def test_from_json(self) -> None:
         # Given
         json_data = """
         {
@@ -35,7 +35,7 @@ class TestConcreteTodoistLabel(unittest.TestCase):
 
 
 class TestConcreteTodoistFilter(unittest.TestCase):
-    def test_from_json(self):
+    def test_from_json(self) -> None:
         # Given
         json_data = """
         {
@@ -63,7 +63,7 @@ class TestConcreteTodoistFilter(unittest.TestCase):
 
 
 class TestConcreteTodoistProject(unittest.TestCase):
-    def test_from_json(self):
+    def test_from_json(self) -> None:
         # Given
         json_data = """
         {
