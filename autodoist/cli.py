@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict
 import yaml
 from github import Github
 from autodoist.gtd.gtd_state import process_gtd_state
-from autodoist.models import load_gtd_state_from_yaml
+from autodoist.models import load_gtd_state_from_yaml, GTDState
 from autodoist.todoist.api_wrapper import (
     TodoistAPIRequester,
     TodoistApiWrapper,
@@ -19,8 +19,8 @@ class GitHubClient:
     def __init__(self, github_token: str) -> None:
         self.github = Github(github_token)
 
-    def post_comment(self, repo: str, pr_number: int, comment: str) -> None:
-        repo = self.github.get_repo(repo)
+    def post_comment(self, repo_name: str, pr_number: int, comment: str) -> None:
+        repo = self.github.get_repo(repo_name)
         pr = repo.get_pull(pr_number)
         pr.create_issue_comment(comment)
 
@@ -38,7 +38,7 @@ class AutoDoistApp:
 
     def run(self, args: argparse.Namespace) -> None:
         yaml_data: str = self.file_reader(args.yaml_file)
-        gtd_state: Dict[str, Any] = load_gtd_state_from_yaml(yaml_data)
+        gtd_state: GTDState = load_gtd_state_from_yaml(yaml_data)
 
         todoist_api_wrapper: TodoistApiWrapper = (
             TodoistApiWrapper(self.api_requester)
