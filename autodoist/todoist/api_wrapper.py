@@ -17,7 +17,7 @@ class TodoistAPIRequester:
         self.api_key: str = api_key
         self.logger: logging.Logger = logging.getLogger(__name__)
 
-    def make_request(self, **payload: Any) -> Any:
+    def make_request(self, **payload: Any) -> Dict[str, Any]:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
         headers: Dict[str, str] = {"Authorization": f"Bearer {self.api_key}"}
         response: requests.Response = requests.post(
@@ -87,7 +87,7 @@ class TodoistApiWrapper:
         command: Dict[str, Any] = {
             "type": f"{item_type}_{action_type}",
             "uuid": str(uuid.uuid4()),
-            "args": updated_item.to_dict(),  # type: ignore[attr-defined]
+            "args": updated_item.to_dict(),
         }
 
         if item_id:
