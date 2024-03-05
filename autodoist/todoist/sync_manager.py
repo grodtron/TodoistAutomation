@@ -45,9 +45,15 @@ class TodoistSyncManager:
         self,
         existing_objects: List[Any],
         desired_objects: List[Any],
-        concrete_class: Type[ConcreteTodoistLabel] | Type[ConcreteTodoistFilter] | Type[ConcreteTodoistProject]
+        concrete_class: (
+            Type[ConcreteTodoistLabel]
+            | Type[ConcreteTodoistFilter]
+            | Type[ConcreteTodoistProject]
+        ),
     ) -> List[Any]:
-        existing_objects_dict: Dict[str, Any] = {obj.name: obj for obj in existing_objects}
+        existing_objects_dict: Dict[str, Any] = {
+            obj.name: obj for obj in existing_objects
+        }
         objects_to_sync: List[Any] = []
 
         for desired_obj in desired_objects:
