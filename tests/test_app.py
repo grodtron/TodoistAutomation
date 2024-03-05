@@ -112,7 +112,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 class TestAutoDoistApp(unittest.TestCase):
 
-    @parameterized.expand(
+    @parameterized.expand(  # type: ignore
         [
             # Test Case 1
             (
