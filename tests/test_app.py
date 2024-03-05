@@ -15,7 +15,7 @@ def make_filter(
     is_deleted: bool = False,
     is_favorite: bool = True,
     item_order: int = 1,
-    id: str = "123123",
+    id: int = 123,
 ) -> Dict[str, Any]:
     return {
         "color": color,
@@ -34,7 +34,7 @@ def make_project(
     is_archived: bool = False,
     is_deleted: bool = False,
     is_favorite: bool = False,
-    id: str = "123123",
+    id: int = 123,
 ) -> Dict[str, Any]:
     return {
         "child_order": 0,
@@ -62,7 +62,7 @@ def make_label(
     is_deleted: bool = False,
     is_favorite: bool = False,
     item_order: int = 20,
-    id: str = "123123",
+    id: int = 123,
 ) -> Dict[str, Any]:
     return {
         "color": color,
