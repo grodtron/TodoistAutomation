@@ -5,6 +5,7 @@ from autodoist.cli import AutoDoistApp
 import logging
 import json
 import re
+from typing import Dict, Any
 
 
 def make_filter(
@@ -15,7 +16,7 @@ def make_filter(
     is_favorite=True,
     item_order=1,
     id="123123",
-):
+) -> Dict[str, Any]:
     return {
         "color": color,
         "id": id,
@@ -34,7 +35,7 @@ def make_project(
     is_deleted=False,
     is_favorite=False,
     id="123123",
-):
+) -> Dict[str, Any]:
     return {
         "child_order": 0,
         "collapsed": False,
@@ -62,7 +63,7 @@ def make_label(
     is_favorite=False,
     item_order=20,
     id="123123",
-):
+) -> Dict[str, Any]:
     return {
         "color": color,
         "id": id,
@@ -73,7 +74,7 @@ def make_label(
     }
 
 
-def make_add_command(type, **kwargs):
+def make_add_command(type, **kwargs) -> Dict[str, Any]:
     return {
         "type": f"{type}_add",
         "args": kwargs,
@@ -82,7 +83,7 @@ def make_add_command(type, **kwargs):
     }
 
 
-def make_update_command(type, **kwargs):
+def make_update_command(type, **kwargs) -> Dict[str, Any]:
     return {
         "type": f"{type}_update",
         "args": kwargs,
@@ -90,7 +91,7 @@ def make_update_command(type, **kwargs):
     }
 
 
-def make_hashable_and_comparable(command_dict):
+def make_hashable_and_comparable(command_dict: Dict[str, Any]) -> str:
     for uuid_field in ["uuid", "temp_id"]:
         if uuid_field in command_dict:
             command_dict[uuid_field] = "DUMMY_VALUE"
@@ -150,7 +151,7 @@ class TestAutoDoistApp(unittest.TestCase):
             ),
         ]
     )
-    def test_auto_doist_app(self, yaml_input, first_call_response, expected_commands):
+    def test_auto_doist_app(self, yaml_input, first_call_response, expected_commands) -> None:
         # Mock the file reader
         file_reader_mock = MagicMock(return_value=yaml_input)
 
