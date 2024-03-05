@@ -3,7 +3,6 @@ from typing import List, Optional, Any, Callable, cast
 from enum import Enum
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
-from marshmallow import fields
 
 
 class Color(Enum):
