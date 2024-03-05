@@ -1,6 +1,7 @@
 import unittest
 from autodoist.gtd.gtd_state import process_gtd_state
-from autodoist.models import (Color,
+from autodoist.models import (
+    Color,
     GTDState,
     TodoistCollection,
     TodoistLabel,
