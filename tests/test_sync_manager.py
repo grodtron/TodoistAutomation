@@ -17,7 +17,7 @@ from autodoist.todoist.sync_manager import TodoistSyncManager
 
 class TestTodoistSyncManager(unittest.TestCase):
 
-    @parameterized.expand(
+    @parameterized.expand(  # type: ignore
         [
             # Test case 1: No changes in desired state
             (
@@ -106,7 +106,9 @@ class TestTodoistSyncManager(unittest.TestCase):
             ),
         ]
     )
-    def test_sync(self, name, desired_state, existing_state, expected_sync_commands):
+    def test_sync(
+        self, name, desired_state, existing_state, expected_sync_commands
+    ) -> None:
         # Act
         sync_manager = TodoistSyncManager()
         actual_sync_commands = sync_manager.sync(existing_state, desired_state)

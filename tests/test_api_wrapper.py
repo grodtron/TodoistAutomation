@@ -14,13 +14,13 @@ from autodoist.todoist.api_wrapper import TodoistApiWrapper, TodoistAPIRequester
 
 class TestErrorHandling(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         # Create a MagicMock TodoistAPIRequester for testing
         self.todoist_api_wrapper = TodoistApiWrapper(
             api_requester=TodoistAPIRequester(api_key="FOOBAR")
         )
 
-    def test_update_todoist_objects_error_handling(self):
+    def test_update_todoist_objects_error_handling(self) -> None:
         # Set up a mock error response
         error_response = {
             "error": "Invalid CSRF token",
@@ -54,14 +54,14 @@ class TestErrorHandling(unittest.TestCase):
 
 class TestTodoistApiWrapper(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         # Create a MagicMock TodoistAPIRequester for testing
         self.mock_api_requester = MagicMock(spec=TodoistAPIRequester)
         self.todoist_api_wrapper = TodoistApiWrapper(
             api_requester=self.mock_api_requester
         )
 
-    def test_get_all_todoist_objects(self):
+    def test_get_all_todoist_objects(self) -> None:
         # Set up the expected response
         expected_response = {
             "labels": [
@@ -92,7 +92,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         self.assertEqual(len(result.projects), 1)
         # TODO assert on content
 
-    def test_update_todoist_objects(self):
+    def test_update_todoist_objects(self) -> None:
         # Set up the expected sync_commands and response
         todoist_objects = ConcreteTodoistObjects(
             labels=[

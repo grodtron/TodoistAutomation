@@ -27,7 +27,7 @@ jobs:
 
     - name: Run mypy
       run: |
-        python -m mypy --check-untyped-defs --exclude build/lib .
+        python -m mypy --strict --check-untyped-defs --exclude build/lib .
 
     - name: Run tests
       run: |

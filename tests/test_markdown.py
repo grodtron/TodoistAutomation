@@ -12,7 +12,7 @@ from autodoist.models import (
 import re
 
 
-def normalize_markdown_table_cell_content(cell):
+def normalize_markdown_table_cell_content(cell: str) -> str:
     cell = cell.strip()
 
     if cell and cell == "-" * len(cell):
@@ -21,7 +21,7 @@ def normalize_markdown_table_cell_content(cell):
     return cell
 
 
-def normalize_markdown_table(markdown):
+def normalize_markdown_table(markdown: str) -> str:
     # Convert to lowercase
     markdown = markdown.lower()
 
@@ -35,7 +35,7 @@ def normalize_markdown_table(markdown):
 
 
 class TestNormalizeMarkdownTable(unittest.TestCase):
-    def test_identical_tables(self):
+    def test_identical_tables(self) -> None:
         markdown_table1 = """
         | Name   | Age | Location   |
         |--------|-----|------------|
@@ -55,7 +55,7 @@ class TestNormalizeMarkdownTable(unittest.TestCase):
 
 
 class TestRenderAsMarkdown(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.todoist_objects = ConcreteTodoistObjects(
             labels=[
                 ConcreteTodoistLabel(
@@ -77,7 +77,7 @@ class TestRenderAsMarkdown(unittest.TestCase):
             ],
         )
 
-    def test_render_as_markdown(self):
+    def test_render_as_markdown(self) -> None:
         expected_markdown = """
 | Type   | Operation | ID  | Name     | New/Changed Attributes           |
 | ------ | --------- | --- | -------- | -------------------------- |

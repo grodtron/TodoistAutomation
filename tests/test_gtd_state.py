@@ -1,6 +1,7 @@
 import unittest
-from autodoist.gtd.gtd_state import (
-    process_gtd_state,
+from autodoist.gtd.gtd_state import process_gtd_state
+from autodoist.models import (
+    Color,
     GTDState,
     TodoistCollection,
     TodoistLabel,
@@ -10,11 +11,10 @@ from autodoist.gtd.gtd_state import (
     CompositeContext,
     ExclusionList,
 )
-from autodoist.models import Color
 
 
 class TestGTDState(unittest.TestCase):
-    def test_render_todoist_objects(self):
+    def test_render_todoist_objects(self) -> None:
 
         self.maxDiff = None
 
@@ -65,7 +65,7 @@ class TestGTDState(unittest.TestCase):
         self.assertEqual(result.labels, expected_labels)
         self.assertEqual(result.filters, expected_filters)
 
-    def test_render_todoist_objects_multiple_exclusion_lists(self):
+    def test_render_todoist_objects_multiple_exclusion_lists(self) -> None:
 
         self.maxDiff = None
 

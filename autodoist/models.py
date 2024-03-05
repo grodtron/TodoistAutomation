@@ -1,5 +1,5 @@
 import yaml
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Callable, cast
 from enum import Enum
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
@@ -27,25 +27,27 @@ class Color(Enum):
     GREY = "grey"
     TAUPE = "taupe"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 
-def ExcludeIfNone(value):
+def ExcludeIfNone(value: Optional[Any]) -> bool:
     """Do not include field for None values"""
     return value is None
 
 
-def OptField(default_val=None):
-    return field(metadata=config(exclude=ExcludeIfNone), default=default_val)
+def OptField(default_val: Optional[Any] = None) -> Any:
+    return field(default=default_val, metadata=config(exclude=ExcludeIfNone))
 
 
-def OptColorField(default_val=None):
+def OptColorField(default_val: Optional[Color] = None) -> Any:
     return field(
-        metadata=config(
-            exclude=ExcludeIfNone, encoder=lambda x: x.value, decoder=Color
-        ),
         default=default_val,
+        metadata=config(
+            exclude=ExcludeIfNone,
+            encoder=lambda x: x.value,
+            decoder=Color,
+        ),
     )
 
 
@@ -178,6 +180,6 @@ class GTDState:
     exclusion_lists: List[ExclusionList] = field(default_factory=list)
 
 
-def load_gtd_state_from_yaml(yaml_data):
+def load_gtd_state_from_yaml(yaml_data: str) -> GTDState:
     data = yaml.safe_load(yaml_data)
     return GTDState.from_dict(data)  # type: ignore

@@ -1,8 +1,11 @@
 import argparse
 import logging
+from typing import Any, Callable, Dict
+
 import yaml
+from github import Github
 from autodoist.gtd.gtd_state import process_gtd_state
-from autodoist.models import load_gtd_state_from_yaml
+from autodoist.models import load_gtd_state_from_yaml, GTDState
 from autodoist.todoist.api_wrapper import (
     TodoistAPIRequester,
     TodoistApiWrapper,
@@ -10,30 +13,34 @@ from autodoist.todoist.api_wrapper import (
 )
 from autodoist.todoist.sync_manager import TodoistSyncManager
 from autodoist.github.markdown import render_as_markdown
-from github import Github
 
 
 class GitHubClient:
-    def __init__(self, github_token):
+    def __init__(self, github_token: str) -> None:
         self.github = Github(github_token)
 
-    def post_comment(self, repo, pr_number, comment):
-        repo = self.github.get_repo(repo)
+    def post_comment(self, repo_name: str, pr_number: int, comment: str) -> None:
+        repo = self.github.get_repo(repo_name)
         pr = repo.get_pull(pr_number)
         pr.create_issue_comment(comment)
 
 
 class AutoDoistApp:
-    def __init__(self, file_reader, api_requester, github_client):
-        self.file_reader = file_reader
-        self.api_requester = api_requester
-        self.github_client = github_client
+    def __init__(
+        self,
+        file_reader: Callable[[str], str],
+        api_requester: TodoistAPIRequester,
+        github_client: GitHubClient,
+    ) -> None:
+        self.file_reader: Callable[[str], str] = file_reader
+        self.api_requester: TodoistAPIRequester = api_requester
+        self.github_client: GitHubClient = github_client
 
-    def run(self, args):
-        yaml_data = self.file_reader(args.yaml_file)
-        gtd_state = load_gtd_state_from_yaml(yaml_data)
+    def run(self, args: argparse.Namespace) -> None:
+        yaml_data: str = self.file_reader(args.yaml_file)
+        gtd_state: GTDState = load_gtd_state_from_yaml(yaml_data)
 
-        todoist_api_wrapper = (
+        todoist_api_wrapper: TodoistApiWrapper = (
             TodoistApiWrapper(self.api_requester)
             if not args.dry_run
             else DryRunTodoistApiWrapper(self.api_requester)
@@ -50,7 +57,7 @@ class AutoDoistApp:
             self.github_client.post_comment(args.repo, args.pr_number, markdown_summary)
 
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Command line tool for syncing GTD state with Todoist."
     )
@@ -88,7 +95,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_arguments()
 
     if args.debug:
@@ -96,11 +103,11 @@ def main():
     else:
         logging.basicConfig(level=logging.INFO)
 
-    file_reader = lambda file_path: open(file_path, "r").read()
-    api_requester = TodoistAPIRequester(args.api_key)
-    github_client = GitHubClient(getattr(args, "github_token", "DUMMY_GITHUB_TOKEN"))
+    file_reader: Callable[[str], str] = lambda file_path: open(file_path, "r").read()
+    api_requester: TodoistAPIRequester = TodoistAPIRequester(args.api_key)
+    github_client: GitHubClient = GitHubClient(args.github_token)
 
-    app = AutoDoistApp(file_reader, api_requester, github_client)
+    app: AutoDoistApp = AutoDoistApp(file_reader, api_requester, github_client)
     app.run(args)
 
 
