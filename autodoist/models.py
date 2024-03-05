@@ -27,7 +27,7 @@ class Color(Enum):
     GREY = "grey"
     TAUPE = "taupe"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 
