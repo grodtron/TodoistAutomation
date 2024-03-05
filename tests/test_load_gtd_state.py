@@ -11,7 +11,7 @@ from autodoist.models import (
 
 class TestLoadGTDStateFromYAML(unittest.TestCase):
 
-    def test_load_gtd_state_from_yaml(self):
+    def test_load_gtd_state_from_yaml(self) -> None:
         yaml_data = """
         contexts:
           - name: "Work"
