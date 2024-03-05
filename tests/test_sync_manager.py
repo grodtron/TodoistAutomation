@@ -17,7 +17,7 @@ from autodoist.todoist.sync_manager import TodoistSyncManager
 
 class TestTodoistSyncManager(unittest.TestCase):
 
-    @parameterized.expand(
+    @parameterized.expand(  # type: ignore
         [
             # Test case 1: No changes in desired state
             (
