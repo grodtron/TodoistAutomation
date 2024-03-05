@@ -21,14 +21,18 @@ class TodoistAPIRequester:
     def make_request(self, **payload: Any) -> Dict[str, Any]:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
         headers: Dict[str, str] = {"Authorization": f"Bearer {self.api_key}"}
-        response: requests.Response = requests.post(self.API_URL, headers=headers, data=payload)
+        response: requests.Response = requests.post(
+            self.API_URL, headers=headers, data=payload
+        )
         self.logger.debug(f"Received response: {response.content.decode('utf-8')}")
 
         print(response.status_code)
         print(repr(response))
 
         if response.status_code != 200:
-            self.logger.error(f"Request failed with status code: {response.status_code}")
+            self.logger.error(
+                f"Request failed with status code: {response.status_code}"
+            )
             try:
                 error_data: Dict[str, Any] = response.json()
                 error_message: str = error_data.get("error", "Unknown error")
@@ -65,7 +69,9 @@ class TodoistApiWrapper:
 
         return ConcreteTodoistObjects(labels=labels, filters=filters, projects=projects)
 
-    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict[str, Any]:
+    def update_todoist_objects(
+        self, todoist_objects: ConcreteTodoistObjects
+    ) -> Dict[str, Any]:
         sync_commands: List[Dict[str, Any]] = []
 
         for item in todoist_objects.get_all_items():
@@ -94,12 +100,16 @@ class TodoistApiWrapper:
 
 
 class DryRunTodoistApiWrapper(TodoistApiWrapper):
-    def update_todoist_objects(self, todoist_objects: ConcreteTodoistObjects) -> Dict[str, Any]:
+    def update_todoist_objects(
+        self, todoist_objects: ConcreteTodoistObjects
+    ) -> Dict[str, Any]:
         sync_commands: List[Dict[str, Any]] = []
 
         for item in todoist_objects.get_all_items():
             item_type: str = item.get_type()
-            command: Dict[str, Any] = self._create_update_command(item_type, item.id, item)
+            command: Dict[str, Any] = self._create_update_command(
+                item_type, item.id, item
+            )
             sync_commands.append(command)
             self.logger.debug(f"Dry run command: {command}")
 
