@@ -1,5 +1,6 @@
 import unittest
 import uuid
+import json
 from unittest.mock import MagicMock, patch
 from autodoist.models import (
     ConcreteTodoistObjects,
@@ -139,7 +140,7 @@ class TestTodoistApiWrapper(unittest.TestCase):
         # Check that make_request was called with a subset of the expected commands
         self.mock_api_requester.make_request.assert_called_once()
         actual_args, actual_kwargs = self.mock_api_requester.make_request.call_args
-        actual_commands = actual_kwargs["commands"]
+        actual_commands = json.loads(actual_kwargs["commands"])
 
         self.assertEqual(len(actual_commands), len(expected_commands))
 

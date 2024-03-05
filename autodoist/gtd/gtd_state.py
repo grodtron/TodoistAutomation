@@ -29,7 +29,7 @@ def process_gtd_state(gtd_state: GTDState) -> TodoistCollection:
             [f"!#{exclusion.name}" for exclusion in gtd_state.exclusion_lists]
         )
         label = TodoistLabel(
-            name=f"{context.name}", color=context.color, is_favorite=True
+            name=f"{context.name}", color=context.color, is_favorite=False
         )
         filter_ = TodoistFilter(
             name=f"{context.emojis} {context.name.title()}",
@@ -41,7 +41,7 @@ def process_gtd_state(gtd_state: GTDState) -> TodoistCollection:
 
     def _process_composite_context(context: CompositeContext) -> TodoistCollection:
         labels = [
-            TodoistLabel(name=f"{label}", color=context.color, is_favorite=True)
+            TodoistLabel(name=f"{label}", color=context.color, is_favorite=False)
             for label in context.labels
         ]
         exclusion_queries = " & ".join(

@@ -1,47 +1,36 @@
 from autodoist.models import ConcreteTodoistObjects
 from typing import List, Dict
+import re
 
 
 def render_as_markdown(todoist_objects: ConcreteTodoistObjects) -> str:
-    markdown = ""
+    headers = ["Type", "Operation", "ID", "Name", "New/Changed Attributes"]
+    rows = []
 
-    def _gather_attributes(
-        todoist_objects: ConcreteTodoistObjects,
-    ) -> Dict[str, List[str]]:
-        attributes: Dict[str, List[str]] = {}
-        for item in todoist_objects.get_all_items():
-            for field_name, field_value in item.to_dict().items():
-                if field_value is not None:
-                    if field_name not in attributes:
-                        attributes[field_name] = []
-                    attributes[field_name].append(str(field_value))
-        return attributes
+    def process_query(query: str) -> str:
+        # Replace multiple spaces with {n spaces} and escape pipe characters
+        query = re.sub(r" {2,}", lambda x: f" {{{len(x.group())} spaces}} ", query)
+        return query.replace("|", "\|")
 
-    attributes = _gather_attributes(todoist_objects)
-    all_fields = sorted(attributes.keys())
-
-    # Ensure 'name' is the leftmost column
-    if "name" in all_fields:
-        all_fields.remove("name")
-        all_fields.insert(0, "name")
-
-    # Ensure 'query' is the rightmost column, if it exists
-    if "query" in all_fields:
-        all_fields.remove("query")
-        all_fields.append("query")
-
-    # Constructing the header row
-    markdown += "| " + " | ".join(all_fields) + " |\n"
-    markdown += "|-" + "-|-".join(["-" * len(field) for field in all_fields]) + "-|\n"
-
-    # Constructing the rows
     for item in todoist_objects.get_all_items():
-        markdown += (
-            "| "
-            + " | ".join(
-                str(item.to_dict().get(field_name, "")) for field_name in all_fields
-            )
-            + " |\n"
+        item_type = item.get_type()
+        operation = "🌳🔄" if item.id else "🌱✨"
+        id = item.id if item.id else " "
+        name = item.name
+        other_attributes = ", ".join(
+            [
+                f"{k}=`{process_query(v)}`" if k == "query" else f"{k}={v}"
+                for k, v in item.__dict__.items()
+                if k not in ["id", "name"] and v is not None
+            ]
         )
 
-    return markdown
+        rows.append([item_type, operation, id, name, other_attributes])
+
+    markdown_table = f"| {' | '.join(headers)} |\n"
+    markdown_table += f"|{'|'.join(['---' for _ in headers])}|\n"
+
+    for row in rows:
+        markdown_table += f"| {' | '.join(str(x) for x in row)} |\n"
+
+    return markdown_table

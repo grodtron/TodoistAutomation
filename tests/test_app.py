@@ -137,9 +137,7 @@ class TestAutoDoistApp(unittest.TestCase):
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command(
-                        "label", name="call", color="red", id=123, is_favorite=True
-                    ),
+                    make_update_command("label", name="call", color="red", id=123),
                     make_add_command(
                         "filter",
                         name=" Call",
@@ -189,9 +187,9 @@ class TestAutoDoistApp(unittest.TestCase):
         }
         actual_commands_set = {
             make_hashable_and_comparable(cmd)
-            for cmd in api_requester_mock.make_request.call_args_list[1].kwargs[
-                "commands"
-            ]
+            for cmd in json.loads(
+                api_requester_mock.make_request.call_args_list[1].kwargs["commands"]
+            )
         }
 
         self.assertEqual(actual_commands_set, expected_commands_set)

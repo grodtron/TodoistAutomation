@@ -27,6 +27,9 @@ class Color(Enum):
     GREY = "grey"
     TAUPE = "taupe"
 
+    def __str__(self):
+        return self.value
+
 
 def ExcludeIfNone(value: Optional[Any]) -> bool:
     """Do not include field for None values"""

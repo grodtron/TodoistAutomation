@@ -42,9 +42,9 @@ class TestGTDState(unittest.TestCase):
 
         # Assert that the result contains the expected labels and filters
         expected_labels = [
-            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=True),
-            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=True),
-            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=True),
+            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=False),
+            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=False),
+            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=False),
         ]
 
         expected_filters = [
@@ -96,9 +96,9 @@ class TestGTDState(unittest.TestCase):
 
         # Assert that the result contains the expected labels and filters with multiple exclusion lists
         expected_labels = [
-            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=True),
-            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=True),
-            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=True),
+            TodoistLabel(name="Work", color=Color.BLUE, is_favorite=False),
+            TodoistLabel(name="Health", color=Color.GREEN, is_favorite=False),
+            TodoistLabel(name="Finance", color=Color.GREEN, is_favorite=False),
         ]
 
         expected_filters = [
