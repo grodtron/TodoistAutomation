@@ -41,7 +41,7 @@ class TodoistAPIRequester:
             except ValueError:
                 raise Exception("Request failed with unknown error")
 
-        return response.json()
+        return response.json()  # type: Dict[str, Any]
 
 
 class TodoistApiWrapper:
