@@ -77,7 +77,7 @@ class TodoistSyncManager:
                 if updated_attrs:
                     updated_attrs["id"] = existing_obj.id
                     updated_attrs["name"] = desired_obj.name
-                    updated_obj = concrete_class.from_dict(updated_attrs)
+                    updated_obj = concrete_class.from_dict(updated_attrs)  # type: ignore[union-attr]
                     objects_to_sync.append(updated_obj)
 
         return objects_to_sync
