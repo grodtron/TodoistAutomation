@@ -27,10 +27,10 @@ class GitHubClient:
 
 class AutoDoistApp:
     def __init__(
-        self, 
-        file_reader: Callable[[str], str], 
-        api_requester: TodoistAPIRequester, 
-        github_client: GitHubClient
+        self,
+        file_reader: Callable[[str], str],
+        api_requester: TodoistAPIRequester,
+        github_client: GitHubClient,
     ) -> None:
         self.file_reader: Callable[[str], str] = file_reader
         self.api_requester: TodoistAPIRequester = api_requester
