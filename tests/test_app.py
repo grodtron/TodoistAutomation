@@ -189,7 +189,7 @@ class TestAutoDoistApp(unittest.TestCase):
         )
 
         expected_commands_set = {
-            make_hashable_and_comparable(cmd) for cmd in expected_commands
+            make_hashable_and_comparable(cmd) for cmd in expected_commands  # type: ignore[arg-type]
         }
         actual_commands_set = {
             make_hashable_and_comparable(cmd)
