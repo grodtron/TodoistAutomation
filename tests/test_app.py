@@ -134,11 +134,11 @@ class TestAutoDoistApp(unittest.TestCase):
                             color="grey",
                         ),
                     ],
-                    "labels": [make_label(name="call", color="yellow", id="123")],
+                    "labels": [make_label(name="call", color="yellow", id=123)],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command("label", name="call", color="red", id="123"),
+                    make_update_command("label", name="call", color="red", id=123),
                     make_add_command(
                         "filter",
                         name=" Call",
