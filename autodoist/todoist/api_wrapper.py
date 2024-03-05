@@ -7,7 +7,6 @@ from autodoist.models import (
     ConcreteTodoistLabel,
     ConcreteTodoistFilter,
     ConcreteTodoistProject,
-    TodoistObject,
 )
 
 
@@ -18,7 +17,7 @@ class TodoistAPIRequester:
         self.api_key: str = api_key
         self.logger: logging.Logger = logging.getLogger(__name__)
 
-    def make_request(self, **payload: Any) -> Dict[str, Any]:
+    def make_request(self, **payload: Any) -> Any:
         self.logger.debug(f"Sending request to {self.API_URL} with payload: {payload}")
         headers: Dict[str, str] = {"Authorization": f"Bearer {self.api_key}"}
         response: requests.Response = requests.post(
@@ -55,15 +54,15 @@ class TodoistApiWrapper:
         )
         self.logger.debug(f"Received Todoist objects: {response}")
         labels: List[ConcreteTodoistLabel] = [
-            cast(ConcreteTodoistLabel, ConcreteTodoistLabel.from_dict(label))
+            cast(ConcreteTodoistLabel, ConcreteTodoistLabel.from_dict(label))  # type: ignore[attr-defined]
             for label in response.get("labels", [])
         ]
         filters: List[ConcreteTodoistFilter] = [
-            cast(ConcreteTodoistFilter, ConcreteTodoistFilter.from_dict(filter_))
+            cast(ConcreteTodoistFilter, ConcreteTodoistFilter.from_dict(filter_))  # type: ignore[attr-defined]
             for filter_ in response.get("filters", [])
         ]
         projects: List[ConcreteTodoistProject] = [
-            cast(ConcreteTodoistProject, ConcreteTodoistProject.from_dict(project))
+            cast(ConcreteTodoistProject, ConcreteTodoistProject.from_dict(project))  # type: ignore[attr-defined]
             for project in response.get("projects", [])
         ]
 
@@ -82,13 +81,13 @@ class TodoistApiWrapper:
         return self.api_requester.make_request(commands=sync_commands)
 
     def _create_update_command(
-        self, item_type: str, item_id: Optional[int], updated_item: TodoistObject
+        self, item_type: str, item_id: Optional[int], updated_item: Any
     ) -> Dict[str, Any]:
         action_type: str = "update" if item_id else "add"
         command: Dict[str, Any] = {
             "type": f"{item_type}_{action_type}",
             "uuid": str(uuid.uuid4()),
-            "args": updated_item.to_dict(),
+            "args": updated_item.to_dict(),  # type: ignore[attr-defined]
         }
 
         if item_id:
