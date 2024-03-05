@@ -5,17 +5,17 @@ from autodoist.cli import AutoDoistApp
 import logging
 import json
 import re
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 
 def make_filter(
-    name="Foobar",
-    query="somequery",
-    color="charcoal",
-    is_deleted=False,
-    is_favorite=True,
-    item_order=1,
-    id="123123",
+    name: str = "Foobar",
+    query: str = "somequery",
+    color: str = "charcoal",
+    is_deleted: bool = False,
+    is_favorite: bool = True,
+    item_order: int = 1,
+    id: str = "123123",
 ) -> Dict[str, Any]:
     return {
         "color": color,
@@ -29,12 +29,12 @@ def make_filter(
 
 
 def make_project(
-    name="Inbox",
-    color="charcoal",
-    is_archived=False,
-    is_deleted=False,
-    is_favorite=False,
-    id="123123",
+    name: str = "Inbox",
+    color: str = "charcoal",
+    is_archived: bool = False,
+    is_deleted: bool = False,
+    is_favorite: bool = False,
+    id: str = "123123",
 ) -> Dict[str, Any]:
     return {
         "child_order": 0,
@@ -57,12 +57,12 @@ def make_project(
 
 
 def make_label(
-    name="Top3",
-    color="charcoal",
-    is_deleted=False,
-    is_favorite=False,
-    item_order=20,
-    id="123123",
+    name: str = "Top3",
+    color: str = "charcoal",
+    is_deleted: bool = False,
+    is_favorite: bool = False,
+    item_order: int = 20,
+    id: str = "123123",
 ) -> Dict[str, Any]:
     return {
         "color": color,
@@ -74,7 +74,7 @@ def make_label(
     }
 
 
-def make_add_command(type, **kwargs) -> Dict[str, Any]:
+def make_add_command(type: str, **kwargs: Any) -> Dict[str, Any]:
     return {
         "type": f"{type}_add",
         "args": kwargs,
@@ -83,7 +83,7 @@ def make_add_command(type, **kwargs) -> Dict[str, Any]:
     }
 
 
-def make_update_command(type, **kwargs) -> Dict[str, Any]:
+def make_update_command(type: str, **kwargs: Any) -> Dict[str, Any]:
     return {
         "type": f"{type}_update",
         "args": kwargs,
@@ -96,7 +96,7 @@ def make_hashable_and_comparable(command_dict: Dict[str, Any]) -> str:
         if uuid_field in command_dict:
             command_dict[uuid_field] = "DUMMY_VALUE"
 
-    def _normalize_whitespace(text):
+    def _normalize_whitespace(text: str) -> str:
         return re.sub(r"\s+", " ", text).strip()
 
     if "query" in command_dict["args"]:
@@ -134,11 +134,11 @@ class TestAutoDoistApp(unittest.TestCase):
                             color="grey",
                         ),
                     ],
-                    "labels": [make_label(name="call", color="yellow", id=123)],
+                    "labels": [make_label(name="call", color="yellow", id="123")],
                 },
                 # Expected Commands Submitted (simplified list of commands)
                 [
-                    make_update_command("label", name="call", color="red", id=123),
+                    make_update_command("label", name="call", color="red", id="123"),
                     make_add_command(
                         "filter",
                         name=" Call",
@@ -152,7 +152,7 @@ class TestAutoDoistApp(unittest.TestCase):
         ]
     )
     def test_auto_doist_app(
-        self, yaml_input, first_call_response, expected_commands
+        self, yaml_input: str, first_call_response: Dict[str, Any], expected_commands: Dict[str, Any]
     ) -> None:
         # Mock the file reader
         file_reader_mock = MagicMock(return_value=yaml_input)
