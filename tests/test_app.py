@@ -151,7 +151,9 @@ class TestAutoDoistApp(unittest.TestCase):
             ),
         ]
     )
-    def test_auto_doist_app(self, yaml_input, first_call_response, expected_commands) -> None:
+    def test_auto_doist_app(
+        self, yaml_input, first_call_response, expected_commands
+    ) -> None:
         # Mock the file reader
         file_reader_mock = MagicMock(return_value=yaml_input)
 
