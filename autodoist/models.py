@@ -31,12 +31,12 @@ class Color(Enum):
 
 def ExcludeIfNone(value: Optional[Any]) -> bool:
     """Do not include field for None values"""
-    return value is not None
+    return value is None
 
 
 def OptField(default_val: Optional[Any] = None) -> Any:
     return field(
-        default=default_val, metadata=config(exclude=lambda x: ExcludeIfNone(x))
+        default=default_val, metadata=config(exclude=ExcludeIfNone)
     )
 
 
@@ -44,9 +44,9 @@ def OptColorField(default_val: Optional[Color] = None) -> Any:
     return field(
         default=default_val,
         metadata=config(
-            exclude=lambda x: ExcludeIfNone(x),
+            exclude=ExcludeIfNone,
             encoder=lambda x: x.value,
-            decoder=lambda x: Color(x),
+            decoder=Color,
         ),
     )
 
