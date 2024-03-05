@@ -1,3 +1,4 @@
+from typing import Type, List, Dict, Any
 from autodoist.todoist.api_wrapper import TodoistApiWrapper
 from autodoist.models import (
     ConcreteTodoistObjects,
@@ -9,7 +10,7 @@ from autodoist.models import (
 
 
 class TodoistSyncManager:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def sync(
@@ -40,9 +41,14 @@ class TodoistSyncManager:
             projects=projects_to_sync,
         )
 
-    def _sync_objects(self, existing_objects, desired_objects, concrete_class):
-        existing_objects_dict = {obj.name: obj for obj in existing_objects}
-        objects_to_sync = []
+    def _sync_objects(
+        self,
+        existing_objects: List[Any],
+        desired_objects: List[Any],
+        concrete_class: Type[ConcreteTodoistLabel] | Type[ConcreteTodoistFilter] | Type[ConcreteTodoistProject]
+    ) -> List[Any]:
+        existing_objects_dict: Dict[str, Any] = {obj.name: obj for obj in existing_objects}
+        objects_to_sync: List[Any] = []
 
         for desired_obj in desired_objects:
             existing_obj = existing_objects_dict.get(desired_obj.name)
@@ -56,7 +62,7 @@ class TodoistSyncManager:
                 desired_dict = desired_obj.to_dict()
                 existing_dict = existing_obj.to_dict()
 
-                updated_attrs = {
+                updated_attrs: Dict[str, Any] = {
                     attr: value
                     for attr, value in desired_dict.items()
                     if existing_dict.get(attr) != value
