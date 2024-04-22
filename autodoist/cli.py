@@ -105,7 +105,7 @@ def main() -> None:
 
     file_reader: Callable[[str], str] = lambda file_path: open(file_path, "r").read()
     api_requester: TodoistAPIRequester = TodoistAPIRequester(args.api_key)
-    github_client: GitHubClient = GitHubClient(args.github_token)
+    github_client: GitHubClient = GitHubClient(args.github_token) if hasattr(args, 'github_token') else None
 
     app: AutoDoistApp = AutoDoistApp(file_reader, api_requester, github_client)
     app.run(args)
